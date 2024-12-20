@@ -1,0 +1,108 @@
+/* General Navbar Styling */
+.navbar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 10px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  user-select: none;
+  z-index: 2;
+}
+
+/* Left Section for Profile */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Space between profile picture and name */
+  margin-left: 200px;
+}
+
+/* Profile Picture Styling */
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-picture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-name {
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Logo Styling */
+.navbar-logo h2 {
+  margin: 0;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+/* Actions (Search, Icons, Logout) */
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Space between elements */
+}
+
+/* Search Bar */
+.navbar-search {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 200px; /* Set width for the search bar */
+}
+
+.navbar-search input {
+  padding: 8px 10px 8px 30px; /* Add left padding to accommodate the icon */
+  font-size: 14px;
+  border: 1px solid #c8e6c9; /* Light border color */
+  border-radius: 10px;
+  outline: none;
+  width: 100%; /* Ensure it uses the full width of its container */
+  background-color: #f8f8f8;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px; /* Place icon inside the input field */
+  bottom: 12px;
+  color: #006766;
+  pointer-events: none; /* The icon should not interfere with typing */
+}
+
+/* Icon Buttons */
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #555;
+  transition: color 0.3s;
+}
+
+.icon-button:hover {
+  color: #000;
+}
+
+/* Logout Button */
+.logout-button {
+  padding: 5px 15px;
+  background-color: #d9534f;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+  background-color: #c9302c;
+}

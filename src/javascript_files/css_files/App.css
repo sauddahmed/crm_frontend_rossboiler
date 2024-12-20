@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+.main-content {
+  margin-left: 250px; /* Equal to the sidebar's width */
+  padding: 20px;
+  flex: 1;
+  background-color: #f9f9f9;
+  min-height: 100vh; /* Ensures full height */
+}
+
+/* Hide the scrollbar but keep scrolling functionality */
+.sidebar::-webkit-scrollbar {
+  width: 0; /* Hide scrollbar */
+  background: transparent; /* Make background transparent */
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: transparent; /* Make thumb transparent */
+}

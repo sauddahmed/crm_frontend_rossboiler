@@ -1,0 +1,253 @@
+/* Sidebar Styles */
+.sidebar {
+  width: 200px; /* Adjust width for a more balanced layout */
+  height: 100vh; /* Full height */
+  background-color: #072b2b; /* Dark green background */
+  color: #c8e4e4; /* Light text color */
+  position: fixed; /* Fixed position on the screen */
+  top: 0;
+  left: 0;
+  padding: 20px;
+  padding-left: 5px;
+  padding-right: 10px;
+  /* overflow-y: auto; Scrollable if content exceeds viewport */
+  overflow: visible;
+  border-right: 1px solid #ddd; /* Light border for separation */
+  z-index: 10; /* Ensures sidebar is above other content */
+  user-select: none;
+}
+
+/* Sidebar Header */
+.sidebar-header {
+  height: auto;
+  width: 110px;
+  position: absolute;
+  font-size: 20px;
+  font-weight: 600;
+  font-family: "Times New Roman", Times, serif;
+  color: #c8e4e4;
+  margin-left: 35px;
+  margin-top: -15px;
+}
+
+/* Sidebar Menu */
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  padding-top: 70px;
+}
+
+.sidebar-menu li {
+  margin-bottom: 10px;
+  position: relative;
+}
+
+/* Sidebar Menu Links */
+.sidebar-menu li a {
+  color: #c8e4e4;
+  text-decoration: none;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-menu li a:hover {
+  background-color: #0e4849;
+  color: #c8e4e4;
+  position: relative;
+}
+
+/* Submenu Styles */
+.submenu {
+  display: none;
+  padding: 0; /* Remove padding for submenu container */
+  list-style: none;
+  margin-top: 0; /* Remove any top margin */
+  background-color: #109c9e;
+  border-radius: 5px;
+  position: absolute; /* Position outside of the sidebar */
+  left: 100%; /* Push submenu to the right side */
+  top: -5rem; /* Align it with the parent list item */
+  width: 150px; /* Adjust width of submenu */
+  transition: max-height 0.3s ease-in-out;
+  box-shadow: 0px 0px 8px 0.5px #072b2b;
+}
+
+.submenu.active {
+  display: block;
+}
+
+.submenu li {
+  margin: 0; /* Remove margin between li elements */
+}
+
+.submenu li a {
+  display: block;
+  color: #fff;
+  padding: 5px 10px; /* Decrease padding to reduce space between items */
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  margin: 0; /* Remove margin from anchor elements */
+  border-radius: 0px;
+}
+
+.submenu li a:hover {
+  color: #fff;
+  background-color: #072b2b;
+}
+
+.menu-icon {
+  color: #109c9e;
+  margin-right: 10px;
+  width: 20px;
+  height: auto;
+}
+
+/* Dropdown Arrow */
+.dropdown-arrow {
+  transition: transform 0.3s ease-in-out;
+  margin-left: 150px;
+  position: absolute;
+}
+
+/* Rotate arrow when submenu is active */
+.dropdown-arrow.open {
+  transform: rotate(-90deg);
+}
+
+/* Sidebar Bottom Section */
+.sidebar-bottom-section {
+  margin-top: auto;
+  margin-top: 48vh;
+}
+
+.sidebar-bottom-section li {
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+.sidebar-bottom-section a {
+  color: #333;
+  text-decoration: none;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  transition: background 0.3s ease;
+}
+
+.sidebar-bottom-section a:hover {
+  background-color: #f0f0f0;
+}
+
+/* Main Content */
+.main-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  margin-left: 200px; /* Adjust to the width of the sidebar */
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* button {
+  padding: 12px 20px;
+  background-color: #072b2b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0e4849;
+} */
+
+.error-message {
+  color: #d32f2f;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Responsive Styles for Smaller Screens */
+@media (max-width: 768px) {
+  .main-container {
+    flex-direction: column; /* Stack sidebar and content */
+  }
+
+  .sidebar {
+    width: 100%;
+    position: relative;
+    margin-bottom: 20px; /* Add spacing below the sidebar */
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 10px;
+  }
+
+  .signin-box {
+    max-width: 100%;
+    padding: 20px;
+  }
+}
+
+/* Responsive Styles for Larger Screens */
+@media (min-width: 1440px) {
+  .sidebar {
+    width: 200px; /* Increase sidebar width for larger screens */
+  }
+
+  .main-content {
+    margin-left: 250px; /* Adjust content to match sidebar width */
+    padding: 40px; /* Add more padding for a spacious feel */
+  }
+
+  .sidebar-header {
+    font-size: 26px; /* Slightly larger font size for the header */
+  }
+
+  .sidebar-menu li a {
+    font-size: 18px; /* Larger font size for menu items */
+    padding: 10px 15px; /* Add more padding for larger screens */
+  }
+
+  .signin-box {
+    max-width: 550px; /* Increase the width of the signin box */
+    padding: 40px; /* Add more padding for a spacious look */
+    margin-top: -70px;
+  }
+
+  .form-group input {
+    padding: 15px; /* Larger input fields for ease of use */
+    font-size: 18px;
+  }
+
+  .sidebar-bottom-section {
+    margin-top: 65vh;
+  }
+}
+
+/* Hide the scrollbar but keep scrolling functionality */
+.sidebar::-webkit-scrollbar {
+  width: 0; /* Hide scrollbar */
+  background: transparent; /* Make background transparent */
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: transparent; /* Make thumb transparent */
+}

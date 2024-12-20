@@ -1,0 +1,101 @@
+/* General sign in page Styling */
+
+.signin-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  font-family: "Arial", sans-serif;
+  user-select: none;
+  position: fixed;
+  top: 20px; /* Adjust padding to create space below the navbar */
+  overflow: hidden; /* Disable scrolling */
+  background-image: url("./../../assets/back1.jpg"); /* Path to your image */
+  background-size: cover; /* Make sure the image covers the entire area */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent image from repeating */
+}
+
+/* Sign-in Box Styling */
+.signin-box {
+  background-color: #ffffff; /* White box background */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+/* Header Styling */
+.signin-box h2 {
+  color: #006766; /* Dark green */
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Form Group Styling */
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* Label Styling */
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #006766;                                                
+}
+
+/* Input Field Styling */
+input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #c8e6c9; /* Light green border */
+  border-radius: 8px;
+  outline: none;
+  margin-top: 5px;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  border-color: #006766; /* Focused input border */
+}
+
+/* Button Styling */
+.signin-button button {
+  padding: 0.5rem 0rem;
+  background-color: #072b2b; /* Dark green */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.signin-button button:hover {
+  background-color: #006766; /* Lighter green on hover */
+}
+
+/* Error Message Styling */
+.error-message {
+  color: #d32f2f; /* Red color for errors */
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Hide the scrollbar but keep scrolling functionality */
+.signin-page::-webkit-scrollbar {
+  width: 0; /* Hide scrollbar */
+  background: transparent; /* Make background transparent */
+}
+
+.signin-page::-webkit-scrollbar-thumb {
+  background: transparent; /* Make thumb transparent */
+}
