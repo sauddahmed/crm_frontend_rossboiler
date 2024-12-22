@@ -1,14 +1,14 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 
 // Create the context
-const DataContext = createContext();
+const CategoryContext = createContext();
 
 // Custom hook to access the context
-export const useDataContext = () => {
-  return useContext(DataContext);
+export const useCategoryContext = () => {
+  return useContext(CategoryContext);
 };
 
-export const DataProvider = ({ children }) => {
+export const CategoryProvider = ({ children }) => {
   // State to manage the table data for the dashboard
   const [tableData, setTableData] = useState(() => {
     // Initialize state with data from localStorage, if available
@@ -41,7 +41,7 @@ export const DataProvider = ({ children }) => {
   };
 
   return (
-    <DataContext.Provider
+    <CategoryContext.Provider
       value={{
         tableData,
         addDataToTable,
@@ -50,6 +50,6 @@ export const DataProvider = ({ children }) => {
       }}
     >
       {children}
-    </DataContext.Provider>
+    </CategoryContext.Provider>
   );
 };

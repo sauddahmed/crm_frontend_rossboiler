@@ -233,7 +233,7 @@ button:hover {
   }
 
   .form-group input {
-    padding: 15px; /* Larger input fields for ease of use */
+    padding: 0.5rem; /* Larger input fields for ease of use */
     font-size: 18px;
   }
 

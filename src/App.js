@@ -13,8 +13,9 @@ import Customers from "./javascript_files/pages/Customers";
 import SignInPage from "./javascript_files/pages/SignIn";
 import Navbar from "./javascript_files/components/Navbar";
 import Sidebar from "./javascript_files/components/Sidebar";
-import { DataProvider } from "./context/DataContextParts";
-import { DataProvider as DashboardDataProvider } from "./context/DataContextDash";
+// import { DataProvider } from "./context/DataContextParts";
+import { CategoryProvider } from "./context/CategoryContext";
+import { SubCategoryProvider } from "./context/SubCategoryContext";
 
 const PrivateRoute = ({ element }) => {
   const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
@@ -23,8 +24,8 @@ const PrivateRoute = ({ element }) => {
 
 const App = () => {
   return (
-    <DataProvider>
-      <DashboardDataProvider>
+    <CategoryProvider>
+      <SubCategoryProvider>
         <Router>
           <Navbar />
           <div className="app-container">
@@ -33,7 +34,7 @@ const App = () => {
               <Routes>
                 <Route path="/signin" element={<SignInPage />} />
                 <Route
-                  path="/"
+                  path="/Dashboard"
                   element={<PrivateRoute element={<Dashboard />} />}
                 />
                 <Route
@@ -56,8 +57,8 @@ const App = () => {
             </main>
           </div>
         </Router>
-      </DashboardDataProvider>
-    </DataProvider>
+      </SubCategoryProvider>
+    </CategoryProvider>
   );
 };
 

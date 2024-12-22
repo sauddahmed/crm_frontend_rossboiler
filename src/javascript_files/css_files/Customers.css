@@ -44,12 +44,12 @@ body {
 
 /* Form field styling */
 .form-field {
-  width: 48%; /* Two fields per row */
+  width: 36%; /* Two fields per row */
 }
 
 .form-label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 0rem;
   font-size: 14px;
   font-weight: 600;
   color: #555;
@@ -58,7 +58,7 @@ body {
 .form-input,
 .form-select {
   width: 100%;
-  padding: 8px 5px;
+  padding: 0.5rem;
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -75,10 +75,12 @@ body {
 .form-button {
   background-color: #109c9e;
   color: #fff;
+  font-size: 0.85rem;
   font-weight: 600;
-  margin-top: 2rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 0.5rem;
+  margin-top: 1.6rem;
+  /* padding-left: 1rem; */
+  /* padding-right: 1rem; */
   height: 2.5rem;
   border: none;
   border-radius: 5px;
@@ -97,10 +99,9 @@ body {
   gap: 10px;
   margin: 10px 0;
   background: #ffffff;
-  padding: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding-top: 1.2rem;
+  padding: 1.2rem;
 }
 
 .search-select,
@@ -117,9 +118,10 @@ body {
   background-color: #109c9e;
   color: white;
   font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.5rem;
   border: none;
   border-radius: 5px;
-  padding: 8px 15px;
   cursor: pointer;
   transition: background-color 0.3s;
   margin-top: -0.5rem;

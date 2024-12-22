@@ -55,7 +55,7 @@ const Sidebar = () => {
       <ul className="sidebar-menu">
         {/* Dashboard Link */}
         <li>
-          <a href="#Dashboard" className="sidebar-link">
+          <a href="/Dashboard" className="sidebar-link">
             <FaThLarge className="menu-icon" />
             Dashboard
           </a>

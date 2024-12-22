@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useDataContext } from "../../../context/DataContextDash";
+import { useCategoryContext } from "../../../context/CategoryContext";
 import "./../../css_files/CategoryMaster.css"; // Import the updated CSS
 
 const CategoryMaster = () => {
   const { tableData, addDataToTable, editDataInTable, deleteDataFromTable } =
-    useDataContext();
+    useCategoryContext();
 
   const [formData, setFormData] = useState({
     category: "",
@@ -116,19 +116,6 @@ const CategoryMaster = () => {
 
       {/* Form */}
       <form className="form-container" onSubmit={handleFormSubmit}>
-        <div className="form-field">
-          <label htmlFor="id" className="form-label">
-            ID
-          </label>
-          <input
-            type="text"
-            id="id"
-            name="id"
-            value={formData.id}
-            disabled
-            className="form-input"
-          />
-        </div>
         <div className="form-field">
           <label htmlFor="category" className="form-label">
             Category
