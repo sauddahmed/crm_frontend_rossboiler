@@ -12,6 +12,13 @@
   background-color: whitesmoke;
 }
 
+.add-technician-master aside {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .add-technician-master blockquote {
   width: 100%;
   display: flex;
