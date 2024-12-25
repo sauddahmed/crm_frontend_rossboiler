@@ -6,6 +6,8 @@ import Overview from "./javascript_files/Homepage/Overview";
 import { useState } from "react";
 import SubCategoryMaster from "./javascript_files/Master/SubCategoryMaster";
 import HSNMaster from "./javascript_files/Master/HSNMaster";
+import CurrencyMaster from "./javascript_files/Master/CurrencyMaster";
+import UnitMaster from "./javascript_files/Master/UnitMaster";
 
 function App() {
   const [showsidebar, setshowsidebar] = useState(false);
@@ -28,6 +30,8 @@ function App() {
           element={<SubCategoryMaster />}
         />
         <Route path="/master/hsn-master" element={<HSNMaster />} />
+        <Route path="/master/currency-master" element={<CurrencyMaster />} />
+        <Route path="/master/unit-master" element={<UnitMaster />} />
       </Route>
     </Routes>
   );

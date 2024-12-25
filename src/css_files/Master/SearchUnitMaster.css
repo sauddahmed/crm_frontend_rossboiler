@@ -1,4 +1,4 @@
-.search-category-master-form {
+.search-unit-master-form {
   width: 40%;
   border: 1px solid black;
   background-color: whitesmoke;
@@ -12,7 +12,7 @@
   position: relative;
 }
 
-.search-category-master-form blockquote {
+.search-unit-master-form blockquote {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -20,13 +20,13 @@
   width: 100%;
 }
 
-.search-category-master-form blockquote input {
+.search-unit-master-form blockquote input {
   width: 100%;
   padding: 0.5rem;
   font-size: 1rem;
 }
 
-.search-category-master-form button {
+.search-unit-master-form button {
   border: 0;
   background-color: #109b9e;
   color: white;

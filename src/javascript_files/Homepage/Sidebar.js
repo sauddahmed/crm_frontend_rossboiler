@@ -35,13 +35,13 @@ function Sidebar() {
               <mark onClick={() => nav("/master/hsn-master")}>
                 <h4>HSN Master</h4>
               </mark>
-              <mark>
+              <mark onClick={() => nav("/master/unit-master")}>
                 <h4>Unit Master</h4>
               </mark>
               <mark>
                 <h4>Packing Master</h4>
               </mark>
-              <mark>
+              <mark onClick={() => nav("/master/currency-master")}>
                 <h4>Currency Master</h4>
               </mark>
               <mark>
