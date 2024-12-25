@@ -55,7 +55,7 @@ function Overview({ showsidebar }) {
           ],
           datasets: [
             {
-              label: "Total Team Members in Month in 2024",
+              label: "Total Parts Sold in Month in 2024",
               data: [12, 19, 3, 5, 2, 3, 8, 6, 3, 7, 5, 11],
               borderColor: "rgba(75, 192, 192, 1)",
               backgroundColor: "rgba(75, 192, 192, 0.2)",
@@ -140,7 +140,7 @@ function Overview({ showsidebar }) {
           ],
           datasets: [
             {
-              label: "Total Land Sales in Month in 2024",
+              label: "Quotations Generated in month in 2024",
               data: [12, 19, 3, 5, 2, 3, 14, 11, 5, 9, 6, 2],
               borderColor: "rgba(75, 192, 192, 1)",
               backgroundColor: "rgba(75, 192, 192, 0.2)",
@@ -224,7 +224,7 @@ function Overview({ showsidebar }) {
           ],
           datasets: [
             {
-              label: "Business Summary in Month in 2024",
+              label: "Orders Generated in month in 2024",
               data: [12, 19, 3, 5, 2, 3, 11, 12, 5, 9, 7, 6],
               borderColor: "rgba(75, 192, 192, 1)",
               backgroundColor: "rgba(75, 192, 192, 0.2)",
@@ -308,7 +308,7 @@ function Overview({ showsidebar }) {
           ],
           datasets: [
             {
-              label: "Upcoming DeadLines in Month in 2024",
+              label: "Technicians assigned in month in 2024",
               data: [12, 19, 3, 5, 2, 3, 17, 13, 14, 5, 9, 6],
               borderColor: "rgba(75, 192, 192, 1)",
               backgroundColor: "rgba(75, 192, 192, 0.2)",
@@ -392,7 +392,7 @@ function Overview({ showsidebar }) {
           ],
           datasets: [
             {
-              label: "Business Summary in Month in 2024",
+              label: "Total Revenue Generated in Month in 2024",
               data: [12, 19, 3, 5, 2, 3, 11, 12, 5, 9, 7, 6],
               borderColor: "rgba(75, 192, 192, 1)",
               backgroundColor: "rgba(75, 192, 192, 0.2)",
@@ -476,7 +476,7 @@ function Overview({ showsidebar }) {
           ],
           datasets: [
             {
-              label: "Upcoming DeadLines in Month in 2024",
+              label: "Feedbacks Received in Month in 2024",
               data: [12, 19, 3, 5, 2, 3, 17, 13, 14, 5, 9, 6],
               borderColor: "rgba(75, 192, 192, 1)",
               backgroundColor: "rgba(75, 192, 192, 0.2)",
