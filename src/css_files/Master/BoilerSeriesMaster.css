@@ -1,0 +1,36 @@
+.boiler-series-master {
+  width: 100%;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.boiler-series-master h1 {
+  font-size: 2.5rem;
+}
+
+.boiler-series-master-forms {
+  margin: 1rem auto;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  width: fit-content;
+}
+
+.boiler-series-master-forms button {
+  padding: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  border: 0;
+}
+
+.boiler-series-master-forms button:nth-child(1) {
+  background-color: #072b2b;
+  color: white;
+  border-radius: 0.5rem;
+}
+
+.boiler-series-master-forms button:nth-child(2) {
+  background-color: #109b9e;
+  color: white;
+  border-radius: 0.5rem;
+}

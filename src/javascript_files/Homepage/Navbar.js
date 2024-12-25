@@ -6,27 +6,44 @@ function Navbar({ setshowsidebar, showsidebar }) {
     <>
       <nav className="navbar">
         <figure>
-          <button onClick={() => setshowsidebar(!showsidebar)}>
+          <button
+            onClick={() => {
+              if (showsidebar) {
+                setshowsidebar(false);
+              } else {
+                setshowsidebar(true);
+              }
+            }}
+          >
             <i class="fa-solid fa-bars"></i>
           </button>
           <img src="/images/Image 689.png" id="navbar-logo" />
         </figure>
         <aside>
           <blockquote>
-            <i className="fa-solid fa-info-circle" />
-            <h3>About Us</h3>
+            <i
+              className="fa-solid fa-info-circle"
+              title={showsidebar && "About Us"}
+            />
+            {showsidebar === false && <h3>About Us</h3>}
           </blockquote>
           <blockquote>
-            <i className="fa-solid fa-user" />
-            <h3>Contact Us</h3>
+            <i
+              className="fa-solid fa-user"
+              title={showsidebar && "Contact Us"}
+            />
+            {showsidebar === false && <h3>Contact Us</h3>}
           </blockquote>
           <blockquote>
-            <i class="fa-solid fa-gear"></i>
-            <h3>Settings</h3>
+            <i class="fa-solid fa-gear" title={showsidebar && "Settings"}></i>
+            {showsidebar === false && <h3>Settings</h3>}
           </blockquote>
           <blockquote>
-            <i class="fa-solid fa-bell"></i>
-            <h3>Notifications</h3>
+            <i
+              class="fa-solid fa-bell"
+              title={showsidebar && "Notifications"}
+            ></i>
+            {showsidebar === false && <h3>Notifications</h3>}
           </blockquote>
           <figure className="navbar-profile">
             <img src="/images/profile_image.png" />

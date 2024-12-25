@@ -1,20 +1,22 @@
 .table {
-  width: 75%;
+  min-width: 75%;
+  max-width: 98%;
   border-collapse: collapse;
   text-align: left;
-  box-shadow: 0 0 0.5rem #109b9e;
   margin: 2rem auto;
 }
 
 .table tbody tr td {
   padding: 1rem;
   border: 1px solid #109b9e;
+  word-break: break-all;
 }
 
 .table thead tr th {
   background-color: #109b9e;
   color: white;
   padding: 1rem;
+  word-break: break-all;
   border: 1px solid #072b2b;
 }
 
