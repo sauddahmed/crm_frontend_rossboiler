@@ -1,0 +1,41 @@
+.table {
+  width: 75%;
+  border-collapse: collapse;
+  text-align: left;
+  box-shadow: 0 0 0.5rem #109b9e;
+  margin: 2rem auto;
+}
+
+.table tbody tr td {
+  padding: 1rem;
+  border: 1px solid #109b9e;
+}
+
+.table thead tr th {
+  background-color: #109b9e;
+  color: white;
+  padding: 1rem;
+  border: 1px solid #072b2b;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: whitesmoke;
+}
+
+.table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.table i.fa-pen-to-square {
+  cursor: pointer;
+  font-size: 1.3rem;
+  color: darkgreen;
+  transition: color 0.3s ease;
+}
+
+.table i.fa-trash {
+  cursor: pointer;
+  font-size: 1.3rem;
+  color: red;
+  transition: color 0.3s ease;
+}
