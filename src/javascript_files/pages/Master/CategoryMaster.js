@@ -16,6 +16,9 @@ const CategoryMaster = () => {
   const [filterType, setFilterType] = useState("id"); // State for filter type (ID/Category)
   const [filteredData, setFilteredData] = useState(tableData); // State to store filtered results
   const [nextId, setNextId] = useState(1); // State to track the next ID
+  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [editingRowIndex, setEditingRowIndex] = useState(null); // Track row being edited
+  const [rowEditData, setRowEditData] = useState({}); // Store data for inline editing
 
   useEffect(() => {
     setFilteredData(tableData);
@@ -30,8 +33,6 @@ const CategoryMaster = () => {
     }
   }, [tableData]);
 
-  const [editingIndex, setEditingIndex] = useState(null);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -42,13 +43,8 @@ const CategoryMaster = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (editingIndex !== null) {
-      editDataInTable(editingIndex, formData);
-      setEditingIndex(null);
-    } else {
-      addDataToTable({ ...formData, id: nextId.toString() });
-      setNextId(nextId + 1);
-    }
+    addDataToTable({ ...formData, id: nextId.toString() });
+    setNextId(nextId + 1);
     setFormData({
       category: "",
       description: "",
@@ -56,16 +52,10 @@ const CategoryMaster = () => {
     });
   };
 
-  const handleEdit = (index) => {
-    setEditingIndex(index);
-    setFormData(tableData[index]);
-  };
-
   const handleDelete = (index) => {
     deleteDataFromTable(index);
   };
 
-  // Handle Filter Button Click
   const handleFilter = () => {
     const newFilteredData = tableData.filter((item) => {
       if (filterType === "id") {
@@ -78,11 +68,32 @@ const CategoryMaster = () => {
     setFilteredData(newFilteredData);
   };
 
-  // Reset Filter and Show All Data
   const resetFilter = () => {
     setSearchQuery("");
     setFilterType("id");
     setFilteredData(tableData);
+  };
+
+  // Start Inline Editing
+  const startInlineEdit = (index, row) => {
+    setEditingRowIndex(index);
+    setRowEditData(row);
+  };
+
+  // Save Inline Edits
+  const saveInlineEdit = (index) => {
+    editDataInTable(index, rowEditData);
+    setEditingRowIndex(null);
+  };
+
+  // Cancel Inline Edits
+  const cancelInlineEdit = () => {
+    setEditingRowIndex(null);
+  };
+
+  const handleRowEditChange = (e) => {
+    const { name, value } = e.target;
+    setRowEditData((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -99,9 +110,10 @@ const CategoryMaster = () => {
           <option value="id">Search by ID</option>
           <option value="category">Search by Category</option>
         </select>
+
         <input
           type="text"
-          placeholder={`Enter ${filterType === "id" ? "ID" : "Category"}`}
+          placeholder={`Search ${filterType === "id" ? "ID" : "Category"}`}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="search-input"
@@ -112,41 +124,54 @@ const CategoryMaster = () => {
         <button onClick={resetFilter} className="reset-button">
           Reset
         </button>
+        <button
+          onClick={() => setIsFormVisible((prev) => !prev)}
+          className="search-button toggle-form-button"
+        >
+          {isFormVisible ? "Hide" : "Add"}
+        </button>
       </div>
 
       {/* Form */}
-      <form className="form-container" onSubmit={handleFormSubmit}>
-        <div className="form-field">
-          <label htmlFor="category" className="form-label">
-            Category
-          </label>
-          <input
-            type="text"
-            id="category"
-            name="category"
-            value={formData.category}
-            onChange={handleInputChange}
-            required
-            className="form-input"
-          />
-        </div>
-        <div className="form-field">
-          <label htmlFor="description" className="form-label">
-            Description
-          </label>
-          <input
-            type="text"
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleInputChange}
-            className="form-input"
-          />
-        </div>
-        <button type="submit" className="form-button">
-          {editingIndex !== null ? "Save Changes" : "Add Category"}
-        </button>
-      </form>
+      {isFormVisible && (
+        <form className="form-container" onSubmit={handleFormSubmit}>
+          <div className="form-field">
+            <label htmlFor="category" className="form-label">
+              Category
+            </label>
+            <select
+              id="category"
+              name="category"
+              value={formData.category}
+              onChange={handleInputChange}
+              required
+              className="form-input"
+            >
+              <option value="">Select Category</option>
+              <option value="Sports">Sports</option>
+              <option value="Health">Health</option>
+              <option value="Technology">Technology</option>
+              <option value="Education">Education</option>
+            </select>
+          </div>
+          <div className="form-field">
+            <label htmlFor="description" className="form-label">
+              Description
+            </label>
+            <textarea
+              type="text"
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+              className="form-input"
+            />
+          </div>
+          <button type="submit" className="form-button">
+            Add Category
+          </button>
+        </form>
+      )}
 
       {/* Table */}
       <div className="table-wrapper">
@@ -163,21 +188,63 @@ const CategoryMaster = () => {
             {filteredData.map((data, index) => (
               <tr key={index}>
                 <td>{data.id}</td>
-                <td>{data.category}</td>
-                <td>{data.description}</td>
                 <td>
-                  <button
-                    className="action-btn"
-                    onClick={() => handleEdit(index)}
-                  >
-                    ✏️ Edit
-                  </button>
-                  <button
-                    className="action-btn"
-                    onClick={() => handleDelete(index)}
-                  >
-                    🗑️ Delete
-                  </button>
+                  {editingRowIndex === index ? (
+                    <input
+                      type="text"
+                      name="category"
+                      value={rowEditData.category}
+                      onChange={handleRowEditChange}
+                      className="table-edit-input"
+                    />
+                  ) : (
+                    data.category
+                  )}
+                </td>
+                <td>
+                  {editingRowIndex === index ? (
+                    <textarea
+                      name="description"
+                      value={rowEditData.description}
+                      onChange={handleRowEditChange}
+                      className="table-edit-input"
+                    />
+                  ) : (
+                    data.description
+                  )}
+                </td>
+                <td>
+                  {editingRowIndex === index ? (
+                    <>
+                      <button
+                        className="action-btn save-btn"
+                        onClick={() => saveInlineEdit(index)}
+                      >
+                        💾 Save
+                      </button>
+                      <button
+                        className="action-btn cancel-btn"
+                        onClick={cancelInlineEdit}
+                      >
+                        ✖️ Cancel
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        className="action-btn edit-btn"
+                        onClick={() => startInlineEdit(index, data)}
+                      >
+                        ✏️ Edit
+                      </button>
+                      <button
+                        className="action-btn delete-btn"
+                        onClick={() => handleDelete(index)}
+                      >
+                        🗑️ Delete
+                      </button>
+                    </>
+                  )}
                 </td>
               </tr>
             ))}

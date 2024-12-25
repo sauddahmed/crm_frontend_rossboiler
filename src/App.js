@@ -8,6 +8,7 @@ import {
 import Dashboard from "./javascript_files/pages/Dashboard";
 import CategoryMaster from "./javascript_files/pages/Master/CategoryMaster";
 import SubCategoryMaster from "./javascript_files/pages/Master/SubCategoryMaster";
+import HsnMaster from "./javascript_files/pages/Master/HsnMaster";
 import Inventory from "./javascript_files/pages/Inventory";
 import Customers from "./javascript_files/pages/Customers";
 import SignInPage from "./javascript_files/pages/SignIn";
@@ -16,6 +17,7 @@ import Sidebar from "./javascript_files/components/Sidebar";
 // import { DataProvider } from "./context/DataContextParts";
 import { CategoryProvider } from "./context/CategoryContext";
 import { SubCategoryProvider } from "./context/SubCategoryContext";
+import { HsnProvider } from "./context/HsnContext";
 
 const PrivateRoute = ({ element }) => {
   const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
@@ -26,37 +28,43 @@ const App = () => {
   return (
     <CategoryProvider>
       <SubCategoryProvider>
-        <Router>
-          <Navbar />
-          <div className="app-container">
-            <Sidebar />
-            <main className="main-content">
-              <Routes>
-                <Route path="/signin" element={<SignInPage />} />
-                <Route
-                  path="/Dashboard"
-                  element={<PrivateRoute element={<Dashboard />} />}
-                />
-                <Route
-                  path="/CategoryMaster"
-                  element={<PrivateRoute element={<CategoryMaster />} />}
-                />
-                <Route
-                  path="/SubCategoryMaster"
-                  element={<PrivateRoute element={<SubCategoryMaster />} />}
-                />
-                <Route
-                  path="/inventory"
-                  element={<PrivateRoute element={<Inventory />} />}
-                />
-                <Route
-                  path="/customers"
-                  element={<PrivateRoute element={<Customers />} />}
-                />
-              </Routes>
-            </main>
-          </div>
-        </Router>
+        <HsnProvider>
+          <Router>
+            <Navbar />
+            <div className="app-container">
+              <Sidebar />
+              <main className="main-content">
+                <Routes>
+                  <Route path="/signin" element={<SignInPage />} />
+                  <Route
+                    path="/Dashboard"
+                    element={<PrivateRoute element={<Dashboard />} />}
+                  />
+                  <Route
+                    path="/CategoryMaster"
+                    element={<PrivateRoute element={<CategoryMaster />} />}
+                  />
+                  <Route
+                    path="/SubCategoryMaster"
+                    element={<PrivateRoute element={<SubCategoryMaster />} />}
+                  />
+                  <Route
+                    path="/HsnMaster"
+                    element={<PrivateRoute element={<HsnMaster />} />}
+                  />
+                  <Route
+                    path="/inventory"
+                    element={<PrivateRoute element={<Inventory />} />}
+                  />
+                  <Route
+                    path="/customers"
+                    element={<PrivateRoute element={<Customers />} />}
+                  />
+                </Routes>
+              </main>
+            </div>
+          </Router>
+        </HsnProvider>
       </SubCategoryProvider>
     </CategoryProvider>
   );

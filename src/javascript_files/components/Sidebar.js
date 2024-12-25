@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
-import mainlogo from "../css_files/Sidebar.css"; // Ensure CSS is linked properly
+import "../css_files/Sidebar.css"; // Ensure CSS is linked properly
 import logo from "./../../assets/ross-logo.png"; // Adjust the path as necessary
 
 import {
-  FaFileAlt,
   FaCogs,
   FaSignOutAlt,
   FaInfoCircle,
   FaBook,
-  FaArrowCircleRight,
-  FaDashcube,
   FaThLarge,
   FaArrowCircleDown,
 } from "react-icons/fa"; // Add appropriate icons
@@ -84,7 +81,7 @@ const Sidebar = () => {
               <a href="/SubCategoryMaster">Sub Category</a>
             </li>
             <li>
-              <a href="/hsn-master">HSN</a>
+              <a href="/HsnMaster">HSN</a>
             </li>
             <li>
               <a href="/unit-master">Unit</a>

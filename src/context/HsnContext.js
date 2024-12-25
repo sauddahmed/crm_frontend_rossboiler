@@ -1,24 +1,24 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 
 // Create the context
-const SubCategoryContext = createContext();
+const HsnContext = createContext();
 
 // Custom hook to access the context
-export const useSubCategoryContext = () => {
-  return useContext(SubCategoryContext);
+export const useHsnContext = () => {
+  return useContext(HsnContext);
 };
 
-export const SubCategoryProvider = ({ children }) => {
+export const HsnProvider = ({ children }) => {
   // State to manage the table data for the dashboard
   const [tableData, setTableData] = useState(() => {
     // Initialize state with data from localStorage, if available
-    const storedData = localStorage.getItem("subCategoryData");
+    const storedData = localStorage.getItem("hsnContext");
     return storedData ? JSON.parse(storedData) : [];
   });
 
   // Save the tableData to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem("subCategoryData", JSON.stringify(tableData));
+    localStorage.setItem("hsnContext", JSON.stringify(tableData));
   }, [tableData]);
 
   // Function to add data to the table
@@ -41,7 +41,7 @@ export const SubCategoryProvider = ({ children }) => {
   };
 
   return (
-    <SubCategoryContext.Provider
+    <HsnContext.Provider
       value={{
         tableData,
         addDataToTable,
@@ -50,6 +50,8 @@ export const SubCategoryProvider = ({ children }) => {
       }}
     >
       {children}
-    </SubCategoryContext.Provider>
+    </HsnContext.Provider>
   );
 };
+
+// export const useHsnContext = () => useContext(HsnContext);

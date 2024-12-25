@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useSubCategoryContext } from "../../../context/SubCategoryContext";
+import { useHsnContext } from "../../../context/HsnContext";
 import "./../../css_files/CategoryMaster.css"; // Import the updated CSS
 
-const SubCategoryMaster = () => {
+const HsnMaster = () => {
   const { tableData, addDataToTable, editDataInTable, deleteDataFromTable } =
-    useSubCategoryContext();
+    useHsnContext();
 
   const [formData, setFormData] = useState({
-    category: "",
+    hsnCode: "",
     description: "",
     id: "",
   });
@@ -17,7 +17,7 @@ const SubCategoryMaster = () => {
   const [filteredData, setFilteredData] = useState(tableData); // State to store filtered results
   const [nextId, setNextId] = useState(1); // State to track the next ID
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const [editingRowIndex, setEditingRowIndex] = useState(null); // Track row being edited
+  const [editingRowIndex, setEditingRowIndex] = useState(null);
   const [rowEditData, setRowEditData] = useState({}); // Store data for inline editing
 
   useEffect(() => {
@@ -46,30 +46,35 @@ const SubCategoryMaster = () => {
     addDataToTable({ ...formData, id: nextId.toString() });
     setNextId(nextId + 1);
     setFormData({
-      subCategory: "",
+      hsnCode: "",
       description: "",
       id: "",
     });
   };
 
+  //   const handleEdit = (index) => {
+  //     setEditingRowIndex(index); // Correct variable
+  //     setFormData(tableData[index]);
+  //   };
+
   const handleDelete = (index) => {
     deleteDataFromTable(index);
   };
 
+  // Handle Filter Button Click
   const handleFilter = () => {
     const newFilteredData = tableData.filter((item) => {
       if (filterType === "id") {
         return item.id.toString().includes(searchQuery);
-      } else if (filterType === "subCategory") {
-        return item.subCategory
-          .toLowerCase()
-          .includes(searchQuery.toLowerCase());
+      } else if (filterType === "hsnCode") {
+        return item.hsnCode.includes(searchQuery);
       }
       return true;
     });
     setFilteredData(newFilteredData);
   };
 
+  // Reset Filter and Show All Data
   const resetFilter = () => {
     setSearchQuery("");
     setFilterType("id");
@@ -99,8 +104,8 @@ const SubCategoryMaster = () => {
   };
 
   return (
-    <div className="subcategory-master">
-      <h1 className="page-header">SUBCATEGORY MASTER</h1>
+    <div className="hsn-master">
+      <h1 className="page-header">HSN MASTER</h1>
 
       {/* Search Section */}
       <div className="search-container">
@@ -110,11 +115,11 @@ const SubCategoryMaster = () => {
           className="search-select"
         >
           <option value="id">Search by ID</option>
-          <option value="subCategory">Search by Sub Category</option>
+          <option value="hsnCode">Search by HSN Code</option>
         </select>
         <input
           type="text"
-          placeholder={`Enter ${filterType === "id" ? "ID" : "SubCategory"}`}
+          placeholder={`Enter ${filterType === "id" ? "ID" : "HSN Code"}`}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="search-input"
@@ -137,23 +142,19 @@ const SubCategoryMaster = () => {
       {isFormVisible && (
         <form className="form-container" onSubmit={handleFormSubmit}>
           <div className="form-field">
-            <label htmlFor="subCategory" className="form-label">
-              Sub Category
+            <label htmlFor="hsnCode" className="form-label">
+              HSN Code
             </label>
-            <select
-              id="subCategory"
-              name="subCategory"
-              value={formData.subCategory}
+            <input
+              type="text"
+              id="hsnCode"
+              name="hsnCode"
+              value={formData.hsnCode}
               onChange={handleInputChange}
               required
               className="form-input"
-            >
-              <option value="">Select Category</option>
-              <option value="Sports">Sports</option>
-              <option value="Health">Health</option>
-              <option value="Technology">Technology</option>
-              <option value="Education">Education</option>
-            </select>
+              placeholder="Enter HSN Code"
+            />
           </div>
           <div className="form-field">
             <label htmlFor="description" className="form-label">
@@ -169,7 +170,7 @@ const SubCategoryMaster = () => {
             />
           </div>
           <button type="submit" className="form-button">
-            Add Category
+            {editingRowIndex !== null ? "Save Changes" : "Add Category"}
           </button>
         </form>
       )}
@@ -180,7 +181,7 @@ const SubCategoryMaster = () => {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Sub Category</th>
+              <th>HSN Code</th>
               <th>Description</th>
               <th>Actions</th>
             </tr>
@@ -189,17 +190,18 @@ const SubCategoryMaster = () => {
             {filteredData.map((data, index) => (
               <tr key={index}>
                 <td>{data.id}</td>
+
                 <td>
                   {editingRowIndex === index ? (
                     <input
                       type="text"
-                      name="subCategory"
-                      value={rowEditData.subCategory}
+                      name="hsnCode"
+                      value={rowEditData.hsnCode}
                       onChange={handleRowEditChange}
                       className="table-edit-input"
                     />
                   ) : (
-                    data.subCategory
+                    data.hsnCode
                   )}
                 </td>
                 <td>
@@ -263,4 +265,4 @@ const SubCategoryMaster = () => {
   );
 };
 
-export default SubCategoryMaster;
+export default HsnMaster;
