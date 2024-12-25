@@ -135,7 +135,7 @@ function Table() {
             <i class="fa-solid fa-trash" title="Delete"></i>
           </td>
         </tr>
-        {/* <tr>
+        <tr>
           <td>12</td>
           <td>Office Supplies</td>
           <td>Stationery, organizers, and office equipment</td>
@@ -146,7 +146,7 @@ function Table() {
             <i class="fa-solid fa-trash" title="Delete"></i>
           </td>
         </tr>
-         <tr>
+        <tr>
           <td>13</td>
           <td>Pet Supplies</td>
           <td>Food, toys, and care items for pets</td>
@@ -233,7 +233,7 @@ function Table() {
           <td>
             <i class="fa-solid fa-trash" title="Delete"></i>
           </td>
-        </tr>*/}
+        </tr>
       </tbody>
     </table>
   );
