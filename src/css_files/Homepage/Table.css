@@ -1,43 +1,62 @@
 .table {
-  min-width: 75%;
-  max-width: 98%;
-  border-collapse: collapse;
-  text-align: left;
+  width: 98%;
+  overflow-x: auto;
   margin: 2rem auto;
 }
 
-.table tbody tr td {
-  padding: 1rem;
-  border: 1px solid #109b9e;
-  word-break: break-all;
+.table table {
+  min-width: 75%;
+  max-width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  text-align: left;
 }
 
-.table thead tr th {
+.table table tbody tr td {
+  padding: 1rem;
+  border: 1px solid #109b9e;
+}
+
+.table table tbody tr td input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+}
+
+.table table thead tr th {
   background-color: #109b9e;
   color: white;
   padding: 1rem;
-  word-break: break-all;
   border: 1px solid #072b2b;
 }
 
-.table tbody tr:nth-child(even) {
+.table table tbody tr:nth-child(even) {
   background-color: whitesmoke;
 }
 
-.table tbody tr:hover {
+.table table tbody tr:hover {
   background-color: #f1f1f1;
 }
 
-.table i.fa-pen-to-square {
-  cursor: pointer;
+.table table tbody tr td i {
   font-size: 1.3rem;
-  color: darkgreen;
-  transition: color 0.3s ease;
+  cursor: pointer;
 }
 
-.table i.fa-trash {
-  cursor: pointer;
-  font-size: 1.3rem;
+.table table i.fa-floppy-disk {
+  font-size: 1.4rem;
+  color: darkgreen;
+}
+
+.table table i.fa-xmark {
+  font-size: 1.4rem;
+}
+.table table i.fa-pen-to-square {
+  color: darkgreen;
+}
+
+.table table i.fa-trash {
   color: red;
-  transition: color 0.3s ease;
 }

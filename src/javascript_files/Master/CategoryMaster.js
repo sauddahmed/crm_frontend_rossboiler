@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../css_files/Master/CategoryMaster.css";
 import AddCategoryMaster from "./AddCategoryMaster";
 import Table from "../Homepage/Table";
@@ -8,7 +8,7 @@ function CategoryMaster() {
   const [showaddcategorymaster, setshowaddcategorymaster] = useState(false);
   const [showsearchform, setshowsearchform] = useState(false);
   const tablehead = ["Category Id", "Category Name", "Description"];
-  const tabledata = [
+  const [tabledata, setTabledata] = useState([
     [1, "Electronics", "Devices and gadgets"],
     [2, "Furniture", "Home and office furniture"],
     [3, "Clothing", "Apparel and garments"],
@@ -29,7 +29,25 @@ function CategoryMaster() {
     [18, "Fitness", "Fitness equipment and accessories"],
     [19, "Gaming", "Gaming consoles and accessories"],
     [20, "Photography", "Cameras and photography tools"],
-  ];
+  ]);
+
+  function setcategorymasterdata(data) {
+    setTabledata((prev) => [
+      ...prev,
+      [prev.length + 1, data.name, data.description],
+    ]);
+  }
+
+  function handleupdate(updatedtable) {
+    setTabledata(updatedtable);
+  }
+
+  function handledelete(deleterow) {
+    setTabledata((prev) => {
+      const newarr = prev.filter((_, i) => i !== deleterow);
+      return newarr;
+    });
+  }
   return (
     <section className="category-master">
       <h1>Category Master</h1>
@@ -44,12 +62,18 @@ function CategoryMaster() {
       {showaddcategorymaster && (
         <AddCategoryMaster
           setshowaddcategorymaster={setshowaddcategorymaster}
+          setcategorymasterdata={setcategorymasterdata}
         />
       )}
       {showsearchform && (
         <SearchCategoryMaster setshowsearchform={setshowsearchform} />
       )}
-      <Table tablehead={tablehead} tabledata={tabledata} />
+      <Table
+        tablehead={tablehead}
+        tabledata={tabledata}
+        handleupdate={handleupdate}
+        handledelete={handledelete}
+      />
     </section>
   );
 }
