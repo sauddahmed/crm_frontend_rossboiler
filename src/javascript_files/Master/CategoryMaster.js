@@ -31,11 +31,14 @@ function CategoryMaster() {
     [20, "Photography", "Cameras and photography tools"],
   ]);
 
+  const [reload, setreload] = useState(0);
+
   function setcategorymasterdata(data) {
-    setTabledata((prev) => [
-      ...prev,
-      [prev.length + 1, data.name, data.description],
-    ]);
+    setTabledata((prev) => {
+      const updatedData = [...prev];
+      updatedData.push([prev.length + 1, data.name, data.description]);
+      return updatedData;
+    });
   }
 
   function handleupdate(updatedtable) {

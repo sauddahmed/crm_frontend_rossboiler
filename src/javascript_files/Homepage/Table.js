@@ -8,6 +8,10 @@ function Table({ tablehead, tabledata, handleupdate, handledelete }) {
 
   const [fetcheddata, setfetcheddata] = useState(tabledata);
 
+  useEffect(() => {
+    setfetcheddata(tabledata);
+    console.log("Hello");
+  }, [tabledata]);
   return (
     <section className="table">
       <table>
@@ -22,7 +26,7 @@ function Table({ tablehead, tabledata, handleupdate, handledelete }) {
           </tr>
         </thead>
         <tbody>
-          {tabledata.map((data, index) => (
+          {fetcheddata.map((data, index) => (
             <tr key={index}>
               {data.map((tdata, idx) => (
                 <td key={idx}>
