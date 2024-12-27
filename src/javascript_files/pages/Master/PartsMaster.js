@@ -380,7 +380,7 @@ const PartsMaster = () => {
             </select>
           </div>
           <button type="submit" className="form-button form-button-parts">
-            Add Category
+            Add
           </button>
         </form>
       )}
