@@ -16,6 +16,9 @@ import BoilerSeriesMaster from "./javascript_files/Master/BoilerSeriesMaster";
 import CourierMaster from "./javascript_files/Master/CourierMaster";
 import TechnicianMaster from "./javascript_files/Master/TechnicianMaster";
 import CustomerMaster from "./javascript_files/Master/CustomerMaster";
+import Signin from "./javascript_files/Signin/Signin";
+import Login from "./javascript_files/Signin/Login";
+import Register from "./javascript_files/Signin/Register";
 
 function App() {
   const [showsidebar, setshowsidebar] = useState(false);
@@ -25,35 +28,39 @@ function App() {
   }
   return (
     <Routes>
+      <Route path="/" element={<Signin />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Route>
       <Route
-        path="/"
+        path="/dashboard"
         element={
           <Homepage setshowsidebar={showsidebarset} showsidebar={showsidebar} />
         }
       >
-        <Route path="/" element={<Overview showsidebar={showsidebar} />} />
-        <Route path="/master/category-master" element={<CategoryMaster />} />
         <Route
-          path="/master/sub-category-master"
+          path="/dashboard"
+          element={<Overview showsidebar={showsidebar} />}
+        />
+        <Route path="master/category-master" element={<CategoryMaster />} />
+        <Route
+          path="master/sub-category-master"
           element={<SubCategoryMaster />}
         />
-        <Route path="/master/hsn-master" element={<HSNMaster />} />
-        <Route path="/master/currency-master" element={<CurrencyMaster />} />
-        <Route path="/master/unit-master" element={<UnitMaster />} />
-        <Route path="/master/packing-master" element={<PackingMaster />} />
-        <Route path="/master/gst-master" element={<GSTMaster />} />
-        <Route path="/master/parts-master" element={<PartsMaster />} />
-        <Route path="/master/boiler-master" element={<BoilerMaster />} />
+        <Route path="master/hsn-master" element={<HSNMaster />} />
+        <Route path="master/currency-master" element={<CurrencyMaster />} />
+        <Route path="master/unit-master" element={<UnitMaster />} />
+        <Route path="master/packing-master" element={<PackingMaster />} />
+        <Route path="master/gst-master" element={<GSTMaster />} />
+        <Route path="master/parts-master" element={<PartsMaster />} />
+        <Route path="master/boiler-master" element={<BoilerMaster />} />
         <Route
-          path="/master/boiler-series-master"
+          path="master/boiler-series-master"
           element={<BoilerSeriesMaster />}
         />
-        <Route path="/master/courier-master" element={<CourierMaster />} />
-        <Route
-          path="/master/technician-master"
-          element={<TechnicianMaster />}
-        />
-        <Route path="/master/customer-master" element={<CustomerMaster />} />
+        <Route path="master/courier-master" element={<CourierMaster />} />
+        <Route path="master/technician-master" element={<TechnicianMaster />} />
+        <Route path="master/customer-master" element={<CustomerMaster />} />
       </Route>
     </Routes>
   );
