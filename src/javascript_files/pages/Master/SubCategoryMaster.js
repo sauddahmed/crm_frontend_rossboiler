@@ -99,7 +99,7 @@ const SubCategoryMaster = () => {
   };
 
   return (
-    <div className="subcategory-master">
+    <div className="category-master">
       <h1 className="page-header">SUBCATEGORY MASTER</h1>
 
       {/* Search Section */}

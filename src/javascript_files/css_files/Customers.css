@@ -21,7 +21,7 @@ body {
 
 /* Main container */
 .page-container {
-  max-width: 1100px;
+  max-width: 1300px;
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
@@ -29,10 +29,18 @@ body {
 
 .category-master {
   margin-top: -1rem;
+  margin-right: 150px;
+}
+
+.currency-master {
+  margin-top: -1rem;
+  max-width: 900px;
 }
 
 /* Form container styling */
 .form-container {
+  width: 100%;
+  max-width: 90rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -45,23 +53,17 @@ body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* .toggle-form-button {
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-bottom: 20px;
-}
-
-.toggle-form-button:hover {
-  background-color: #0056b3;
-} */
-
 /* Form field styling */
 .form-field {
-  width: 41%; /* Two fields per row */
+  flex: 1;
+}
+
+.unit-field {
+  width: 27% !important; /* Two fields per row */
+}
+
+.currency-field {
+  flex: 1;
 }
 
 .form-label {
@@ -83,6 +85,12 @@ body {
   border: 1px solid #ccc;
   border-radius: 5px;
   transition: all 0.3s ease;
+}
+
+.form-input,
+.table-edit-input {
+  width: 100%; /* Prevent shrinking or growing */
+  max-width: 400px; /* Optional: Set a maximum width */
 }
 
 .form-input:focus,
@@ -110,6 +118,61 @@ body {
 
 .form-button:hover {
   background-color: #0b7a7a;
+}
+
+/* Parts Form */
+.form-container-parts {
+  width: 100%;
+  max-width: 90rem; /* Max width of the form */
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Align fields to the left */
+  gap: 10px; /* Reduce gap between fields */
+  padding: 10px; /* Reduced padding around the form */
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.parts-field {
+  min-width: auto; /* Minimum width for form fields */
+  max-width: 150px; /* Max width for each field to keep them concise */
+  width: auto; /* Allow fields to auto-size based on content */
+  margin-bottom: 0px; /* Slight margin at the bottom of each field */
+}
+
+.form-label-parts {
+  display: block;
+  margin-bottom: 4px; /* Reduced margin to make labels closer to inputs */
+  font-size: 0.8rem; /* Smaller font size for a more compact look */
+  font-weight: 600;
+  color: #555;
+}
+
+.form-input-parts {
+  width: 100%; /* Full width for inputs */
+  padding: 6px; /* Reduced padding for a tighter appearance */
+  font-size: 0.85rem; /* Slightly smaller font size */
+  background-color: #f6f6f6;
+  border: 1px solid #ccc;
+  border-radius: 4px; /* Slightly smaller border radius for a sharper look */
+  margin-top: 2px; /* Reduced margin-top to bring inputs closer to labels */
+}
+
+textarea.form-input-parts {
+  height: 30px; /* Adjusted height for textareas */
+  resize: vertical; /* Allow vertical resizing of textareas */
+}
+
+select.form-input-parts {
+  padding: 6px; /* Reduced padding inside select dropdown */
+  font-size: 0.85rem; /* Keep the font size smaller for select options */
+}
+
+.form-button-parts {
+  margin-left: 7.7rem;
+  margin-top: 1.4rem;
 }
 
 /* Search Section */
@@ -180,12 +243,20 @@ body {
 .table-wrapper {
   margin-top: 15px;
   border-radius: 8px;
-  overflow: hidden;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  max-width: 100%; /* Ensure the table doesn't exceed the container width */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table-edit-input {
+  width: 90%; /* Constrain width to fit nicely within the cell */
+  max-width: 150px; /* Prevent input from being too wide */
+  box-sizing: border-box; /* Ensure padding and border are included in width */
 }
 
 .styled-table {
   width: 100%;
+  /* table-layout: fixed; */
   border-collapse: collapse;
   background: #ffffff;
 }
@@ -200,6 +271,9 @@ body {
 .styled-table td {
   padding: 12px;
   border-bottom: 1px solid #ddd;
+  overflow: hidden; /* Hide overflow content */
+  text-overflow: ellipsis; /* Add ellipsis for text overflow */
+  white-space: nowrap; /* Prevent wrapping of content */
 }
 
 .styled-table tbody tr:nth-child(even) {
@@ -216,6 +290,53 @@ body {
 
 .styled-table th:last-child {
   text-align: center; /* Aligns content of the last cell in each row to the right */
+}
+
+/* Parts Table */
+.table-wrapper-parts {
+  max-width: 100%; /* Allow table to fit within its parent container */
+  overflow-x: auto; /* Enable horizontal scrolling for small screens */
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.styled-table-parts {
+  width: 100%; /* Table will take up the full width of the parent container */
+  border-collapse: collapse; /* Collapse table borders */
+  margin: 0 auto; /* Center the table horizontally */
+}
+
+.styled-table-parts thead {
+  background-color: #109c9e; /* Light background for the header */
+  color: #ffffff;
+}
+
+.styled-table-parts th,
+.styled-table-parts td {
+  padding: 8px; /* Add space inside cells */
+  border-bottom: 1px solid #ddd; /* Border between rows */
+  overflow: hidden; /* Hide overflow content */
+  text-overflow: ellipsis; /* Add ellipsis for text overflow */
+  white-space: nowrap; /* Prevent wrapping of content */
+  font-size: 0.85rem; /* Font size for better readability */
+}
+
+.styled-table-parts td input,
+.styled-table-parts td textarea {
+  width: 100%; /* Input fields will expand to fill available width */
+  padding: 4px; /* Add padding inside input fields */
+  font-size: 0.75rem; /* Font size for inputs */
+  border: 1px solid #ccc; /* Border for input fields */
+  border-radius: 4px; /* Rounded corners for inputs */
+}
+
+.styled-table-parts td button {
+  padding: 6px 12px; /* Button padding */
+  font-size: 0.75rem; /* Button font size */
+  border-radius: 4px; /* Rounded corners for buttons */
+  cursor: pointer; /* Cursor pointer on hover */
+  margin: 2px; /* Small margin between buttons */
 }
 
 /* Action buttons */
@@ -244,6 +365,7 @@ body {
 .action-btn.delete {
   background-color: #d90429;
   color: #fff;
+  min-width: 8rem;
 }
 
 .action-btn.edit:hover {
@@ -252,6 +374,20 @@ body {
 
 .action-btn.delete:hover {
   background-color: #ba041f;
+}
+
+/* Parts btn */
+.action-btn-parts {
+  padding: 0rem 0.5rem;
+  height: 2.1rem;
+  margin-right: 0.3rem;
+  font-size: 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  background-color: #109c9e;
+  color: #fff;
 }
 
 /* Responsive Design */
@@ -288,74 +424,46 @@ body {
   }
 }
 
-/* Responsive Design for Very Large Screens (1400px+) */
-@media (min-width: 1400px) {
-  /* Main container: Increase the width to use more space */
+/* Responsive styles for screens 1440px and above */
+@media (min-width: 1440px) {
   .page-container {
-    max-width: 1300px; /* Increase max-width */
-    padding: 40px; /* More padding for larger screens */
+    max-width: 1200px; /* Increase the container width */
   }
 
-  /* Form container: Adjust padding and spacing for large screens */
   .form-container {
-    padding: 30px;
-    gap: 25px;
+    padding: 30px; /* Increase padding for more spacing */
+    gap: 20px; /* Adjust gap for better layout */
+    height: auto; /* Allow the form to adapt to content */
   }
 
   .form-field {
-    width: 45%; /* Increase width of form fields */
+    flex: 0 0 30%; /* Make fields take 30% of the container width */
   }
 
-  /* Increase font size for form labels and inputs */
-  .form-label {
-    font-size: 16px;
-  }
-
-  .form-input,
-  .form-select {
-    font-size: 16px;
-    padding: 12px 16px;
-  }
-
-  .form-button {
-    padding: 0.75rem;
-    margin-top: 2.5rem;
-    height: 3rem;
-    font-size: 16px;
-  }
-
-  /* Search Section: Make search bar more prominent */
-  .search-container {
-    padding: 15px 20px;
-    gap: 15px;
-    padding-top: 1.5rem;
+  .unit-field {
+    width: 25%; /* Slightly reduce the width */
   }
 
   .search-select,
-  .search-input {
-    font-size: 16px;
-    padding: 12px 16px;
-  }
-
+  .search-input,
   .search-button,
   .reset-button {
-    padding: 12px 18px;
-    font-size: 16px;
+    font-size: 1rem; /* Increase font size for readability */
+    height: 2.5rem; /* Slightly taller inputs/buttons */
+    padding: 0 1.5rem; /* Adjust padding */
   }
 
-  /* Table styling: Adjust table for better display on large screens */
-  .styled-table {
-    font-size: 16px; /* Increase font size */
+  .search-container {
+    padding: 1.5rem; /* Increase padding for better spacing */
+  }
+
+  .table-wrapper {
+    margin-top: 20px; /* Add more spacing above tables */
   }
 
   .styled-table th,
   .styled-table td {
-    padding: 15px;
-  }
-
-  .action-btn {
-    font-size: 16px;
-    padding: 0.75rem 1.25rem;
+    padding: 16px; /* Increase table cell padding */
   }
 }
 

@@ -2,6 +2,7 @@
 .sidebar {
   width: 200px; /* Adjust width for a more balanced layout */
   height: 100vh; /* Full height */
+  transition: width 0.3s ease; /* Smooth transition */
   background-color: #072b2b; /* Dark green background */
   color: #c8e4e4; /* Light text color */
   position: fixed; /* Fixed position on the screen */
@@ -17,6 +18,48 @@
   user-select: none;
 }
 
+.sidebar.collapsed {
+  width: 60px; /* Reduced width when collapsed */
+}
+
+/* Adjust menu icons and text when collapsed */
+.sidebar.collapsed .sidebar-menu li a {
+  padding: 10px; /* Adjust padding for collapsed view */
+}
+
+.sidebar.collapsed .menu-icon {
+  margin-right: 0px; /* Smaller margin when collapsed */
+  width: 20px; /* Smaller icons */
+}
+
+/* Collapsed Submenu */
+.sidebar.collapsed .submenu {
+  left: 45px; /* Adjust submenu position when collapsed */
+}
+
+.sidebar.collapsed .submenu li a {
+  padding: 5px; /* Adjust submenu item padding */
+}
+
+.collapse-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  padding: 5px 10px;
+  background-color: #072b2b;
+  color: #109c9e;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  z-index: 20;
+}
+
+.collapse-btn:hover {
+  background-color: #0e4849;
+}
+
 /* Sidebar Header */
 .sidebar-header {
   height: auto;
@@ -28,6 +71,18 @@
   color: #c8e4e4;
   margin-left: 35px;
   margin-top: -15px;
+}
+
+/* Sidebar Header Styles */
+.sidebar-header img {
+  transition: width 0.3s ease; /* Smooth transition for resizing */
+  width: 100px; /* Default size */
+  height: auto;
+}
+
+/* When the sidebar is collapsed, reduce the logo size */
+.sidebar.collapsed .sidebar-header img.collapsed-logo {
+  width: 40px; /* Adjust size as needed */
 }
 
 /* Sidebar Menu */
@@ -238,7 +293,7 @@ button:hover {
   }
 
   .sidebar-bottom-section {
-    margin-top: 65vh;
+    margin-top: 63vh;
   }
 }
 

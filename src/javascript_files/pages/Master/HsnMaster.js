@@ -104,7 +104,7 @@ const HsnMaster = () => {
   };
 
   return (
-    <div className="hsn-master">
+    <div className="category-master">
       <h1 className="page-header">HSN MASTER</h1>
 
       {/* Search Section */}

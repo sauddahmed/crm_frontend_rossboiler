@@ -17,7 +17,7 @@
   display: flex;
   align-items: center;
   gap: 15px; /* Space between profile picture and name */
-  margin-left: 200px;
+  margin-left: 50px;
 }
 
 /* Profile Picture Styling */

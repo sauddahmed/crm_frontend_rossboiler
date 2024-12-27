@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
-import "../css_files/Sidebar.css"; // Ensure CSS is linked properly
-import logo from "./../../assets/ross-logo.png"; // Adjust the path as necessary
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "../css_files/Sidebar.css";
+import logo from "./../../assets/ross-logo.png";
 
 import {
   FaCogs,
@@ -10,143 +10,215 @@ import {
   FaBook,
   FaThLarge,
   FaArrowCircleDown,
-} from "react-icons/fa"; // Add appropriate icons
+} from "react-icons/fa";
 
-// Sidebar Header component
-const SidebarHeader = () => (
+// SidebarHeader for displaying the logo and header content
+const SidebarHeader = ({ isCollapsed }) => (
   <div className="sidebar-header">
-    <img src={logo} alt="Ross Logo" />
+    {/* Conditionally render the logo only when the sidebar is not collapsed */}
+    {!isCollapsed && (
+      <img src={logo} alt="Ross Logo" className="sidebar-logo" />
+    )}
   </div>
 );
 
-const Sidebar = () => {
-  const [isMasterDropdownOpen, setIsMasterDropdownOpen] = useState(false);
-  const navigate = useNavigate(); // Initialize navigate function
+const Sidebar = ({ isCollapsed, toggleSidebar }) => {
+  const [isMasterDropdownOpen, setIsMasterDropdownOpen] = React.useState(false);
+  const navigate = useNavigate();
 
-  // Open dropdown on hover
   const handleMouseEnter = () => {
     setIsMasterDropdownOpen(true);
   };
 
-  // Close dropdown when mouse leaves
   const handleMouseLeave = () => {
     setIsMasterDropdownOpen(false);
   };
 
-  const handleMainLinkClick = (e) => {
-    e.stopPropagation();
-  };
-
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("user"); // Remove user data upon logout
+    localStorage.removeItem("user");
     navigate("/signin");
   };
 
   return (
-    <aside className="sidebar">
-      {/* Sidebar Header */}
-      <SidebarHeader />
+    <aside className={`sidebar ${isCollapsed ? "collapsed" : ""}`}>
+      <SidebarHeader isCollapsed={isCollapsed} />
+      {/* Collapse button */}
+      <button onClick={toggleSidebar} className="collapse-btn">
+        {isCollapsed ? "O" : "X"}
+      </button>
 
-      {/* Sidebar Menu */}
       <ul className="sidebar-menu">
         {/* Dashboard Link */}
         <li>
           <a href="/Dashboard" className="sidebar-link">
             <FaThLarge className="menu-icon" />
-            Dashboard
+            {!isCollapsed && "Dashboard"} {/* Show text only when expanded */}
           </a>
         </li>
+
         {/* Master Dropdown */}
         <li
           className="sidebar-item"
-          onMouseEnter={handleMouseEnter} // Trigger open on hover
-          onMouseLeave={handleMouseLeave} // Trigger close when hover leaves
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
         >
           <a href="#master" className="sidebar-link">
             <FaBook className="menu-icon" />
-            Master
-            <span
-              className={`dropdown-arrow ${isMasterDropdownOpen ? "open" : ""}`}
-            >
-              <FaArrowCircleDown />
-            </span>
+            {!isCollapsed && "Master"} {/* Show text only when expanded */}
+            {/* Only show dropdown icon when not collapsed */}
+            {!isCollapsed && (
+              <span
+                className={`dropdown-arrow ${
+                  isMasterDropdownOpen ? "open" : ""
+                }`}
+              >
+                <FaArrowCircleDown />
+              </span>
+            )}
           </a>
 
           <ul className={`submenu ${isMasterDropdownOpen ? "active" : ""}`}>
             <li>
-              <a href="/CategoryMaster">Category</a>
+              <a
+                href="/CategoryMaster"
+                className={isCollapsed ? "collapsed" : ""}
+              >
+                Category
+              </a>
             </li>
             <li>
-              <a href="/SubCategoryMaster">Sub Category</a>
+              <a
+                href="/SubCategoryMaster"
+                className={isCollapsed ? "collapsed" : ""}
+              >
+                Sub Category
+              </a>
             </li>
             <li>
-              <a href="/HsnMaster">HSN</a>
+              <a href="/HsnMaster" className={isCollapsed ? "collapsed" : ""}>
+                HSN
+              </a>
             </li>
             <li>
-              <a href="/unit-master">Unit</a>
+              <a href="/UnitMaster" className={isCollapsed ? "collapsed" : ""}>
+                Unit
+              </a>
             </li>
             <li>
-              <a href="/packaging-master">Packaging</a>
+              <a
+                href="/PackagingMaster"
+                className={isCollapsed ? "collapsed" : ""}
+              >
+                Packaging
+              </a>
             </li>
             <li>
-              <a href="/currency-master">Currency</a>
+              <a
+                href="/CurrencyMaster"
+                className={isCollapsed ? "collapsed" : ""}
+              >
+                Currency
+              </a>
             </li>
             <li>
-              <a href="/customer-pricing">Customer Pricing</a>
+              <a
+                href="/CustomerPricing"
+                className={isCollapsed ? "collapsed" : ""}
+              >
+                Customer Pricing
+              </a>
             </li>
             <li>
-              <a href="/gst-master">GST</a>
+              <a href="/GstMaster" className={isCollapsed ? "collapsed" : ""}>
+                GST
+              </a>
             </li>
             <li>
-              <a href="/parts-master">Parts</a>
+              <a href="/PartsMaster" className={isCollapsed ? "collapsed" : ""}>
+                Parts
+              </a>
             </li>
             <li>
-              <a href="/boiler-master">Boiler</a>
+              <a
+                href="/BoilerMaster"
+                className={isCollapsed ? "collapsed" : ""}
+              >
+                Boiler
+              </a>
             </li>
             <li>
-              <a href="/boiler-series-master">Boiler Series</a>
+              <a
+                href="/BoilerSeriesMaster"
+                className={isCollapsed ? "collapsed" : ""}
+              >
+                Boiler Series
+              </a>
             </li>
             <li>
-              <a href="/boiler-series-parts-mapping">Parts Mapping</a>
+              <a
+                href="/BoilerSeriesPartsMapping"
+                className={isCollapsed ? "collapsed" : ""}
+              >
+                Parts Mapping
+              </a>
             </li>
             <li>
-              <a href="/courier-master">Courier</a>
+              <a
+                href="/CourierMaster"
+                className={isCollapsed ? "collapsed" : ""}
+              >
+                Courier
+              </a>
             </li>
             <li>
-              <a href="/customer-master">Customer</a>
+              <a
+                href="/CustomerMaster"
+                className={isCollapsed ? "collapsed" : ""}
+              >
+                Customer
+              </a>
             </li>
             <li>
-              <a href="/user-management">User Management</a>
+              <a
+                href="/UserManagement"
+                className={isCollapsed ? "collapsed" : ""}
+              >
+                User Management
+              </a>
             </li>
             <li>
-              <a href="/technician-master">Technician</a>
+              <a
+                href="/TechnicianMaster"
+                className={isCollapsed ? "collapsed" : ""}
+              >
+                Technician
+              </a>
             </li>
           </ul>
         </li>
 
-        {/* Settings */}
+        {/* Settings and Help Center */}
         <div className="sidebar-bottom-section">
           <li>
             <a href="/settings" className="sidebar-link">
               <FaCogs className="menu-icon" />
-              Settings
+              {!isCollapsed && "Settings"}
             </a>
           </li>
 
-          {/* Help Center */}
           <li>
             <a href="/Help Center" className="sidebar-link">
               <FaInfoCircle className="menu-icon" />
-              Help Center
+              {!isCollapsed && "Help Center"}
             </a>
           </li>
 
           {/* Logout */}
           <li>
-            <a href="/signin" className="sidebar-link">
-              <FaSignOutAlt className="menu-icon" onClick={handleLogout} />
-              Logout
+            <a href="/signin" className="sidebar-link" onClick={handleLogout}>
+              <FaSignOutAlt className="menu-icon" />
+              {!isCollapsed && "Logout"}
             </a>
           </li>
         </div>
