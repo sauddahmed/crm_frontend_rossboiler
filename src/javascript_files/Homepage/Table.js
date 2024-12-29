@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "../../css_files/Homepage/Table.css";
 
-function Table({ tablehead, tabledata, handleupdate, handledelete }) {
-  const [editable, seteditable] = useState(
-    Array.from({ length: tabledata.length }, () => false)
-  );
-
+function Table({ tablehead, tabledata }) {
   const [fetcheddata, setfetcheddata] = useState(tabledata);
+  const [editable, seteditable] = useState(
+    Array.from({ length: fetcheddata.length }, () => false)
+  );
 
   useEffect(() => {
     setfetcheddata(tabledata);
-    console.log("Hello");
   }, [tabledata]);
   return (
     <section className="table">
@@ -34,15 +32,6 @@ function Table({ tablehead, tabledata, handleupdate, handledelete }) {
                   <input
                     type={editable[index] && idx != 0 ? "text" : "hidden"}
                     value={fetcheddata[index][idx]}
-                    onChange={(e) =>
-                      setfetcheddata((prev) => {
-                        const newArr = [...prev];
-                        const rowCopy = [...newArr[index]];
-                        rowCopy[idx] = e.target.value;
-                        newArr[index] = rowCopy;
-                        return newArr;
-                      })
-                    }
                   />
                 </td>
               ))}
@@ -51,10 +40,6 @@ function Table({ tablehead, tabledata, handleupdate, handledelete }) {
                   <i
                     className="fa-solid fa-floppy-disk"
                     title="Save Changes"
-                    onClick={() => {
-                      handleupdate(fetcheddata);
-                      seteditable(false);
-                    }}
                   ></i>
                 ) : (
                   <i
@@ -88,7 +73,6 @@ function Table({ tablehead, tabledata, handleupdate, handledelete }) {
                     title="Delete"
                     onClick={() => {
                       if (window.confirm("Do You want to delete")) {
-                        handledelete(index);
                       }
                     }}
                   />

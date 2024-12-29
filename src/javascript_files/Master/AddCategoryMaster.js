@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import "../../css_files/Master/AddCategoryMaster.css";
 import CloseForm from "./CloseForm";
 
-function AddCategoryMaster({
-  setshowaddcategorymaster,
-  setcategorymasterdata,
-}) {
+function AddCategoryMaster({ setshowaddcategorymaster }) {
   const [data, setdata] = useState({
     name: "",
     description: "",
@@ -13,8 +10,6 @@ function AddCategoryMaster({
 
   function handlesubmit(e) {
     e.preventDefault();
-    setcategorymasterdata(data);
-    setshowaddcategorymaster(false);
   }
 
   return (

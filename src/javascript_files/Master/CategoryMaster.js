@@ -31,26 +31,6 @@ function CategoryMaster() {
     [20, "Photography", "Cameras and photography tools"],
   ]);
 
-  const [reload, setreload] = useState(0);
-
-  function setcategorymasterdata(data) {
-    setTabledata((prev) => {
-      const updatedData = [...prev];
-      updatedData.push([prev.length + 1, data.name, data.description]);
-      return updatedData;
-    });
-  }
-
-  function handleupdate(updatedtable) {
-    setTabledata(updatedtable);
-  }
-
-  function handledelete(deleterow) {
-    setTabledata((prev) => {
-      const newarr = prev.filter((_, i) => i !== deleterow);
-      return newarr;
-    });
-  }
   return (
     <section className="category-master">
       <h1>Category Master</h1>
@@ -65,18 +45,12 @@ function CategoryMaster() {
       {showaddcategorymaster && (
         <AddCategoryMaster
           setshowaddcategorymaster={setshowaddcategorymaster}
-          setcategorymasterdata={setcategorymasterdata}
         />
       )}
       {showsearchform && (
         <SearchCategoryMaster setshowsearchform={setshowsearchform} />
       )}
-      <Table
-        tablehead={tablehead}
-        tabledata={tabledata}
-        handleupdate={handleupdate}
-        handledelete={handledelete}
-      />
+      <Table tablehead={tablehead} tabledata={tabledata} />
     </section>
   );
 }
