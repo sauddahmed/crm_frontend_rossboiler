@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css_files/Sidebar.css";
 import logo from "./../../assets/ross-logo.png";
@@ -15,23 +15,23 @@ import {
 // SidebarHeader for displaying the logo and header content
 const SidebarHeader = ({ isCollapsed }) => (
   <div className="sidebar-header">
-    {/* Conditionally render the logo only when the sidebar is not collapsed */}
     {!isCollapsed && (
       <img src={logo} alt="Ross Logo" className="sidebar-logo" />
     )}
   </div>
 );
 
-const Sidebar = ({ isCollapsed, toggleSidebar }) => {
-  const [isMasterDropdownOpen, setIsMasterDropdownOpen] = React.useState(false);
+const Sidebar = () => {
+  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isMasterDropdownOpen, setIsMasterDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleMouseEnter = () => {
-    setIsMasterDropdownOpen(true);
+    setIsCollapsed(false); // Expand sidebar on hover
   };
 
   const handleMouseLeave = () => {
-    setIsMasterDropdownOpen(false);
+    setIsCollapsed(true); // Collapse sidebar when not hovered
   };
 
   const handleLogout = () => {
@@ -41,32 +41,29 @@ const Sidebar = ({ isCollapsed, toggleSidebar }) => {
   };
 
   return (
-    <aside className={`sidebar ${isCollapsed ? "collapsed" : ""}`}>
+    <aside
+      className={`sidebar ${isCollapsed ? "collapsed" : ""}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <SidebarHeader isCollapsed={isCollapsed} />
-      {/* Collapse button */}
-      <button onClick={toggleSidebar} className="collapse-btn">
-        {isCollapsed ? "O" : "X"}
-      </button>
 
       <ul className="sidebar-menu">
-        {/* Dashboard Link */}
         <li>
           <a href="/Dashboard" className="sidebar-link">
             <FaThLarge className="menu-icon" />
-            {!isCollapsed && "Dashboard"} {/* Show text only when expanded */}
+            {!isCollapsed && "Dashboard"}
           </a>
         </li>
 
-        {/* Master Dropdown */}
         <li
           className="sidebar-item"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          onMouseEnter={() => setIsMasterDropdownOpen(true)}
+          onMouseLeave={() => setIsMasterDropdownOpen(false)}
         >
           <a href="#master" className="sidebar-link">
             <FaBook className="menu-icon" />
-            {!isCollapsed && "Master"} {/* Show text only when expanded */}
-            {/* Only show dropdown icon when not collapsed */}
+            {!isCollapsed && "Master"}
             {!isCollapsed && (
               <span
                 className={`dropdown-arrow ${
@@ -198,7 +195,6 @@ const Sidebar = ({ isCollapsed, toggleSidebar }) => {
           </ul>
         </li>
 
-        {/* Settings and Help Center */}
         <div className="sidebar-bottom-section">
           <li>
             <a href="/settings" className="sidebar-link">
@@ -214,7 +210,6 @@ const Sidebar = ({ isCollapsed, toggleSidebar }) => {
             </a>
           </li>
 
-          {/* Logout */}
           <li>
             <a href="/signin" className="sidebar-link" onClick={handleLogout}>
               <FaSignOutAlt className="menu-icon" />
