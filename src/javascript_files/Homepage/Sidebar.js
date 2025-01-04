@@ -1,82 +1,93 @@
-import React, { useState } from "react";
+import React from "react";
 import "../../css_files/Homepage/Sidebar.css";
 import { useNavigate } from "react-router-dom";
 
 function Sidebar() {
-  const [showmenu, setshowmenu] = useState(false);
   const nav = useNavigate();
+
+  const menuItems = [
+    { path: "/dashboard", icon: "fa-solid fa-user", label: "Dashboard" },
+    {
+      path: "master/category-master",
+      icon: "fa-solid fa-tags",
+      label: "Category Master",
+    },
+    {
+      path: "master/sub-category-master",
+      icon: "fa-solid fa-sitemap",
+      label: "Sub-Category Master",
+    },
+    {
+      path: "master/hsn-master",
+      icon: "fa-solid fa-code",
+      label: "HSN Master",
+    },
+    {
+      path: "master/unit-master",
+      icon: "fa-solid fa-ruler",
+      label: "Unit Master",
+    },
+    {
+      path: "master/packing-master",
+      icon: "fa-solid fa-box",
+      label: "Packing Master",
+    },
+    {
+      path: "master/currency-master",
+      icon: "fa-solid fa-coins",
+      label: "Currency Master",
+    },
+    {
+      path: "master/gst-master",
+      icon: "fa-solid fa-file-invoice",
+      label: "GST Master",
+    },
+    {
+      path: "master/parts-master",
+      icon: "fa-solid fa-cogs",
+      label: "Parts Master",
+    },
+    {
+      path: "master/boiler-master",
+      icon: "fa-solid fa-fire",
+      label: "Boiler Master",
+    },
+    {
+      path: "master/boiler-series-master",
+      icon: "fa-solid fa-stream",
+      label: "Boiler Series Master",
+    },
+    {
+      path: "master/courier-master",
+      icon: "fa-solid fa-truck",
+      label: "Courier Master",
+    },
+    {
+      path: "master/customer-master",
+      icon: "fa-solid fa-users",
+      label: "Customer Master",
+    },
+    {
+      path: "master/technician-master",
+      icon: "fa-solid fa-tools",
+      label: "Technician Master",
+    },
+  ];
+
   return (
     <section className="sidebar">
       <div>
-        <aside>
-          <blockquote onClick={() => nav("/dashboard")}>
-            <i className="fa-solid fa-user"></i>
-            <h3>Dashboard</h3>
-          </blockquote>
-        </aside>
-        <aside>
-          <blockquote onClick={() => setshowmenu(!showmenu)}>
-            <i class="fa-solid fa-book"></i>
-            <h3>Master</h3>
-            <i
-              class={
-                showmenu ? "fa-solid fa-angle-up" : "fa-solid fa-angle-down"
-              }
-            ></i>
-          </blockquote>
-          {showmenu && (
-            <blockquote>
-              <mark onClick={() => nav("master/category-master")}>
-                <h4>Category Master</h4>
-              </mark>
-              <mark onClick={() => nav("master/sub-category-master")}>
-                <h4>Sub-Category Master</h4>
-              </mark>
-              <mark onClick={() => nav("master/hsn-master")}>
-                <h4>HSN Master</h4>
-              </mark>
-              <mark onClick={() => nav("master/unit-master")}>
-                <h4>Unit Master</h4>
-              </mark>
-              <mark onClick={() => nav("master/packing-master")}>
-                <h4>Packing Master</h4>
-              </mark>
-              <mark onClick={() => nav("master/currency-master")}>
-                <h4>Currency Master</h4>
-              </mark>
-              <mark>
-                <h4 style={{ color: "gray" }}>Customer Pricing</h4>
-              </mark>
-              <mark onClick={() => nav("master/gst-master")}>
-                <h4>GST Master</h4>
-              </mark>
-              <mark onClick={() => nav("master/parts-master")}>
-                <h4>Parts Master</h4>
-              </mark>
-              <mark onClick={() => nav("master/boiler-master")}>
-                <h4>Boiler Master</h4>
-              </mark>
-              <mark onClick={() => nav("master/boiler-series-master")}>
-                <h4>Boilder Series Master</h4>
-              </mark>
-              <mark>
-                <h4 style={{ color: "gray" }}>Boilder Series Parts Mapping</h4>
-              </mark>
-              <mark onClick={() => nav("master/courier-master")}>
-                <h4>Courier Master</h4>
-              </mark>
-              <mark onClick={() => nav("master/customer-master")}>
-                <h4>Customer Master</h4>
-              </mark>
-              <mark>
-                <h4 style={{ color: "gray" }}>User Management</h4>
-              </mark>
-              <mark onClick={() => nav("master/technician-master")}>
-                <h4>Technician Master</h4>
-              </mark>
-            </blockquote>
-          )}
-        </aside>
+        {menuItems.map((item, index) => (
+          <aside
+            key={index}
+            className="sidebar-item"
+            onClick={() => nav(item.path)}
+            title={item.label} // Tooltip for accessibility
+          >
+            <i className={item.icon}></i>
+            <span className="sidebar-text">{item.label}</span>
+          </aside>
+        ))}
       </div>
     </section>
   );

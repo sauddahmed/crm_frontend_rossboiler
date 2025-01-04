@@ -1,36 +1,46 @@
+.category-master-container {
+  background-color: #f0ebf1; /* Grey background */
+  padding: 20px;
+}
+
+/* Inner white background container */
 .category-master {
-  width: 100%;
-  text-align: center;
-  padding: 2rem 0;
+  background-color: #ffffff; /* White background */
+  padding: 20px;
+  max-width: 1200px; /* Optional: sets a max width for the content */
+  margin: 0 auto; /* Centers the inner content */
+}
+
+.category-master-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10rem;
 }
 
 .category-master h1 {
-  font-size: 2.5rem;
+  font-size: 1.3rem;
+  margin: 0;
 }
 
-.category-master-forms {
-  margin: 1rem auto;
+.category-master-buttons {
   display: flex;
-  align-items: center;
-  gap: 2rem;
-  width: fit-content;
+  gap: 0.2rem;
 }
 
-.category-master-forms button {
-  padding: 0.5rem;
+.category-master-buttons button {
+  padding: 0.5rem 1rem;
   cursor: pointer;
   font-size: 1rem;
   border: 0;
+  border-radius: 0rem;
+  color: white;
 }
 
-.category-master-forms button:nth-child(1) {
-  background-color: #072b2b;
-  color: white;
-  border-radius: 0.5rem;
+.category-master-buttons button:nth-child(1) {
+  background-color: #0089ce;
 }
 
-.category-master-forms button:nth-child(2) {
-  background-color: #109b9e;
-  color: white;
-  border-radius: 0.5rem;
+.category-master-buttons button:nth-child(2) {
+  background-color: #0089ce;
 }

@@ -11,15 +11,13 @@ function Signin() {
     sessionStorage.setItem("username", "user123");
     sessionStorage.setItem("password", "pass@123");
   }, []);
+
   return (
     <>
       <ToastContainer />
       <section className="signin">
-        <figure>
-          <img src="/images/Signin/Image 706.png" />
-        </figure>
+        <img src="/images/Image 689.png" alt="Logo" />
         <div>
-          <img src="/images/Image 689.png" />
           <Outlet />
         </div>
       </section>

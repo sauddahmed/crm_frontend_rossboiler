@@ -1,9 +1,7 @@
 import { Route, Routes } from "react-router-dom";
-import logo from "./logo.svg";
 import Homepage from "./javascript_files/Homepage/Homepage";
 import CategoryMaster from "./javascript_files/Master/CategoryMaster";
 import Overview from "./javascript_files/Homepage/Overview";
-import { useState } from "react";
 import SubCategoryMaster from "./javascript_files/Master/SubCategoryMaster";
 import HSNMaster from "./javascript_files/Master/HSNMaster";
 import CurrencyMaster from "./javascript_files/Master/CurrencyMaster";
@@ -21,27 +19,14 @@ import Login from "./javascript_files/Signin/Login";
 import Register from "./javascript_files/Signin/Register";
 
 function App() {
-  const [showsidebar, setshowsidebar] = useState(false);
-
-  function showsidebarset(showsidebar) {
-    setshowsidebar(showsidebar);
-  }
   return (
     <Routes>
       <Route path="/" element={<Signin />}>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Route>
-      <Route
-        path="/dashboard"
-        element={
-          <Homepage setshowsidebar={showsidebarset} showsidebar={showsidebar} />
-        }
-      >
-        <Route
-          path="/dashboard"
-          element={<Overview showsidebar={showsidebar} />}
-        />
+      <Route path="/dashboard" element={<Homepage />}>
+        <Route path="/dashboard" element={<Overview />} />
         <Route path="master/category-master" element={<CategoryMaster />} />
         <Route
           path="master/sub-category-master"

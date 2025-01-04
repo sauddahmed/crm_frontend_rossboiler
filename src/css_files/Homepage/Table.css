@@ -15,7 +15,8 @@
 
 .table table tbody tr td {
   padding: 1rem;
-  border: 1px solid #109b9e;
+  border-bottom: 1px solid #072b2b;
+  border-top: 1px solid #072b2b;
 }
 
 .table table tbody tr td input {
@@ -26,14 +27,15 @@
 }
 
 .table table thead tr th {
-  background-color: #109b9e;
-  color: white;
+  /* background-color: #109b9e; */
+  color: black;
   padding: 1rem;
-  border: 1px solid #072b2b;
+  border-bottom: 1px solid #072b2b;
+  border-top: 1px solid #072b2b;
 }
 
 .table table tbody tr:nth-child(even) {
-  background-color: whitesmoke;
+  /* background-color: whitesmoke; */
 }
 
 .table table tbody tr:hover {

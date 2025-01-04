@@ -1,67 +1,59 @@
 .navbar {
-  background-color: whitesmoke;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 0.5rem;
-  gap: 1rem;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+  font-family: Arial, sans-serif;
 }
 
 #navbar-logo {
-  width: 150px;
-  height: 75px;
-  mix-blend-mode: multiply;
+  height: 40px;
 }
 
-.navbar aside {
+.company-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-left: 0.5rem;
+  color: #333;
+}
+
+.navbar-left {
   display: flex;
   align-items: center;
-  gap: 2rem;
 }
 
-.navbar aside blockquote {
+.navbar-right {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
+  gap: 1.5rem; /* Increase spacing between icons */
 }
 
-.navbar aside blockquote i {
-  font-size: 1.5rem;
-}
-
-.navbar aside blockquote h3:hover {
-  text-decoration: underline;
-}
-
-.navbar-profile {
-  width: 70px;
-  height: 70px;
-}
-
-.navbar-profile img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-}
-
-.navbar figure button {
-  background-color: transparent;
-  cursor: pointer;
+.navbar-icon {
+  display: flex;
+  flex-direction: column; /* Stack icon and text vertically */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: none;
   border: none;
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
-.navbar figure button:hover {
-  transform: scale(1.2);
-  background-color: whitesmoke;
+.navbar-icon:hover {
+  color: #007bff;
 }
 
-.navbar button i {
-  font-size: 2.5rem;
+.navbar-icon i {
+  font-size: 1.1rem;
+  margin-bottom: 0.4rem; /* Add spacing below the icon */
 }
 
-.navbar figure {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+.navbar-icon span {
+  font-size: 0.7rem;
+  font-weight: 550;
 }

@@ -19,8 +19,9 @@ function Table({ tablehead, tabledata }) {
               <th key={index}>{head}</th>
             ))}
 
-            <th></th>
-            <th></th>
+            <th colSpan={2} align="center">
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody>

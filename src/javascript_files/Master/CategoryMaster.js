@@ -32,25 +32,26 @@ function CategoryMaster() {
   ]);
 
   return (
-    <section className="category-master">
-      <h1>Category Master</h1>
-      <blockquote className="category-master-forms">
-        <button onClick={() => setshowaddcategorymaster(true)}>
-          Add Category Master
-        </button>
-        <button onClick={() => setshowsearchform(true)}>
-          Search Category Master
-        </button>
-      </blockquote>
-      {showaddcategorymaster && (
-        <AddCategoryMaster
-          setshowaddcategorymaster={setshowaddcategorymaster}
-        />
-      )}
-      {showsearchform && (
-        <SearchCategoryMaster setshowsearchform={setshowsearchform} />
-      )}
-      <Table tablehead={tablehead} tabledata={tabledata} />
+    <section className="category-master-container">
+      {" "}
+      <div className="category-master">
+        <div className="category-master-header">
+          <h1>Category Master</h1>
+          <div className="category-master-buttons">
+            <button onClick={() => setshowaddcategorymaster(true)}>Add</button>
+            <button onClick={() => setshowsearchform(true)}>Search</button>
+          </div>
+        </div>
+        {showaddcategorymaster && (
+          <AddCategoryMaster
+            setshowaddcategorymaster={setshowaddcategorymaster}
+          />
+        )}
+        {showsearchform && (
+          <SearchCategoryMaster setshowsearchform={setshowsearchform} />
+        )}
+        <Table tablehead={tablehead} tabledata={tabledata} />
+      </div>
     </section>
   );
 }

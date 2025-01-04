@@ -1,56 +1,47 @@
 import React from "react";
 import "../../css_files/Homepage/Navbar.css";
 
-function Navbar({ setshowsidebar, showsidebar }) {
+function Navbar() {
   return (
-    <>
-      <nav className="navbar">
-        <figure>
-          <button
-            onClick={() => {
-              if (showsidebar) {
-                setshowsidebar(false);
-              } else {
-                setshowsidebar(true);
-              }
-            }}
-          >
-            <i class="fa-solid fa-bars"></i>
-          </button>
-          <img src="/images/Image 689.png" id="navbar-logo" />
-        </figure>
-        <aside>
-          <blockquote>
-            <i
-              className="fa-solid fa-info-circle"
-              title={showsidebar && "About Us"}
-            />
-            {showsidebar === false && <h3>About Us</h3>}
-          </blockquote>
-          <blockquote>
-            <i
-              className="fa-solid fa-user"
-              title={showsidebar && "Contact Us"}
-            />
-            {showsidebar === false && <h3>Contact Us</h3>}
-          </blockquote>
-          <blockquote>
-            <i class="fa-solid fa-gear" title={showsidebar && "Settings"}></i>
-            {showsidebar === false && <h3>Settings</h3>}
-          </blockquote>
-          <blockquote>
-            <i
-              class="fa-solid fa-bell"
-              title={showsidebar && "Notifications"}
-            ></i>
-            {showsidebar === false && <h3>Notifications</h3>}
-          </blockquote>
-          <figure className="navbar-profile">
-            <img src="/images/profile_image.png" />
-          </figure>
-        </aside>
-      </nav>
-    </>
+    <nav className="navbar">
+      {/* Left Section: Logo */}
+      <div className="navbar-left">
+        <img src="/images/image 689.png" alt="Company Logo" id="navbar-logo" />
+        <span className="company-name">Ross Boilers</span>
+      </div>
+
+      {/* Right Section: Navigation Icons */}
+      <div className="navbar-right">
+        <button className="navbar-icon">
+          <i className="fa-solid fa-home"></i>
+          <span>Dashboard</span>
+        </button>
+        <button className="navbar-icon">
+          <i className="fa-solid fa-envelope"></i>
+          <span>INQUIRIES</span>
+        </button>
+        <button className="navbar-icon">
+          <i className="fa-solid fa-building"></i>
+          <span>Companies</span>
+        </button>
+        <button className="navbar-icon">
+          <i className="fa-solid fa-box"></i>
+          <span>Products</span>
+        </button>
+        <button className="navbar-icon">
+          <i className="fa-solid fa-truck"></i>
+          <span>Vendors</span>
+        </button>
+        <button className="navbar-icon">
+          <i className="fa-solid fa-user"></i>
+          <span>Users</span>
+        </button>
+        <button className="navbar-icon">
+          <i className="fa-solid fa-users"></i>
+          <span>Dealers</span>
+        </button>
+      </div>
+    </nav>
   );
 }
 
