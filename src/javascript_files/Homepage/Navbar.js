@@ -6,7 +6,7 @@ function Navbar() {
     <nav className="navbar">
       {/* Left Section: Logo */}
       <div className="navbar-left">
-        <img src="/images/image 689.png" alt="Company Logo" id="navbar-logo" />
+        <img src="/images/image689.png" alt="Company Logo" id="navbar-logo" />
         <span className="company-name">Ross Boilers</span>
       </div>
 

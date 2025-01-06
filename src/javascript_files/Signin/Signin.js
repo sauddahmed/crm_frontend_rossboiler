@@ -16,7 +16,7 @@ function Signin() {
     <>
       <ToastContainer />
       <section className="signin">
-        <img src="/images/Image 689.png" alt="Logo" />
+        <img src="/images/Image689.png" alt="Logo" />
         <div>
           <Outlet />
         </div>
