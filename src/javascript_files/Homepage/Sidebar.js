@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../css_files/Homepage/Sidebar.css";
 import { useNavigate } from "react-router-dom";
 
 function Sidebar() {
   const nav = useNavigate();
+  const [isMasterOpen, setIsMasterOpen] = useState(false);
 
-  const menuItems = [
-    { path: "/dashboard", icon: "fa-solid fa-user", label: "Dashboard" },
+  const toggleMasterDropdown = () => setIsMasterOpen(!isMasterOpen);
+
+  const masterItems = [
     {
       path: "master/category-master",
       icon: "fa-solid fa-tags",
@@ -25,7 +27,7 @@ function Sidebar() {
     {
       path: "master/unit-master",
       icon: "fa-solid fa-ruler",
-      label: "Unit Master",
+      label: "Unit\nMaster",
     },
     {
       path: "master/packing-master",
@@ -34,7 +36,7 @@ function Sidebar() {
     },
     {
       path: "master/currency-master",
-      icon: "fa-solid fa-coins",
+      icon: "fa-solid fa-dollar-sign",
       label: "Currency Master",
     },
     {
@@ -54,7 +56,7 @@ function Sidebar() {
     },
     {
       path: "master/boiler-series-master",
-      icon: "fa-solid fa-stream",
+      icon: "fa-solid fa-file-invoice",
       label: "Boiler Series Master",
     },
     {
@@ -77,17 +79,54 @@ function Sidebar() {
   return (
     <section className="sidebar">
       <div>
-        {menuItems.map((item, index) => (
-          <aside
-            key={index}
-            className="sidebar-item"
-            onClick={() => nav(item.path)}
-            title={item.label} // Tooltip for accessibility
-          >
-            <i className={item.icon}></i>
-            <span className="sidebar-text">{item.label}</span>
-          </aside>
-        ))}
+        <aside
+          className="sidebar-item"
+          onClick={() => nav("/dashboard")}
+          title="Dashboard"
+        >
+          <i className="fa-solid fa-chart-pie"></i>
+          <span className="sidebar-text">Dashboard</span>
+        </aside>
+
+        {/* Master Dropdown */}
+        <aside
+          className="sidebar-item"
+          onClick={toggleMasterDropdown}
+          title="Master"
+        >
+          <i
+            className={`fa-solid ${
+              isMasterOpen ? "fa-folder-open" : "fa-folder"
+            }`}
+          ></i>
+          <span className="sidebar-text">Master</span>
+        </aside>
+
+        {isMasterOpen && (
+          <div className="dropdown-menu">
+            {masterItems.map((item, index) => (
+              <aside
+                key={index}
+                className="dropdown-item"
+                onClick={() => nav(item.path)}
+                title={item.label}
+              >
+                <i className={item.icon}></i>
+                <span className="dropdown-text">{item.label}</span>
+              </aside>
+            ))}
+          </div>
+        )}
+
+        {/* Settings Button */}
+        <aside
+          className="sidebar-item"
+          onClick={() => nav("/settings")}
+          title="Settings"
+        >
+          <i className="fa-solid fa-cog"></i>
+          <span className="sidebar-text">Settings</span>
+        </aside>
       </div>
     </section>
   );

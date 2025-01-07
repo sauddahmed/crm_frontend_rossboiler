@@ -13,7 +13,7 @@ function Navbar() {
       {/* Right Section: Navigation Icons */}
       <div className="navbar-right">
         <button className="navbar-icon">
-          <i className="fa-solid fa-home"></i>
+          <i className="fa-solid fa-chart-pie"></i>
           <span>Dashboard</span>
         </button>
         <button className="navbar-icon">
