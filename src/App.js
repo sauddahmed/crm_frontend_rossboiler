@@ -11,9 +11,11 @@ import GSTMaster from "./javascript_files/Master/GSTMaster";
 import PartsMaster from "./javascript_files/Master/PartsMaster";
 import BoilerMaster from "./javascript_files/Master/BoilerMaster";
 import BoilerSeriesMaster from "./javascript_files/Master/BoilerSeriesMaster";
+import BoilerSeriesMappingMaster from "./javascript_files/Master/BoilerSeriesMappingMaster";
 import CourierMaster from "./javascript_files/Master/CourierMaster";
 import TechnicianMaster from "./javascript_files/Master/TechnicianMaster";
 import CustomerMaster from "./javascript_files/Master/CustomerMaster";
+import CustomerPricing from "./javascript_files/Master/CustomerPricing";
 import Signin from "./javascript_files/Signin/Signin";
 import Login from "./javascript_files/Signin/Login";
 import Register from "./javascript_files/Signin/Register";
@@ -44,9 +46,14 @@ function App() {
           path="master/boiler-series-master"
           element={<BoilerSeriesMaster />}
         />
+        <Route
+          path="master/boiler-series-mapping-master"
+          element={<BoilerSeriesMappingMaster />}
+        />
         <Route path="master/courier-master" element={<CourierMaster />} />
         <Route path="master/technician-master" element={<TechnicianMaster />} />
         <Route path="master/customer-master" element={<CustomerMaster />} />
+        <Route path="master/customer-pricing" element={<CustomerPricing />} />
       </Route>
     </Routes>
   );

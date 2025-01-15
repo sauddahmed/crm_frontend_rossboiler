@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../css_files/Master/CategoryMaster.css";
-import AddCategoryMaster from "./AddCategoryMaster";
 import Table from "../Homepage/Table";
-import SearchCategoryMaster from "./SearchCategoryMaster";
 
 function CategoryMaster() {
-  const [showaddcategorymaster, setshowaddcategorymaster] = useState(false);
-  const [showsearchform, setshowsearchform] = useState(false);
-  const tablehead = ["Category Id", "Category Name", "Description"];
-  const [tabledata, setTabledata] = useState([
+  const [showAddForm, setShowAddForm] = useState(false); // State to show/hide Add form
+  const [searchQuery, setSearchQuery] = useState(""); // State for search input
+  const [filterType, setFilterType] = useState("id"); // State for filter type (ID/Category)
+  const [tableData, setTableData] = useState([
     [1, "Electronics", "Devices and gadgets"],
     [2, "Furniture", "Home and office furniture"],
     [3, "Clothing", "Apparel and garments"],
@@ -30,27 +28,128 @@ function CategoryMaster() {
     [19, "Gaming", "Gaming consoles and accessories"],
     [20, "Photography", "Cameras and photography tools"],
   ]);
+  const [filteredData, setFilteredData] = useState(tableData); // State for filtered table data
+  const [newCategory, setNewCategory] = useState({
+    category: "",
+    description: "",
+  }); // State for the new category input fields
+
+  // Effect to initialize filteredData
+  useEffect(() => {
+    setFilteredData(tableData);
+  }, [tableData]);
+
+  // Handle form input change
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewCategory((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Add new category
+  const handleAddCategory = (e) => {
+    e.preventDefault();
+    if (!newCategory.category || !newCategory.description) {
+      alert("All fields are required!");
+      return;
+    }
+    setTableData((prev) => [
+      ...prev,
+      [prev.length + 1, newCategory.category, newCategory.description],
+    ]);
+    setNewCategory({ category: "", description: "" }); // Reset form
+    setShowAddForm(false); // Hide the form after adding
+  };
+
+  // Handle search filter
+  const handleFilter = () => {
+    const lowerCaseQuery = searchQuery.toLowerCase();
+    const newFilteredData = tableData.filter((row) => {
+      if (filterType === "id") {
+        return row[0].toString().includes(lowerCaseQuery);
+      } else if (filterType === "category") {
+        return row[1].toLowerCase().includes(lowerCaseQuery);
+      }
+      return true;
+    });
+    setFilteredData(newFilteredData);
+  };
+
+  // Reset filter
+  const resetFilter = () => {
+    setSearchQuery("");
+    setFilteredData(tableData);
+  };
 
   return (
     <section className="category-master-container">
-      {" "}
       <div className="category-master">
-        <div className="category-master-header">
-          <h1>Category Master</h1>
-          <div className="category-master-buttons">
-            <button onClick={() => setshowaddcategorymaster(true)}>Add</button>
-            <button onClick={() => setshowsearchform(true)}>Search</button>
-          </div>
-        </div>
-        {showaddcategorymaster && (
-          <AddCategoryMaster
-            setshowaddcategorymaster={setshowaddcategorymaster}
+        <h1 className="category-master-title">CATEGORY MASTER</h1>
+
+        {/* Search Section */}
+        <div className="search-container">
+          <select
+            value={filterType}
+            onChange={(e) => setFilterType(e.target.value)}
+            className="search-select"
+          >
+            <option value="id">Search by ID</option>
+            <option value="category">Search by Category</option>
+          </select>
+          <input
+            type="text"
+            placeholder={`Search by ${filterType === "id" ? "ID" : "Category"}`}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-input"
           />
+          <button onClick={handleFilter} className="filter-button">
+            Filter
+          </button>
+          <button onClick={resetFilter} className="reset-button">
+            Reset
+          </button>
+          <button
+            onClick={() => setShowAddForm((prev) => !prev)}
+            className="add-button"
+          >
+            {showAddForm ? "Hide" : "Add"}
+          </button>
+        </div>
+
+        {/* Add Form */}
+        {showAddForm && (
+          <form onSubmit={handleAddCategory} className="add-category-form">
+            <div className="form-row">
+              <label>Category:</label>
+              <input
+                type="text"
+                name="category"
+                value={newCategory.category}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className="form-row">
+              <label>Description:</label>
+              <input
+                type="text"
+                name="description"
+                value={newCategory.description}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <button type="submit" className="add-category-button">
+              Add
+            </button>
+          </form>
         )}
-        {showsearchform && (
-          <SearchCategoryMaster setshowsearchform={setshowsearchform} />
-        )}
-        <Table tablehead={tablehead} tabledata={tabledata} />
+
+        {/* Table */}
+        <Table
+          tablehead={["Category Id", "Category Name", "Description"]}
+          tabledata={filteredData}
+        />
       </div>
     </section>
   );

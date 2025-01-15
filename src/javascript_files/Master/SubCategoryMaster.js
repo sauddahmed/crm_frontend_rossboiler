@@ -1,56 +1,193 @@
 import React, { useState } from "react";
 import "../../css_files/Master/SubCategoryMaster.css";
-import AddSubCategoryMaster from "./AddSubCategoryMaster";
-import SearchSubCategoryMaster from "./SearchSubCategoryMaster";
 import Table from "../Homepage/Table";
 
 function SubCategoryMaster() {
-  const [showaddform, setshowaddform] = useState(false);
-  const [showsearchform, setshowsearchform] = useState(false);
-  const tablehead = ["Sub-Category Id", "Sub-Category Name", "Description"];
-  const tabledata = [
-    [1, "Laptops", "Portable personal computers"],
-    [2, "Smartphones", "Mobile phones with advanced features"],
-    [3, "Chairs", "Seating furniture for various purposes"],
-    [4, "Tables", "Furniture for dining or work"],
-    [5, "Men's Clothing", "Apparel for men"],
-    [6, "Women's Clothing", "Apparel for women"],
-    [7, "Fiction Books", "Novels and stories"],
-    [8, "Non-fiction Books", "Educational and informational books"],
-    [9, "Board Games", "Games for multiple players"],
-    [10, "Video Games", "Games for electronic devices"],
-    [11, "Skincare", "Products for healthy skin"],
-    [12, "Haircare", "Products for hair maintenance"],
-    [13, "Cookware", "Utensils for cooking"],
-    [14, "Bakeware", "Utensils for baking"],
-    [15, "Gardening Tools", "Equipment for gardening tasks"],
-    [16, "Plant Seeds", "Seeds for planting various crops"],
-    [17, "Car Accessories", "Add-ons for vehicles"],
-    [18, "Bike Accessories", "Add-ons for bikes"],
-    [19, "Watches", "Wearable timekeeping devices"],
-    [20, "Cameras", "Devices for capturing photographs"],
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterType, setFilterType] = useState("id");
+  const [newSubCategory, setNewSubCategory] = useState({
+    category: "",
+    subCategory: "",
+    description: "",
+  });
+
+  const categories = [
+    "Electronics",
+    "Home Furniture",
+    "Apparel",
+    "Books",
+    "Toys & Games",
+    "Personal Care",
+    "Kitchen",
+    "Garden",
+    "Automotive",
+    "Fashion",
+    "Photography",
   ];
+
+  const tableData = [
+    [1, "Electronics", "Laptops", "Portable personal computers"],
+    [2, "Electronics", "Smartphones", "Mobile phones with advanced features"],
+    [3, "Home Furniture", "Chairs", "Seating furniture for various purposes"],
+    [4, "Home Furniture", "Tables", "Furniture for dining or work"],
+    [5, "Apparel", "Men's Clothing", "Apparel for men"],
+    [6, "Apparel", "Women's Clothing", "Apparel for women"],
+    [7, "Books", "Fiction Books", "Novels and stories"],
+    [8, "Books", "Non-fiction Books", "Educational and informational books"],
+    [9, "Toys & Games", "Board Games", "Games for multiple players"],
+    [10, "Toys & Games", "Video Games", "Games for electronic devices"],
+    [11, "Personal Care", "Skincare", "Products for healthy skin"],
+    [12, "Personal Care", "Haircare", "Products for hair maintenance"],
+    [13, "Kitchen", "Cookware", "Utensils for cooking"],
+    [14, "Kitchen", "Bakeware", "Utensils for baking"],
+    [15, "Garden", "Gardening Tools", "Equipment for gardening tasks"],
+    [16, "Garden", "Plant Seeds", "Seeds for planting various crops"],
+    [17, "Automotive", "Car Accessories", "Add-ons for vehicles"],
+    [18, "Automotive", "Bike Accessories", "Add-ons for bikes"],
+    [19, "Fashion", "Watches", "Wearable timekeeping devices"],
+    [20, "Photography", "Cameras", "Devices for capturing photographs"],
+  ];
+
+  // Handle search filter
+  const handleFilter = () => {
+    const lowerCaseQuery = searchQuery.toLowerCase();
+    const filteredData = tableData.filter((row) => {
+      if (filterType === "id") {
+        return row[0].toString().includes(lowerCaseQuery);
+      } else if (filterType === "subCategory") {
+        return row[2].toLowerCase().includes(lowerCaseQuery);
+      }
+      return true;
+    });
+    return filteredData;
+  };
+
+  const filteredData = handleFilter();
+
+  // Reset filter
+  const resetFilter = () => {
+    setSearchQuery("");
+  };
+
+  // Handle input change
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewSubCategory((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Handle add form submission
+  const handleAddSubCategory = (e) => {
+    e.preventDefault();
+    if (
+      !newSubCategory.category ||
+      !newSubCategory.subCategory ||
+      !newSubCategory.description
+    ) {
+      alert("All fields are required!");
+      return;
+    }
+    // Add new sub-category logic (e.g., updating state or sending to backend)
+    console.log("New Sub-Category: ", newSubCategory);
+    setNewSubCategory({ category: "", subCategory: "", description: "" });
+    setShowAddForm(false);
+  };
+
   return (
-    <>
-      <section className="sub-category-master">
-        <h1>Sub Category Master</h1>
-        <blockquote className="sub-category-master-forms">
-          <button onClick={() => setshowaddform(true)}>
-            Add Sub-Category Master
+    <section className="category-master-container">
+      <div className="category-master">
+        <h1 className="category-master-title">SUB-CATEGORY MASTER</h1>
+
+        {/* Search Section */}
+        <div className="search-container">
+          <select
+            value={filterType}
+            onChange={(e) => setFilterType(e.target.value)}
+            className="search-select"
+          >
+            <option value="id">Search by ID</option>
+            <option value="subCategory">Search by Sub-Category</option>
+          </select>
+          <input
+            type="text"
+            placeholder={`Search by ${
+              filterType === "id" ? "ID" : "Sub-Category"
+            }`}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-input"
+          />
+          <button onClick={handleFilter} className="filter-button">
+            Filter
           </button>
-          <button onClick={() => setshowsearchform(true)}>
-            Search Sub-Category Master
+          <button onClick={resetFilter} className="reset-button">
+            Reset
           </button>
-        </blockquote>
-        {showaddform && (
-          <AddSubCategoryMaster setshowaddform={setshowaddform} />
+          <button
+            onClick={() => setShowAddForm((prev) => !prev)}
+            className="add-button"
+          >
+            {showAddForm ? "Hide" : "Add"}
+          </button>
+        </div>
+
+        {/* Add Form */}
+        {showAddForm && (
+          <form className="add-category-form" onSubmit={handleAddSubCategory}>
+            <div className="form-row">
+              <label>Category:</label>
+              <select
+                name="category"
+                value={newSubCategory.category}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="">Select Category</option>
+                {categories.map((category, index) => (
+                  <option key={index} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-row">
+              <label>Sub-Category Name:</label>
+              <input
+                type="text"
+                name="subCategory"
+                value={newSubCategory.subCategory}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className="form-row">
+              <label>Description:</label>
+              <input
+                type="text"
+                name="description"
+                value={newSubCategory.description}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <button type="submit" className="add-category-button">
+              Add
+            </button>
+          </form>
         )}
-        {showsearchform && (
-          <SearchSubCategoryMaster setshowsearchform={setshowsearchform} />
-        )}
-        <Table tablehead={tablehead} tabledata={tabledata} />
-      </section>
-    </>
+
+        {/* Table */}
+        <Table
+          tablehead={[
+            "Sub-Category Id",
+            "Category",
+            "Sub-Category Name",
+            "Description",
+          ]}
+          tabledata={filteredData}
+        />
+      </div>
+    </section>
   );
 }
 

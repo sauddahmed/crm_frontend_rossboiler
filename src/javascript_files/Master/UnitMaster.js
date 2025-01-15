@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 import "../../css_files/Master/UnitMaster.css";
 import Table from "../Homepage/Table";
-import AddUnitMaster from "./AddUnitMaster";
-import SearchUnitMaster from "./SearchUnitMaster";
 
 function UnitMaster() {
-  const [showaddform, setshowaddform] = useState(false);
-  const [showsearchform, setshowsearchform] = useState(false);
-  const tablehead = ["Unit Id", "Unit Name", "Unit Code", "Description"];
-
-  const tabledata = [
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterType, setFilterType] = useState("id");
+  const [tableData, setTableData] = useState([
     [1, "Kilogram", "KG", "Measurement of mass"],
     [2, "Meter", "M", "Measurement of length"],
     [3, "Liter", "L", "Measurement of volume"],
@@ -30,25 +27,135 @@ function UnitMaster() {
     [18, "Second", "SEC", "Very small unit of time"],
     [19, "Barrel", "BBL", "Unit of volume for liquids"],
     [20, "Carton", "CTN", "Box used for packaging"],
-  ];
+  ]);
+  const [filteredData, setFilteredData] = useState(tableData);
+  const [newUnit, setNewUnit] = useState({
+    name: "",
+    code: "",
+    description: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewUnit((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleAddUnit = (e) => {
+    e.preventDefault();
+    if (!newUnit.name || !newUnit.code || !newUnit.description) {
+      alert("All fields are required!");
+      return;
+    }
+    setTableData((prev) => [
+      ...prev,
+      [prev.length + 1, newUnit.name, newUnit.code, newUnit.description],
+    ]);
+    setNewUnit({ name: "", code: "", description: "" });
+    setShowAddForm(false);
+  };
+
+  const handleFilter = () => {
+    const lowerCaseQuery = searchQuery.toLowerCase();
+    const newFilteredData = tableData.filter((row) => {
+      if (filterType === "id") {
+        return row[0].toString().includes(lowerCaseQuery);
+      } else if (filterType === "name") {
+        return row[1].toLowerCase().includes(lowerCaseQuery);
+      }
+      return true;
+    });
+    setFilteredData(newFilteredData);
+  };
+
+  const resetFilter = () => {
+    setSearchQuery("");
+    setFilteredData(tableData);
+  };
 
   return (
-    <>
-      <section className="unit-master">
-        <h1>Unit Master</h1>
-        <blockquote className="unit-master-forms">
-          <button onClick={() => setshowaddform(true)}>Add Unit Master</button>
-          <button onClick={() => setshowsearchform(true)}>
-            Search Unit Master
+    <section className="category-master-container">
+      <div className="category-master">
+        <h1 className="category-master-title">UNIT MASTER</h1>
+
+        {/* Search Section */}
+        <div className="search-container">
+          <select
+            value={filterType}
+            onChange={(e) => setFilterType(e.target.value)}
+            className="search-select"
+          >
+            <option value="id">Search by ID</option>
+            <option value="name">Search by Name</option>
+          </select>
+          <input
+            type="text"
+            placeholder={`Search by ${filterType === "id" ? "ID" : "Name"}`}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-input"
+          />
+          <button onClick={handleFilter} className="filter-button">
+            Filter
           </button>
-        </blockquote>
-        {showaddform && <AddUnitMaster setshowaddform={setshowaddform} />}
-        {showsearchform && (
-          <SearchUnitMaster setshowsearchform={setshowsearchform} />
+          <button onClick={resetFilter} className="reset-button">
+            Reset
+          </button>
+          <button
+            onClick={() => setShowAddForm((prev) => !prev)}
+            className="add-button"
+          >
+            {showAddForm ? "Hide" : "Add"}
+          </button>
+        </div>
+
+        {/* Add Form */}
+        {showAddForm && (
+          <form onSubmit={handleAddUnit} className="add-category-form">
+            <div className="form-row">
+              <div className="form-field">
+                <label>Unit Name:</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={newUnit.name}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-field">
+                <label>Unit Code:</label>
+                <input
+                  type="text"
+                  name="code"
+                  value={newUnit.code}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-field">
+                <label>Description:</label>
+                <input
+                  type="text"
+                  name="description"
+                  value={newUnit.description}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+            </div>
+            <button type="submit" className="add-category-button">
+              Add
+            </button>
+          </form>
         )}
-        <Table tablehead={tablehead} tabledata={tabledata} />
-      </section>
-    </>
+
+        {/* Table */}
+        <Table
+          tablehead={["Unit Id", "Unit Name", "Unit Code", "Description"]}
+          tabledata={filteredData}
+        />
+      </div>
+    </section>
   );
 }
 

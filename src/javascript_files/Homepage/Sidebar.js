@@ -60,6 +60,11 @@ function Sidebar() {
       label: "Boiler Series Master",
     },
     {
+      path: "master/boiler-series-mapping-master",
+      icon: "fa-solid fa-map",
+      label: "Boiler Series Mapping Master",
+    },
+    {
       path: "master/courier-master",
       icon: "fa-solid fa-truck",
       label: "Courier Master",
@@ -68,6 +73,11 @@ function Sidebar() {
       path: "master/customer-master",
       icon: "fa-solid fa-users",
       label: "Customer Master",
+    },
+    {
+      path: "master/customer-pricing",
+      icon: "fa-solid fa-money-bill",
+      label: "Customer Pricing",
     },
     {
       path: "master/technician-master",

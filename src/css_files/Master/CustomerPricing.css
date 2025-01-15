@@ -1,14 +1,14 @@
-.sub-category-master {
-  width: 50%;
+.customer-master {
+  width: 100%;
   text-align: center;
   padding: 2rem 0;
 }
 
-.sub-category-master h1 {
+.customer-master h1 {
   font-size: 2.5rem;
 }
 
-.sub-category-master-forms {
+.customer-master-forms {
   margin: 1rem auto;
   display: flex;
   align-items: center;
@@ -16,20 +16,20 @@
   width: fit-content;
 }
 
-.sub-category-master-forms button {
+.customer-master-forms button {
   padding: 0.5rem;
   cursor: pointer;
   font-size: 1rem;
   border: 0;
 }
 
-.sub-category-master-forms button:nth-child(1) {
+.customer-master-forms button:nth-child(1) {
   background-color: #072b2b;
   color: white;
   border-radius: 0.5rem;
 }
 
-.sub-category-master-forms button:nth-child(2) {
+.customer-master-forms button:nth-child(2) {
   background-color: #109b9e;
   color: white;
   border-radius: 0.5rem;
