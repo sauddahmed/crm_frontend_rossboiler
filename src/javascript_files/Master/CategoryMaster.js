@@ -34,6 +34,22 @@ function CategoryMaster() {
     description: "",
   }); // State for the new category input fields
 
+  // Dummy categories for dropdown
+  const categories = [
+    "Electronics",
+    "Furniture",
+    "Clothing",
+    "Books",
+    "Toys",
+    "Sports",
+    "Beauty",
+    "Kitchen",
+    "Gardening",
+    "Automotive",
+    "Jewelry",
+    "Music",
+  ];
+
   // Effect to initialize filteredData
   useEffect(() => {
     setFilteredData(tableData);
@@ -122,13 +138,19 @@ function CategoryMaster() {
             <form onSubmit={handleAddCategory} className="add-category-form">
               <div className="form-row">
                 <label>Category:</label>
-                <input
-                  type="text"
+                <select
                   name="category"
                   value={newCategory.category}
                   onChange={handleInputChange}
                   required
-                />
+                >
+                  <option value="">Select a category</option>
+                  {categories.map((category, index) => (
+                    <option key={index} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="form-row">
                 <label>Description:</label>

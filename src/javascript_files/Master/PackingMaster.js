@@ -82,6 +82,16 @@ function PackingMaster() {
       alert("All fields are required!");
       return;
     }
+
+    // Validate the length of packingName and usedFor
+    if (
+      newPacking.packingName.length > 100 ||
+      newPacking.usedFor.length > 100
+    ) {
+      alert("Packing Name and Used For must not exceed 100 characters!");
+      return;
+    }
+
     setTableData((prev) => [
       ...prev,
       [
@@ -163,6 +173,7 @@ function PackingMaster() {
                 name="packingName"
                 value={newPacking.packingName}
                 onChange={handleInputChange}
+                maxLength="100" // Added maxLength attribute
                 required
               />
             </div>
@@ -173,6 +184,7 @@ function PackingMaster() {
                 name="usedFor"
                 value={newPacking.usedFor}
                 onChange={handleInputChange}
+                maxLength="100" // Added maxLength attribute
                 required
               />
             </div>

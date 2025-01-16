@@ -508,64 +508,116 @@ function PartsMaster() {
               </div>
               <div className="form-row">
                 <label>Category:</label>
-                <input
-                  type="text"
+                <select
                   name="category"
                   value={newPart.category}
                   onChange={handleInputChange}
                   required
-                />
+                >
+                  <option value="">Select a category</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Automotive">Automotive</option>
+                  <option value="Furniture">Furniture</option>
+                </select>
               </div>
               <div className="form-row">
                 <label>Subcategory:</label>
-                <input
-                  type="text"
+                <select
                   name="subcategory"
                   value={newPart.subcategory}
                   onChange={handleInputChange}
                   required
-                />
+                >
+                  <option value="">Select a subcategory</option>
+                  {newPart.category === "Electronics" && (
+                    <>
+                      <option value="Mobile Phones">Mobile Phones</option>
+                      <option value="Laptops">Laptops</option>
+                      <option value="Accessories">Accessories</option>
+                    </>
+                  )}
+                  {newPart.category === "Automotive" && (
+                    <>
+                      <option value="Car Parts">Car Parts</option>
+                      <option value="Motorcycle Parts">Motorcycle Parts</option>
+                      <option value="Accessories">Accessories</option>
+                    </>
+                  )}
+                  {newPart.category === "Furniture" && (
+                    <>
+                      <option value="Tables">Tables</option>
+                      <option value="Chairs">Chairs</option>
+                      <option value="Beds">Beds</option>
+                    </>
+                  )}
+                </select>
               </div>
               <div className="form-row">
                 <label>Units:</label>
-                <input
-                  type="text"
+                <select
                   name="units"
                   value={newPart.units}
                   onChange={handleInputChange}
                   required
-                />
+                >
+                  <option value="">Select Units</option>
+                  <option value="Piece">Piece</option>
+                  <option value="Kilogram">Kilogram</option>
+                  <option value="Meter">Meter</option>
+                  <option value="Dozen">Dozen</option>
+                  <option value="Liter">Liter</option>
+                </select>
               </div>
+
               <div className="form-row">
                 <label>GST (%):</label>
-                <input
-                  type="text"
+                <select
                   name="gst"
                   value={newPart.gst}
                   onChange={handleInputChange}
                   required
-                />
+                >
+                  <option value="">Select GST (%)</option>
+                  <option value="0%">0%</option>
+                  <option value="5%">5%</option>
+                  <option value="12%">12%</option>
+                  <option value="18%">18%</option>
+                  <option value="28%">28%</option>
+                </select>
               </div>
+
               <div className="form-row">
                 <label>HSN Code:</label>
-                <input
-                  type="text"
+                <select
                   name="hsn"
                   value={newPart.hsn}
                   onChange={handleInputChange}
                   required
-                />
+                >
+                  <option value="">Select HSN Code</option>
+                  <option value="1001">1001</option>
+                  <option value="2002">2002</option>
+                  <option value="3003">3003</option>
+                  <option value="4004">4004</option>
+                  <option value="5005">5005</option>
+                </select>
               </div>
+
               <div className="form-row">
                 <label>Types of Supply:</label>
-                <input
-                  type="text"
+                <select
                   name="supplyType"
                   value={newPart.supplyType}
                   onChange={handleInputChange}
                   required
-                />
+                >
+                  <option value="">Select Type of Supply</option>
+                  <option value="Goods">Goods</option>
+                  <option value="Services">Services</option>
+                  <option value="Both">Both</option>
+                </select>
               </div>
+
               <div className="form-row">
                 <label>Selling Price:</label>
                 <input
@@ -587,25 +639,52 @@ function PartsMaster() {
                 />
               </div>
               <div className="form-row">
-                <label>Dimensions:</label>
-                <input
-                  type="text"
-                  name="dimensions"
-                  value={newPart.dimensions}
-                  onChange={handleInputChange}
-                  required
-                />
+                <label>Dimensions (Cm):</label>
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <input
+                    type="number"
+                    name="length"
+                    value={newPart.length}
+                    placeholder="Length"
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <input
+                    type="number"
+                    name="width"
+                    value={newPart.width}
+                    placeholder="Width"
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <input
+                    type="number"
+                    name="height"
+                    value={newPart.height}
+                    placeholder="Height"
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
               </div>
+
               <div className="form-row">
                 <label>Packing:</label>
-                <input
-                  type="text"
+                <select
                   name="packing"
                   value={newPart.packing}
                   onChange={handleInputChange}
                   required
-                />
+                >
+                  <option value="">Select Packing</option>
+                  <option value="Box">Box</option>
+                  <option value="Bag">Bag</option>
+                  <option value="Bundle">Bundle</option>
+                  <option value="Roll">Roll</option>
+                  <option value="Packet">Packet</option>
+                </select>
               </div>
+
               <div className="form-row">
                 <label>Material:</label>
                 <input
@@ -618,14 +697,18 @@ function PartsMaster() {
               </div>
               <div className="form-row">
                 <label>Certification:</label>
-                <input
-                  type="text"
+                <select
                   name="certification"
                   value={newPart.certification}
                   onChange={handleInputChange}
                   required
-                />
+                >
+                  <option value="">Select Certification</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
               </div>
+
               <button type="submit" className="add-category-button">
                 Add
               </button>

@@ -42,13 +42,21 @@ function UnitMaster() {
 
   const handleAddUnit = (e) => {
     e.preventDefault();
-    if (!newUnit.name || !newUnit.code || !newUnit.description) {
+    const { name, code, description } = newUnit;
+
+    if (!name || !code || !description) {
       alert("All fields are required!");
       return;
     }
+
+    if (code.length !== 2) {
+      alert("Unit code must be exactly 2 characters!");
+      return;
+    }
+
     setTableData((prev) => [
       ...prev,
-      [prev.length + 1, newUnit.name, newUnit.code, newUnit.description],
+      [prev.length + 1, name, code, description],
     ]);
     setNewUnit({ name: "", code: "", description: "" });
     setShowAddForm(false);
@@ -129,6 +137,9 @@ function UnitMaster() {
                   name="code"
                   value={newUnit.code}
                   onChange={handleInputChange}
+                  maxLength={2}
+                  pattern=".{2,2}"
+                  title="Unit code must be exactly 2 characters."
                   required
                 />
               </div>

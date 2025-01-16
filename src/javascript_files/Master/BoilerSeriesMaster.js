@@ -244,14 +244,20 @@ function BoilerSeriesMaster() {
             >
               <div className="form-row">
                 <label>Boiler Head:</label>
-                <input
-                  type="text"
+                <select
                   name="boilerHead"
                   value={newBoilerSeries.boilerHead}
                   onChange={handleInputChange}
                   required
-                />
+                >
+                  <option value="">Select Boiler Head</option>
+                  <option value="Type 1">Type 1</option>
+                  <option value="Type 2">Type 2</option>
+                  <option value="Type 3">Type 3</option>
+                  <option value="Type 4">Type 4</option>
+                </select>
               </div>
+
               <div className="form-row">
                 <label>Series Code:</label>
                 <input

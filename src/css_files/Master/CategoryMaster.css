@@ -112,3 +112,46 @@
 .add-category-button:hover {
   background-color: #138496;
 }
+
+/* Extra large screen responsiveness */
+@media (min-width: 1800px) {
+  .category-master {
+    max-width: 1800px; /* Increase max width for very large screens */
+  }
+
+  .category-master-title {
+    font-size: 1.8rem; /* Increase font size further */
+  }
+
+  .search-select,
+  .search-input {
+    width: 30rem; /* Further increase the width */
+  }
+
+  .filter-button,
+  .reset-button,
+  .add-button {
+    font-size: 14px; /* Increase button font size for large screens */
+    padding: 10px 25px; /* Increase padding for buttons */
+  }
+
+  .add-category-form {
+    width: 70%; /* Allow more space for the form */
+    max-width: 1400px; /* Increase max width for the form */
+  }
+
+  .form-row {
+    max-width: 500px; /* Further increase max width of form rows */
+  }
+
+  .form-row input,
+  .form-row select {
+    max-width: 500px; /* Increase width of form inputs */
+  }
+
+  .add-category-button {
+    font-size: 16px; /* Increase button font size */
+    padding: 10px 25px; /* Increase button padding */
+    max-width: 500px; /* Increase max width of the button */
+  }
+}
