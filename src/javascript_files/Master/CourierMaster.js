@@ -1,21 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../css_files/Master/CourierMaster.css";
 import Table from "../Homepage/Table";
-import AddCourierMaster from "./AddCourierMaster";
-import SearchCourierMaster from "./SearchCourierMaster";
 
 function CourierMaster() {
-  const [showaddform, setshowaddform] = useState(false);
-  const [showsearchform, setshowsearchform] = useState(false);
-  const tablehead = [
-    "Courier Id",
-    "Courier Name",
-    "Courier Email",
-    "Courier Phone Number",
-    "Courier Address",
-  ];
-
-  const tabledata = [
+  const [showAddForm, setShowAddForm] = useState(false); // State to show/hide Add form
+  const [searchQuery, setSearchQuery] = useState(""); // State for search input
+  const [filterType, setFilterType] = useState("id"); // State for filter type (ID/Name)
+  const [tableData, setTableData] = useState([
     [
       1,
       "Express Delivery",
@@ -156,27 +147,186 @@ function CourierMaster() {
       "9876543229",
       "909 Chestnut Drive, Westend, IL 60010",
     ],
-  ];
+  ]);
+  const [filteredData, setFilteredData] = useState(tableData); // State for filtered table data
+  const [newCourier, setNewCourier] = useState({
+    courierName: "",
+    courierEmail: "",
+    courierPhoneNumber: "",
+    courierAddress: "",
+  }); // State for the new courier input fields
+
+  // Effect to initialize filteredData
+  useEffect(() => {
+    setFilteredData(tableData);
+  }, [tableData]);
+
+  // Handle form input change
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewCourier((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Add new courier
+  const handleAddCourier = (e) => {
+    e.preventDefault();
+    if (
+      !newCourier.courierName ||
+      !newCourier.courierEmail ||
+      !newCourier.courierPhoneNumber ||
+      !newCourier.courierAddress
+    ) {
+      alert("All fields are required!");
+      return;
+    }
+    setTableData((prev) => [
+      ...prev,
+      [
+        prev.length + 1,
+        newCourier.courierName,
+        newCourier.courierEmail,
+        newCourier.courierPhoneNumber,
+        newCourier.courierAddress,
+      ],
+    ]);
+    setNewCourier({
+      courierName: "",
+      courierEmail: "",
+      courierPhoneNumber: "",
+      courierAddress: "",
+    }); // Reset form
+    setShowAddForm(false); // Hide the form after adding
+  };
+
+  // Handle search filter
+  const handleFilter = () => {
+    const lowerCaseQuery = searchQuery.toLowerCase();
+    const newFilteredData = tableData.filter((row) => {
+      if (filterType === "id") {
+        return row[0].toString().includes(lowerCaseQuery);
+      } else if (filterType === "courierName") {
+        return row[1].toLowerCase().includes(lowerCaseQuery);
+      } else if (filterType === "courierEmail") {
+        return row[2].toLowerCase().includes(lowerCaseQuery);
+      }
+      return true;
+    });
+    setFilteredData(newFilteredData);
+  };
+
+  // Reset filter
+  const resetFilter = () => {
+    setSearchQuery("");
+    setFilteredData(tableData);
+  };
 
   return (
-    <>
-      <section className="courier-master">
-        <h1>Courier Master</h1>
-        <blockquote className="courier-master-forms">
-          <button onClick={() => setshowaddform(true)}>
-            Add Courier Master
+    <section className="category-master-container">
+      <div className="category-master">
+        <h1 className="category-master-title">COURIER MASTER</h1>
+
+        {/* Search Section */}
+        <div className="search-container">
+          <select
+            value={filterType}
+            onChange={(e) => setFilterType(e.target.value)}
+            className="search-select"
+          >
+            <option value="id">Search by ID</option>
+            <option value="courierName">Search by Courier Name</option>
+            <option value="courierEmail">Search by Courier Email</option>
+          </select>
+          <input
+            type="text"
+            placeholder={`Search by ${
+              filterType === "id"
+                ? "ID"
+                : filterType === "courierName"
+                ? "Courier Name"
+                : "Courier Email"
+            }`}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-input"
+          />
+          <button onClick={handleFilter} className="filter-button">
+            Filter
           </button>
-          <button onClick={() => setshowsearchform(true)}>
-            Search Courier Master
+          <button onClick={resetFilter} className="reset-button">
+            Reset
           </button>
-        </blockquote>
-        {showaddform && <AddCourierMaster setshowaddform={setshowaddform} />}
-        {showsearchform && (
-          <SearchCourierMaster setshowsearchform={setshowsearchform} />
+          <button
+            onClick={() => setShowAddForm((prev) => !prev)}
+            className="add-button"
+          >
+            {showAddForm ? "Hide" : "Add"}
+          </button>
+        </div>
+
+        {/* Add Form */}
+        {showAddForm && (
+          <div className="form-container">
+            <form onSubmit={handleAddCourier} className="add-category-form">
+              <div className="form-row">
+                <label>Courier Name:</label>
+                <input
+                  type="text"
+                  name="courierName"
+                  value={newCourier.courierName}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Courier Email:</label>
+                <input
+                  type="email"
+                  name="courierEmail"
+                  value={newCourier.courierEmail}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Courier Phone Number:</label>
+                <input
+                  type="text"
+                  name="courierPhoneNumber"
+                  value={newCourier.courierPhoneNumber}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Courier Address:</label>
+                <input
+                  type="text"
+                  name="courierAddress"
+                  value={newCourier.courierAddress}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <button type="submit" className="add-category-button">
+                Add Courier
+              </button>
+            </form>
+          </div>
         )}
-        <Table tablehead={tablehead} tabledata={tabledata} />
-      </section>
-    </>
+
+        {/* Table */}
+        <Table
+          tablehead={[
+            "Courier Id",
+            "Courier Name",
+            "Courier Email",
+            "Courier Phone Number",
+            "Courier Address",
+          ]}
+          tabledata={filteredData}
+        />
+      </div>
+    </section>
   );
 }
 

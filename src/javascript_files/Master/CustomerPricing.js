@@ -1,21 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "../Homepage/Table";
 import "../../css_files/Master/CustomerPricing.css";
-import AddCustomerMaster from "./AddCustomerMaster";
-import SearchCustomerMaster from "./SearchCustomerMaster";
 
 function CustomerPricing() {
-  const [showaddform, setshowaddform] = useState(false);
-  const [showsearchform, setshowsearchform] = useState(false);
-  const tablehead = [
-    "Customer Id",
-    "Customer Name",
-    "Name of Company or Organization",
-    "Email",
-    "Phone Number",
-    "Address",
-  ];
-  const tabledata = [
+  const [showAddForm, setShowAddForm] = useState(false); // State to show/hide Add form
+  const [searchQuery, setSearchQuery] = useState(""); // State for search input
+  const [filterType, setFilterType] = useState("id"); // State for filter type (ID/Name)
+  const [tableData, setTableData] = useState([
     [
       1,
       "John Doe",
@@ -176,24 +167,200 @@ function CustomerPricing() {
       "9876543229",
       "909 Chestnut Drive, Westend, IL 60010",
     ],
-  ];
+  ]);
+  const [filteredData, setFilteredData] = useState(tableData); // State for filtered table data
+  const [newCustomer, setNewCustomer] = useState({
+    customerName: "",
+    companyName: "",
+    email: "",
+    phoneNumber: "",
+    address: "",
+  }); // State for new customer form data
+
+  // Effect to initialize filteredData
+  useEffect(() => {
+    setFilteredData(tableData);
+  }, [tableData]);
+
+  // Handle form input change
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewCustomer((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Add new customer
+  const handleAddCustomer = (e) => {
+    e.preventDefault();
+    if (
+      !newCustomer.customerName ||
+      !newCustomer.companyName ||
+      !newCustomer.email ||
+      !newCustomer.phoneNumber ||
+      !newCustomer.address
+    ) {
+      alert("All fields are required!");
+      return;
+    }
+    setTableData((prev) => [
+      ...prev,
+      [
+        prev.length + 1,
+        newCustomer.customerName,
+        newCustomer.companyName,
+        newCustomer.email,
+        newCustomer.phoneNumber,
+        newCustomer.address,
+      ],
+    ]);
+    setNewCustomer({
+      customerName: "",
+      companyName: "",
+      email: "",
+      phoneNumber: "",
+      address: "",
+    }); // Reset form
+    setShowAddForm(false); // Hide the form after adding
+  };
+
+  // Handle search filter
+  const handleFilter = () => {
+    const lowerCaseQuery = searchQuery.toLowerCase();
+    const newFilteredData = tableData.filter((row) => {
+      if (filterType === "id") {
+        return row[0].toString().includes(lowerCaseQuery);
+      } else if (filterType === "customerName") {
+        return row[1].toLowerCase().includes(lowerCaseQuery);
+      } else if (filterType === "companyName") {
+        return row[2].toLowerCase().includes(lowerCaseQuery);
+      }
+      return true;
+    });
+    setFilteredData(newFilteredData);
+  };
+
+  // Reset filter
+  const resetFilter = () => {
+    setSearchQuery("");
+    setFilteredData(tableData);
+  };
 
   return (
-    <section className="customer-master">
-      <h1>Customer Pricing</h1>
-      <blockquote className="customer-master-forms">
-        <button onClick={() => setshowaddform(true)}>
-          Add Customer Pricing
-        </button>
-        <button onClick={() => setshowsearchform(true)}>
-          Search Customer Pricing
-        </button>
-      </blockquote>
-      {showaddform && <AddCustomerMaster setshowaddform={setshowaddform} />}
-      {showsearchform && (
-        <SearchCustomerMaster setshowsearchform={setshowsearchform} />
-      )}
-      <Table tablehead={tablehead} tabledata={tabledata} />
+    <section className="category-master-container">
+      <div className="category-master">
+        <h1 className="category-master-title">CUSTOMER PRICING</h1>
+
+        {/* Search Section */}
+        <div className="search-container">
+          <select
+            value={filterType}
+            onChange={(e) => setFilterType(e.target.value)}
+            className="search-select"
+          >
+            <option value="id">Search by ID</option>
+            <option value="customerName">Search by Customer Name</option>
+            <option value="companyName">Search by Company Name</option>
+          </select>
+          <input
+            type="text"
+            placeholder={`Search by ${
+              filterType === "id"
+                ? "ID"
+                : filterType === "customerName"
+                ? "Customer Name"
+                : "Company Name"
+            }`}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-input"
+          />
+          <button onClick={handleFilter} className="filter-button">
+            Filter
+          </button>
+          <button onClick={resetFilter} className="reset-button">
+            Reset
+          </button>
+          <button
+            onClick={() => setShowAddForm((prev) => !prev)}
+            className="add-button"
+          >
+            {showAddForm ? "Hide" : "Add"}
+          </button>
+        </div>
+
+        {/* Add Form */}
+        {showAddForm && (
+          <div className="form-container">
+            <form onSubmit={handleAddCustomer} className="add-category-form">
+              <div className="form-row">
+                <label>Customer Name:</label>
+                <input
+                  type="text"
+                  name="customerName"
+                  value={newCustomer.customerName}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Company Name:</label>
+                <input
+                  type="text"
+                  name="companyName"
+                  value={newCustomer.companyName}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Email:</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={newCustomer.email}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Phone Number:</label>
+                <input
+                  type="text"
+                  name="phoneNumber"
+                  value={newCustomer.phoneNumber}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Address:</label>
+                <input
+                  type="text"
+                  name="address"
+                  value={newCustomer.address}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <button type="submit" className="add-category-button">
+                Add Customer
+              </button>
+            </form>
+          </div>
+        )}
+
+        {/* Table Component */}
+        <Table
+          tablehead={[
+            "Customer Id",
+            "Customer Name",
+            "Company Name",
+            "Email",
+            "Phone Number",
+            "Address",
+          ]}
+          tabledata={filteredData}
+        />
+      </div>
     </section>
   );
 }

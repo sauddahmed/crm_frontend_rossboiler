@@ -1,28 +1,12 @@
-import React, { useState } from "react";
-import "../../css_files/Master/TechnicianMaster.css";
+import React, { useState, useEffect } from "react";
 import Table from "../Homepage/Table";
-import AddTechnicianMaster from "./AddTechnicianMaster";
-import SearchTechnicianMaster from "./SearchTechnicianMaster";
+import "../../css_files/Master/TechnicianMaster.css";
 
 function TechnicianMaster() {
-  const [showaddform, setshowaddform] = useState(false);
-  const [showsearchform, setshowsearchform] = useState(false);
-  const tablehead = [
-    "Technician Id",
-    "Technician Name",
-    "Age",
-    "Qualification",
-    "Experience",
-    "No. of Years with Ross",
-    "CTC",
-    "Posting Location",
-    "Aadhar Number",
-    "PAN",
-    "Residential Address",
-    "Personal Phone Number",
-  ];
-
-  const tabledata = [
+  const [showAddForm, setShowAddForm] = useState(false); // State to show/hide Add form
+  const [searchQuery, setSearchQuery] = useState(""); // State for search input
+  const [filterType, setFilterType] = useState("id"); // State for filter type (ID/Name)
+  const [tableData, setTableData] = useState([
     [
       1,
       "John Smith",
@@ -303,27 +287,284 @@ function TechnicianMaster() {
       "808 Redwood Blvd, Visakhapatnam, AP",
       "9876543229",
     ],
-  ];
+  ]);
+  const [filteredData, setFilteredData] = useState(tableData); // State for filtered table data
+  const [newTechnician, setNewTechnician] = useState({
+    technicianName: "",
+    age: "",
+    qualification: "",
+    experience: "",
+    yearsWithRoss: "",
+    ctc: "",
+    postingLocation: "",
+    aadharNumber: "",
+    pan: "",
+    address: "",
+    phoneNumber: "",
+  }); // State for new technician form data
+
+  // Effect to initialize filteredData
+  useEffect(() => {
+    setFilteredData(tableData);
+  }, [tableData]);
+
+  // Handle form input change
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewTechnician((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Add new technician
+  const handleAddTechnician = (e) => {
+    e.preventDefault();
+    if (
+      !newTechnician.technicianName ||
+      !newTechnician.age ||
+      !newTechnician.qualification ||
+      !newTechnician.experience ||
+      !newTechnician.yearsWithRoss ||
+      !newTechnician.ctc ||
+      !newTechnician.postingLocation ||
+      !newTechnician.aadharNumber ||
+      !newTechnician.pan ||
+      !newTechnician.address ||
+      !newTechnician.phoneNumber
+    ) {
+      alert("All fields are required!");
+      return;
+    }
+    setTableData((prev) => [
+      ...prev,
+      [
+        prev.length + 1,
+        newTechnician.technicianName,
+        newTechnician.age,
+        newTechnician.qualification,
+        newTechnician.experience,
+        newTechnician.yearsWithRoss,
+        newTechnician.ctc,
+        newTechnician.postingLocation,
+        newTechnician.aadharNumber,
+        newTechnician.pan,
+        newTechnician.address,
+        newTechnician.phoneNumber,
+      ],
+    ]);
+    setNewTechnician({
+      technicianName: "",
+      age: "",
+      qualification: "",
+      experience: "",
+      yearsWithRoss: "",
+      ctc: "",
+      postingLocation: "",
+      aadharNumber: "",
+      pan: "",
+      address: "",
+      phoneNumber: "",
+    }); // Reset form
+    setShowAddForm(false); // Hide the form after adding
+  };
+
+  // Handle search filter
+  const handleFilter = () => {
+    const lowerCaseQuery = searchQuery.toLowerCase();
+    const newFilteredData = tableData.filter((row) => {
+      if (filterType === "id") {
+        return row[0].toString().includes(lowerCaseQuery);
+      } else if (filterType === "technicianName") {
+        return row[1].toLowerCase().includes(lowerCaseQuery);
+      }
+      return true;
+    });
+    setFilteredData(newFilteredData);
+  };
+
+  // Reset filter
+  const resetFilter = () => {
+    setSearchQuery("");
+    setFilteredData(tableData);
+  };
 
   return (
-    <>
-      <section className="technician-master">
-        <h1>Technician Master</h1>
-        <blockquote className="technician-master-forms">
-          <button onClick={() => setshowaddform(true)}>
-            Add Technician Master
+    <section className="category-master-container">
+      <div className="category-master">
+        <h1 className="category-master-title">Technician Master</h1>
+
+        {/* Search Section */}
+        <div className="search-container">
+          <select
+            value={filterType}
+            onChange={(e) => setFilterType(e.target.value)}
+            className="search-select"
+          >
+            <option value="id">Search by Technician Id</option>
+            <option value="technicianName">Search by Technician Name</option>
+          </select>
+          <input
+            type="text"
+            placeholder={`Search by ${
+              filterType === "id" ? "Technician Id" : "Technician Name"
+            }`}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-input"
+          />
+          <button onClick={handleFilter} className="filter-button">
+            Filter
           </button>
-          <button onClick={() => setshowsearchform(true)}>
-            Search Technician Master
+          <button onClick={resetFilter} className="reset-button">
+            Reset
           </button>
-        </blockquote>
-        {showaddform && <AddTechnicianMaster setshowaddform={setshowaddform} />}
-        {showsearchform && (
-          <SearchTechnicianMaster setshowsearchform={setshowsearchform} />
+          <button
+            onClick={() => setShowAddForm((prev) => !prev)}
+            className="add-button"
+          >
+            {showAddForm ? "Hide" : "Add"}
+          </button>
+        </div>
+
+        {/* Add Form */}
+        {showAddForm && (
+          <div className="form-container">
+            <form onSubmit={handleAddTechnician} className="add-category-form">
+              <div className="form-row">
+                <label>Technician Name:</label>
+                <input
+                  type="text"
+                  name="technicianName"
+                  value={newTechnician.technicianName}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Age:</label>
+                <input
+                  type="number"
+                  name="age"
+                  value={newTechnician.age}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Qualification:</label>
+                <input
+                  type="text"
+                  name="qualification"
+                  value={newTechnician.qualification}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Experience:</label>
+                <input
+                  type="text"
+                  name="experience"
+                  value={newTechnician.experience}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>No. of Years with Ross:</label>
+                <input
+                  type="number"
+                  name="yearsWithRoss"
+                  value={newTechnician.yearsWithRoss}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>CTC:</label>
+                <input
+                  type="number"
+                  name="ctc"
+                  value={newTechnician.ctc}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Posting Location:</label>
+                <input
+                  type="text"
+                  name="postingLocation"
+                  value={newTechnician.postingLocation}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Aadhar Number:</label>
+                <input
+                  type="text"
+                  name="aadharNumber"
+                  value={newTechnician.aadharNumber}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>PAN:</label>
+                <input
+                  type="text"
+                  name="pan"
+                  value={newTechnician.pan}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Address:</label>
+                <input
+                  type="text"
+                  name="address"
+                  value={newTechnician.address}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Personal Phone Number:</label>
+                <input
+                  type="text"
+                  name="phoneNumber"
+                  value={newTechnician.phoneNumber}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <button type="submit" className="add-category-button">
+                Add Technician
+              </button>
+            </form>
+          </div>
         )}
-        <Table tablehead={tablehead} tabledata={tabledata} />
-      </section>
-    </>
+
+        {/* Table */}
+        <Table
+          tablehead={[
+            "Technician Id",
+            "Technician Name",
+            "Age",
+            "Qualification",
+            "Experience",
+            "No. of Years with Ross",
+            "CTC",
+            "Posting Location",
+            "Aadhar Number",
+            "PAN",
+            "Residential Address",
+            "Personal Phone Number",
+          ]}
+          tabledata={filteredData}
+        />
+      </div>
+    </section>
   );
 }
 

@@ -535,33 +535,35 @@ function Overview({ showsidebar }) {
     }
   }, []);
   return (
-    <section className="overview">
-      <h1>Dashboard (Under Construction)</h1>
-      <div
-        style={{
-          gridTemplateColumns: showsidebar ? "1fr 1fr" : "1fr 1fr 1fr",
-          width: showsidebar ? "90%" : "100%",
-        }}
-      >
-        <figure>
-          <canvas ref={(el) => (chartRef.current[0] = el)}></canvas>
-        </figure>
-        <figure>
-          <canvas ref={(el) => (chartRef.current[1] = el)}></canvas>
-        </figure>
-        <figure>
-          <canvas ref={(el) => (chartRef.current[2] = el)}></canvas>
-        </figure>
-        <figure>
-          <canvas ref={(el) => (chartRef.current[3] = el)}></canvas>
-        </figure>
-        <figure>
-          <canvas ref={(el) => (chartRef.current[4] = el)}></canvas>
-        </figure>
-        <figure>
-          <canvas ref={(el) => (chartRef.current[5] = el)}></canvas>
-        </figure>
-      </div>
+    <section className="category-master">
+      <section className="overview">
+        <h1>Dashboard (Under Construction)</h1>
+        <div
+          style={{
+            gridTemplateColumns: showsidebar ? "1fr 1fr" : "1fr 1fr 1fr",
+            width: showsidebar ? "90%" : "100%",
+          }}
+        >
+          <figure>
+            <canvas ref={(el) => (chartRef.current[0] = el)}></canvas>
+          </figure>
+          <figure>
+            <canvas ref={(el) => (chartRef.current[1] = el)}></canvas>
+          </figure>
+          <figure>
+            <canvas ref={(el) => (chartRef.current[2] = el)}></canvas>
+          </figure>
+          <figure>
+            <canvas ref={(el) => (chartRef.current[3] = el)}></canvas>
+          </figure>
+          <figure>
+            <canvas ref={(el) => (chartRef.current[4] = el)}></canvas>
+          </figure>
+          <figure>
+            <canvas ref={(el) => (chartRef.current[5] = el)}></canvas>
+          </figure>
+        </div>
+      </section>
     </section>
   );
 }

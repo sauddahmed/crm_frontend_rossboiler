@@ -118,31 +118,33 @@ function CategoryMaster() {
 
         {/* Add Form */}
         {showAddForm && (
-          <form onSubmit={handleAddCategory} className="add-category-form">
-            <div className="form-row">
-              <label>Category:</label>
-              <input
-                type="text"
-                name="category"
-                value={newCategory.category}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="form-row">
-              <label>Description:</label>
-              <input
-                type="text"
-                name="description"
-                value={newCategory.description}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <button type="submit" className="add-category-button">
-              Add
-            </button>
-          </form>
+          <div className="form-container">
+            <form onSubmit={handleAddCategory} className="add-category-form">
+              <div className="form-row">
+                <label>Category:</label>
+                <input
+                  type="text"
+                  name="category"
+                  value={newCategory.category}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Description:</label>
+                <input
+                  type="text"
+                  name="description"
+                  value={newCategory.description}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <button type="submit" className="add-category-button">
+                Add
+              </button>
+            </form>
+          </div>
         )}
 
         {/* Table */}

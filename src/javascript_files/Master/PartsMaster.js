@@ -1,30 +1,12 @@
-import React, { useState } from "react";
-import "../../css_files/Master/PartsMaster.css";
+import React, { useState, useEffect } from "react";
+import "../../css_files/Master/PartsMaster.css"; // Assuming the relevant CSS is in this file
 import Table from "../Homepage/Table";
-import AddPartsMaster from "./AddPartsMaster";
-import SearchPartsMaster from "./SearchPartsMaster";
 
 function PartsMaster() {
-  const [showaddform, setshowaddform] = useState(false);
-  const [showsearchform, setshowsearchform] = useState(false);
-  const tablehead = [
-    "Part Id",
-    "Part Name",
-    "Part Description",
-    "Category",
-    "Subcategory",
-    "Units",
-    "GST (Percentage)",
-    "HSN Code",
-    "Types of Supply",
-    "Selling Price",
-    "Weight",
-    "Dimensions",
-    "Packing",
-    "Material of Construction (MOC)",
-    "IBR Certification",
-  ];
-  const tabledata = [
+  const [showAddForm, setShowAddForm] = useState(false); // State to show/hide Add form
+  const [searchQuery, setSearchQuery] = useState(""); // State for search input
+  const [filterType, setFilterType] = useState("id"); // State for filter type (ID/Part Name)
+  const [tableData, setTableData] = useState([
     [
       1,
       "Laptop Screen",
@@ -365,25 +347,315 @@ function PartsMaster() {
       "Plastic",
       "No",
     ],
-  ];
+    // Add more data as needed...
+  ]);
+  const [filteredData, setFilteredData] = useState(tableData); // State for filtered table data
+  const [newPart, setNewPart] = useState({
+    partName: "",
+    description: "",
+    category: "",
+    subcategory: "",
+    units: "",
+    gst: "",
+    hsn: "",
+    supplyType: "",
+    sellingPrice: "",
+    weight: "",
+    dimensions: "",
+    packing: "",
+    material: "",
+    certification: "",
+  });
+
+  // Effect to initialize filteredData
+  useEffect(() => {
+    setFilteredData(tableData);
+  }, [tableData]);
+
+  // Handle form input change
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewPart((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Add new part
+  const handleAddPart = (e) => {
+    e.preventDefault();
+    if (!newPart.partName || !newPart.description) {
+      alert("All fields are required!");
+      return;
+    }
+    setTableData((prev) => [
+      ...prev,
+      [
+        prev.length + 1,
+        newPart.partName,
+        newPart.description,
+        newPart.category,
+        newPart.subcategory,
+        newPart.units,
+        newPart.gst,
+        newPart.hsn,
+        newPart.supplyType,
+        newPart.sellingPrice,
+        newPart.weight,
+        newPart.dimensions,
+        newPart.packing,
+        newPart.material,
+        newPart.certification,
+      ],
+    ]);
+    setNewPart({
+      partName: "",
+      description: "",
+      category: "",
+      subcategory: "",
+      units: "",
+      gst: "",
+      hsn: "",
+      supplyType: "",
+      sellingPrice: "",
+      weight: "",
+      dimensions: "",
+      packing: "",
+      material: "",
+      certification: "",
+    }); // Reset form
+    setShowAddForm(false); // Hide the form after adding
+  };
+
+  // Handle search filter
+  const handleFilter = () => {
+    const lowerCaseQuery = searchQuery.toLowerCase();
+    const newFilteredData = tableData.filter((row) => {
+      if (filterType === "id") {
+        return row[0].toString().includes(lowerCaseQuery);
+      } else if (filterType === "partName") {
+        return row[1].toLowerCase().includes(lowerCaseQuery);
+      }
+      return true;
+    });
+    setFilteredData(newFilteredData);
+  };
+
+  // Reset filter
+  const resetFilter = () => {
+    setSearchQuery("");
+    setFilteredData(tableData);
+  };
 
   return (
-    <>
-      <section className="parts-master">
-        <h1>Parts Master</h1>
-        <blockquote className="parts-master-forms">
-          <button onClick={() => setshowaddform(true)}>Add Parts Master</button>
-          <button onClick={() => setshowsearchform(true)}>
-            Search Parts Master
+    <section className="category-master-container">
+      <div className="category-master">
+        <h1 className="category-master-title">PARTS MASTER</h1>
+
+        {/* Search Section */}
+        <div className="search-container">
+          <select
+            value={filterType}
+            onChange={(e) => setFilterType(e.target.value)}
+            className="search-select"
+          >
+            <option value="id">Search by ID</option>
+            <option value="partName">Search by Part Name</option>
+          </select>
+          <input
+            type="text"
+            placeholder={`Search by ${
+              filterType === "id" ? "ID" : "Part Name"
+            }`}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-input"
+          />
+          <button onClick={handleFilter} className="filter-button">
+            Filter
           </button>
-        </blockquote>
-        {showaddform && <AddPartsMaster setshowaddform={setshowaddform} />}
-        {showsearchform && (
-          <SearchPartsMaster setshowsearchform={setshowsearchform} />
+          <button onClick={resetFilter} className="reset-button">
+            Reset
+          </button>
+          <button
+            onClick={() => setShowAddForm((prev) => !prev)}
+            className="add-button"
+          >
+            {showAddForm ? "Hide" : "Add"}
+          </button>
+        </div>
+
+        {/* Add Form */}
+        {showAddForm && (
+          <div className="form-container">
+            <form onSubmit={handleAddPart} className="add-category-form">
+              <div className="form-row">
+                <label>Part Name:</label>
+                <input
+                  type="text"
+                  name="partName"
+                  value={newPart.partName}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Description:</label>
+                <input
+                  type="text"
+                  name="description"
+                  value={newPart.description}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Category:</label>
+                <input
+                  type="text"
+                  name="category"
+                  value={newPart.category}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Subcategory:</label>
+                <input
+                  type="text"
+                  name="subcategory"
+                  value={newPart.subcategory}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Units:</label>
+                <input
+                  type="text"
+                  name="units"
+                  value={newPart.units}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>GST (%):</label>
+                <input
+                  type="text"
+                  name="gst"
+                  value={newPart.gst}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>HSN Code:</label>
+                <input
+                  type="text"
+                  name="hsn"
+                  value={newPart.hsn}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Types of Supply:</label>
+                <input
+                  type="text"
+                  name="supplyType"
+                  value={newPart.supplyType}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Selling Price:</label>
+                <input
+                  type="text"
+                  name="sellingPrice"
+                  value={newPart.sellingPrice}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Weight:</label>
+                <input
+                  type="text"
+                  name="weight"
+                  value={newPart.weight}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Dimensions:</label>
+                <input
+                  type="text"
+                  name="dimensions"
+                  value={newPart.dimensions}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Packing:</label>
+                <input
+                  type="text"
+                  name="packing"
+                  value={newPart.packing}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Material:</label>
+                <input
+                  type="text"
+                  name="material"
+                  value={newPart.material}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-row">
+                <label>Certification:</label>
+                <input
+                  type="text"
+                  name="certification"
+                  value={newPart.certification}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <button type="submit" className="add-category-button">
+                Add
+              </button>
+            </form>
+          </div>
         )}
-        <Table tablehead={tablehead} tabledata={tabledata} />
-      </section>
-    </>
+
+        {/* Table */}
+        <Table
+          tablehead={[
+            "Part ID",
+            "Part Name",
+            "Description",
+            "Category",
+            "Subcategory",
+            "Units",
+            "GST",
+            "HSN Code",
+            "Types of Supply",
+            "Selling Price",
+            "Weight",
+            "Dimensions",
+            "Packing",
+            "Material",
+            "Certification",
+          ]}
+          tabledata={filteredData}
+        />
+      </div>
+    </section>
   );
 }
 
