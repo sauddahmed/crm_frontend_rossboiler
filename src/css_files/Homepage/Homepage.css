@@ -17,6 +17,7 @@
   flex: 1; /* Makes the main content area take up the remaining space */
   overflow-y: auto;
   margin-left: 65px; /* Ensure main content does not overlap the sidebar */
+  margin-top: 3.5rem;
   padding: 1rem; /* Adds spacing for better layout */
-  background-color: skyblue;
+  background-color: #f2edf3;
 }
