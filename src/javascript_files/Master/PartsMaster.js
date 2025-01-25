@@ -9,6 +9,7 @@ function PartsMaster() {
   const [tableData, setTableData] = useState([
     [
       1,
+      "1234",
       "Laptop Screen",
       "15.6-inch HD display",
       "Electronics",
@@ -26,6 +27,7 @@ function PartsMaster() {
     ],
     [
       2,
+      "1234",
       "Keyboard",
       "Standard QWERTY keyboard",
       "Electronics",
@@ -43,6 +45,7 @@ function PartsMaster() {
     ],
     [
       3,
+      "1234",
       "Laptop Charger",
       "65W power adapter",
       "Electronics",
@@ -60,6 +63,7 @@ function PartsMaster() {
     ],
     [
       4,
+      "1234",
       "Laptop Battery",
       "Lithium-ion battery",
       "Electronics",
@@ -77,6 +81,7 @@ function PartsMaster() {
     ],
     [
       5,
+      "1234",
       "Cooling Pad",
       "USB-powered cooling pad",
       "Electronics",
@@ -94,6 +99,7 @@ function PartsMaster() {
     ],
     [
       6,
+      "1234",
       "Laptop Stand",
       "Adjustable aluminum stand",
       "Electronics",
@@ -111,6 +117,7 @@ function PartsMaster() {
     ],
     [
       7,
+      "1234",
       "Laptop Bag",
       "Water-resistant laptop bag",
       "Electronics",
@@ -128,6 +135,7 @@ function PartsMaster() {
     ],
     [
       8,
+      "1234",
       "Mouse",
       "Wireless optical mouse",
       "Electronics",
@@ -145,6 +153,7 @@ function PartsMaster() {
     ],
     [
       9,
+      "1234",
       "USB Hub",
       "4-port USB 3.0 hub",
       "Electronics",
@@ -162,6 +171,7 @@ function PartsMaster() {
     ],
     [
       10,
+      "1234",
       "Webcam",
       "HD webcam with microphone",
       "Electronics",
@@ -179,6 +189,7 @@ function PartsMaster() {
     ],
     [
       11,
+      "1234",
       "Docking Station",
       "Universal docking station",
       "Electronics",
@@ -196,6 +207,7 @@ function PartsMaster() {
     ],
     [
       12,
+      "1234",
       "SSD Drive",
       "1TB internal SSD",
       "Electronics",
@@ -213,6 +225,7 @@ function PartsMaster() {
     ],
     [
       13,
+      "1234",
       "RAM Module",
       "8GB DDR4 RAM",
       "Electronics",
@@ -230,6 +243,7 @@ function PartsMaster() {
     ],
     [
       14,
+      "1234",
       "Ethernet Adapter",
       "USB to Ethernet adapter",
       "Electronics",
@@ -247,6 +261,7 @@ function PartsMaster() {
     ],
     [
       15,
+      "1234",
       "Headset",
       "Wireless headset with mic",
       "Electronics",
@@ -264,6 +279,7 @@ function PartsMaster() {
     ],
     [
       16,
+      "1234",
       "Bluetooth Adapter",
       "USB Bluetooth 5.0 adapter",
       "Electronics",
@@ -281,6 +297,7 @@ function PartsMaster() {
     ],
     [
       17,
+      "1234",
       "Graphics Card",
       "External GPU enclosure",
       "Electronics",
@@ -298,6 +315,7 @@ function PartsMaster() {
     ],
     [
       18,
+      "1234",
       "Laptop Sleeve",
       "Shockproof laptop sleeve",
       "Electronics",
@@ -315,6 +333,7 @@ function PartsMaster() {
     ],
     [
       19,
+      "1234",
       "Power Bank",
       "20000mAh power bank",
       "Electronics",
@@ -332,6 +351,7 @@ function PartsMaster() {
     ],
     [
       20,
+      "1234",
       "Screen Guard",
       "Anti-glare screen protector",
       "Electronics",
@@ -351,6 +371,7 @@ function PartsMaster() {
   ]);
   const [filteredData, setFilteredData] = useState(tableData); // State for filtered table data
   const [newPart, setNewPart] = useState({
+    partNumber: "",
     partName: "",
     description: "",
     category: "",
@@ -389,6 +410,7 @@ function PartsMaster() {
       ...prev,
       [
         prev.length + 1,
+        newPart.partNumber,
         newPart.partName,
         newPart.description,
         newPart.category,
@@ -406,6 +428,7 @@ function PartsMaster() {
       ],
     ]);
     setNewPart({
+      PartNumber: "",
       partName: "",
       description: "",
       category: "",
@@ -486,6 +509,16 @@ function PartsMaster() {
         {showAddForm && (
           <div className="form-container">
             <form onSubmit={handleAddPart} className="add-category-form">
+              <div className="form-row">
+                <label>Part Number:</label>
+                <input
+                  type="number"
+                  name="partNumber"
+                  value={newPart.partNumber}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
               <div className="form-row">
                 <label>Part Name:</label>
                 <input
@@ -720,6 +753,7 @@ function PartsMaster() {
         <Table
           tablehead={[
             "Part ID",
+            "Part No.",
             "Part Name",
             "Description",
             "Category",
