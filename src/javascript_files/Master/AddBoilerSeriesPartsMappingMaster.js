@@ -1,38 +1,48 @@
 import React from "react";
 import { useState } from "react";
-import "../../css_files/Master/AddBoilerSeriesMaster.css";
+import "../../css_files/Master/AddBoilerSeriesPartsMappingMaster.css";
 import CloseForm from "./CloseForm";
 import axios from "axios";
 
-function AddBoilerSeriesMaster({ setshowaddform, reload, setReload }) {
-  const [boilerSeriesData, setBoilerSeriesData] = useState({
-    Head: "",
-    SeriesCode: "",
-    Description: "",
-  });
+function AddBoilerSeriesPartsMappingMaster({
+  setshowaddform,
+  reload,
+  setReload,
+}) {
+  const [boilerSeriesPartsMappingData, setBoilerSeriesPartsMappingData] =
+    useState({
+      Head: "",
+      SeriesId: "",
+      Description: "",
+    });
 
   function handleSubmit(e) {
     e.preventDefault();
-    const URL = `${process.env.REACT_APP_API_URL}/api/v1/BoilerSeries`;
+    console.log("Sending Data:", boilerSeriesPartsMappingData);
+
+    const URL = `${process.env.REACT_APP_API_URL}/api/v1/BoilerSeriesPartsMapping`;
     axios
-      .post(URL, boilerSeriesData)
+      .post(URL, boilerSeriesPartsMappingData)
       .then((response) => {
         console.log(response.data);
         setshowaddform(false);
         setReload(!reload);
       })
       .catch((error) => {
-        console.error("Error adding boiler series data:", error);
+        console.error("Error adding boiler series parts mapping data:", error);
       });
   }
   return (
-    <form className="add-boiler-series-master" onSubmit={handleSubmit}>
+    <form
+      className="add-boiler-series-parts-mapping-master"
+      onSubmit={handleSubmit}
+    >
       <blockquote>
         <label>Boiler Head</label>
         <select
           onChange={(e) =>
-            setBoilerSeriesData({
-              ...boilerSeriesData,
+            setBoilerSeriesPartsMappingData({
+              ...boilerSeriesPartsMappingData,
               Head: e.target.value,
             })
           }
@@ -44,14 +54,14 @@ function AddBoilerSeriesMaster({ setshowaddform, reload, setReload }) {
         </select>
       </blockquote>
       <blockquote>
-        <label>Series Code</label>
+        <label>Series Id</label>
         <input
           type="text"
-          placeholder="Enter Series Code"
+          placeholder="Enter Series Id"
           onChange={(e) =>
-            setBoilerSeriesData({
-              ...boilerSeriesData,
-              SeriesCode: e.target.value,
+            setBoilerSeriesPartsMappingData({
+              ...boilerSeriesPartsMappingData,
+              SeriesId: Number(e.target.value),
             })
           }
         />
@@ -62,8 +72,8 @@ function AddBoilerSeriesMaster({ setshowaddform, reload, setReload }) {
           rows={5}
           placeholder="Enter Description"
           onChange={(e) =>
-            setBoilerSeriesData({
-              ...boilerSeriesData,
+            setBoilerSeriesPartsMappingData({
+              ...boilerSeriesPartsMappingData,
               Description: e.target.value,
             })
           }
@@ -75,4 +85,4 @@ function AddBoilerSeriesMaster({ setshowaddform, reload, setReload }) {
   );
 }
 
-export default AddBoilerSeriesMaster;
+export default AddBoilerSeriesPartsMappingMaster;

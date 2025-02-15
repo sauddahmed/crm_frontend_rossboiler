@@ -26,11 +26,11 @@ function PartsMaster() {
     "Material",
     "Certification",
   ];
+
   const [tabledata, setTableData] = useState([]);
-  const [reload, setReload] = useState(false);
 
   useEffect(() => {
-    const URL = `${process.env.REACT_APP_API_URL}/api/v1/Parts`;
+    const URL = `${process.env.REACT_APP_API_URL}/api/v1/parts`;
     axios
       .get(URL)
       .then((response) => {
@@ -43,10 +43,10 @@ function PartsMaster() {
           data.push(response.data[i].description);
           data.push(response.data[i].category);
           data.push(response.data[i].subcategory);
-          data.push(response.data[i].unitId);
-          data.push(response.data[i].gstId);
+          data.push(response.data[i].units);
+          data.push(response.data[i].gstid);
           data.push(response.data[i].hsnDetailsId);
-          data.push(response.data[i].supplyType);
+          data.push(response.data[i].SupplyType);
           data.push(response.data[i].sellingPrice);
           data.push(response.data[i].weight);
           data.push(response.data[i].dimensions);
@@ -61,7 +61,7 @@ function PartsMaster() {
         }
       })
       .catch((error) => {
-        console.error("There was an error fetching parts data!", error);
+        console.error("There was an error fetching the data!", error);
       });
   }, []);
 
@@ -75,13 +75,7 @@ function PartsMaster() {
             Search Parts Master
           </button>
         </blockquote>
-        {showaddform && (
-          <AddPartsMaster
-            setshowaddform={setshowaddform}
-            reload={reload}
-            setReload={setReload}
-          />
-        )}
+        {showaddform && <AddPartsMaster setshowaddform={setshowaddform} />}
         {showsearchform && (
           <SearchPartsMaster setshowsearchform={setshowsearchform} />
         )}

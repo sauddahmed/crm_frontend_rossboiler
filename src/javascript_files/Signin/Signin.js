@@ -8,8 +8,8 @@ function Signin() {
   const nav = useNavigate();
   useEffect(() => {
     nav("/login");
-    sessionStorage.setItem("username", "user123");
-    sessionStorage.setItem("password", "pass@123");
+    sessionStorage.setItem("username", "admin");
+    sessionStorage.setItem("password", "admin123");
   }, []);
 
   return (

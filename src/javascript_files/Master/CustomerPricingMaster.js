@@ -1,36 +1,29 @@
 import React, { useState, useEffect } from "react";
 import Table from "../Homepage/Table";
-import "../../css_files/Master/CustomerMaster.css";
-import AddCustomerMaster from "./AddCustomerMaster";
-import SearchCustomerMaster from "./SearchCustomerMaster";
+import "../../css_files/Master/CustomerPricingMaster.css";
+import AddCustomerPricingMaster from "./AddCustomerPricing";
+import SearchCustomerPricingMaster from "./SearchCustomerPricingMaster";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 
-function CustomerMaster() {
+function CustomerPricingMaster() {
   const [showaddform, setshowaddform] = useState(false);
   const [showsearchform, setshowsearchform] = useState(false);
-  const tablehead = [
-    "Id",
-    "Name",
-    "Description",
-    "Addresses",
-    "Contact Centres",
-    "Customer Boilers",
-  ];
+  const tablehead = ["Id", "Code", "Percentage", "Description"];
   const [tabledata, setTableData] = useState([]);
   const [reload, setReload] = useState(false);
   const [triggerupdate, settriggerupdate] = useState(false);
-  const [customerupdatedata, setcustomerupdatedata] = useState([]);
+  const [customerpricingupdatedata, setcustomerpricingupdatedata] = useState(
+    []
+  );
 
   function setsearchedtabledata(tabledata) {
     setTableData([]);
     const tablearr = [];
     tablearr.push(tabledata.id);
-    tablearr.push(tabledata.orgName);
+    tablearr.push(tabledata.code);
+    tablearr.push(tabledata.percentage);
     tablearr.push(tabledata.description);
-    tablearr.push(tabledata.addresses);
-    tablearr.push(tabledata.contactCentres);
-    tablearr.push(tabledata.customerBoilers);
     setTableData((prev) => {
       const arr = [...prev];
       arr.push(tablearr);
@@ -39,13 +32,13 @@ function CustomerMaster() {
     setshowsearchform(false);
   }
 
-  function fetchcustomerdata(customerdataarr) {
-    setcustomerupdatedata(customerdataarr);
+  function fetchcustomerpricingdata(customerpricingdataarr) {
+    setcustomerpricingupdatedata(customerpricingdataarr);
   }
 
   useEffect(() => {
     setTableData([]);
-    const URL = `${process.env.REACT_APP_API_URL}/api/v1/Customer`;
+    const URL = `${process.env.REACT_APP_API_URL}/api/v1/CustomerPricing`;
     axios
       .get(URL)
       .then((response) => {
@@ -53,11 +46,9 @@ function CustomerMaster() {
         for (let i = 0; i < response.data.length; i++) {
           const data = [];
           data.push(response.data[i].id);
-          data.push(response.data[i].orgName);
+          data.push(response.data[i].code);
+          data.push(response.data[i].percentage);
           data.push(response.data[i].description);
-          data.push(response.data[i].addresses);
-          data.push(response.data[i].contactCentres);
-          data.push(response.data[i].customerBoilers);
           setTableData((prev) => {
             const arr = [...prev];
             arr.push(data);
@@ -66,39 +57,39 @@ function CustomerMaster() {
         }
       })
       .catch((error) => {
-        console.error("Error fetching customer data:", error);
+        console.error("Error fetching customer pricing data:", error);
       });
   }, [reload]);
 
   return (
-    <section className="customer-master">
+    <section className="customer-pricing-master">
       <ToastContainer />
-      <h1>Customer Master</h1>
-      <blockquote className="customer-master-forms">
+      <h1>Customer Pricing Master</h1>
+      <blockquote className="customer-pricing-master-forms">
         <button
           onClick={() => {
             setshowaddform(true);
             settriggerupdate(false);
           }}
         >
-          Add Customer Master
+          Add Customer Pricing Master
         </button>
         <button onClick={() => setshowsearchform(true)}>
-          Search Customer Master
+          Search Customer Pricing Master
         </button>
       </blockquote>
       {showaddform && (
-        <AddCustomerMaster
+        <AddCustomerPricingMaster
           setshowaddform={setshowaddform}
           reload={reload}
           setReload={setReload}
           triggerupdate={triggerupdate}
-          customerupdatedata={customerupdatedata}
-          key={`${customerupdatedata}-${triggerupdate}`}
+          customerpricingupdatedata={customerpricingupdatedata}
+          key={`${customerpricingupdatedata}-${triggerupdate}`}
         />
       )}
       {showsearchform && (
-        <SearchCustomerMaster
+        <SearchCustomerPricingMaster
           setshowsearchform={setshowsearchform}
           setsearchedtabledata={setsearchedtabledata}
         />
@@ -108,8 +99,8 @@ function CustomerMaster() {
         tabledata={tabledata}
         setshowaddform={setshowaddform}
         settriggerupdate={settriggerupdate}
-        fetchdata={fetchcustomerdata}
-        url="Customer/DeleteCustomer"
+        fetchdata={fetchcustomerpricingdata}
+        url="CustomerPricing/DeleteCustomerPricing"
         reload={reload}
         setReload={setReload}
       />
@@ -117,4 +108,4 @@ function CustomerMaster() {
   );
 }
 
-export default CustomerMaster;
+export default CustomerPricingMaster;

@@ -1,37 +1,92 @@
-import React, { useState } from "react";
+import React from "react";
+import { useState } from "react";
 import "../../css_files/Master/AddCategoryMaster.css";
 import CloseForm from "./CloseForm";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-function AddCategoryMaster({ setshowaddcategorymaster }) {
-  const [data, setdata] = useState({
-    name: "",
-    description: "",
+function AddCategoryMaster({
+  setshowaddform,
+  reload,
+  setReload,
+  triggerupdate,
+  categorypdatedata,
+}) {
+  const [categoryData, setCategoryData] = useState({
+    Name: triggerupdate ? categorypdatedata[1] : "",
+    Description: triggerupdate ? categorypdatedata[2] : "",
   });
 
-  function handlesubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
+
+    if (triggerupdate) {
+      const url = `${process.env.REACT_APP_API_URL}/api/v1/Category/UpdateCategory`;
+      axios
+        .put(url, {
+          id: categorypdatedata[0],
+          name: categoryData.Name,
+          description: categoryData.Description,
+        })
+        .then((res) => {
+          toast.success(res.data.message, {
+            position: "bottom-center",
+          });
+          setshowaddform(false);
+          setReload(!reload);
+        })
+        .catch((err) => {
+          toast.error("Failed to Update", {
+            position: "bottom-center",
+          });
+          console.log(err);
+        });
+    } else {
+      const url = `${process.env.REACT_APP_API_URL}/api/v1/Category`;
+      axios
+        .post(url, categoryData)
+        .then((response) => {
+          toast.success("Record Added Successfully", {
+            position: "bottom-center",
+          });
+          setshowaddform(false);
+          setReload(!reload);
+        })
+        .catch((error) => {
+          console.error("Error adding hsn data:", error);
+          toast.error("Failed to Add Record", {
+            position: "bottom-center",
+          });
+        });
+    }
   }
 
   return (
-    <form className="add-category-master" onSubmit={handlesubmit}>
+    <form className="add-category-master" onSubmit={handleSubmit}>
       <blockquote>
         <label>Category Name</label>
         <input
           type="text"
-          placeholder="Enter Category Name"
-          onChange={(e) => setdata({ ...data, name: e.target.value })}
+          placeholder="Enter Category Master Name"
+          value={categoryData.Name}
+          onChange={(e) =>
+            setCategoryData({ ...categoryData, Name: e.target.value })
+          }
         />
       </blockquote>
       <blockquote>
-        <label>Category Description</label>
+        <label>Description</label>
         <textarea
           rows={5}
-          placeholder="Enter Category Description"
-          onChange={(e) => setdata({ ...data, description: e.target.value })}
+          placeholder="Enter Description"
+          value={categoryData.Description}
+          onChange={(e) =>
+            setCategoryData({ ...categoryData, Description: e.target.value })
+          }
         ></textarea>
       </blockquote>
-      <button type="submit">Add </button>
-      <CloseForm close={setshowaddcategorymaster} />
+      <button type="submit">{triggerupdate ? "Update" : "Add"}</button>
+      <CloseForm close={setshowaddform} />
     </form>
   );
 }

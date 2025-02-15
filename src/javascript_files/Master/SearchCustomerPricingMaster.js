@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import "../../css_files/Master/SearchSubCategoryMaster.css";
+import "../../css_files/Master/SearchCustomerPricingMaster.css";
 import CloseForm from "./CloseForm";
 import axios from "axios";
 
-function SearchSubCategoryMaster({ setshowsearchform, setsearchedtabledata }) {
+function SearchCustomerPricingMaster({
+  setshowsearchform,
+  setsearchedtabledata,
+}) {
   const [Id, setId] = useState(0);
 
   function handleSearch(e, id) {
     e.preventDefault();
-    const url = `${process.env.REACT_APP_API_URL}/api/v1/SubCategory/GetSubCategoryById?id=${id}`;
+    const url = `${process.env.REACT_APP_API_URL}/api/v1/CustomerPricing/GetCustomerPricingById?id=${id}`;
     axios
       .get(url)
       .then((res) => {
@@ -21,24 +24,25 @@ function SearchSubCategoryMaster({ setshowsearchform, setsearchedtabledata }) {
   }
   return (
     <form
-      className="search-sub-category-master-form"
+      className="search-customer-pricing-master-form"
       onSubmit={(e) => handleSearch(e, Id)}
     >
-      <h3>
-        Search Sub-Category Master By <br />
-        Entering at least One Field
-      </h3>
+      <h3>Search Customer Pricing Master by Entering at least One Field</h3>
       <blockquote>
         <label>Id</label>
         <input
           type="number"
-          placeholder="Enter Sub-Category Master Id"
+          placeholder="Enter Customer Id"
           onChange={(e) => setId(e.target.value)}
         />
       </blockquote>
       <blockquote>
         <label>Name</label>
-        <input type="text" placeholder="Enter Sub-Category Name" />
+        <input type="number" placeholder="Enter Customer Code" />
+      </blockquote>
+      <blockquote>
+        <label>Email</label>
+        <input type="email" placeholder="Enter Percentage" />
       </blockquote>
       <button type="submit">Search</button>
       <CloseForm close={setshowsearchform} />
@@ -46,4 +50,4 @@ function SearchSubCategoryMaster({ setshowsearchform, setsearchedtabledata }) {
   );
 }
 
-export default SearchSubCategoryMaster;
+export default SearchCustomerPricingMaster;

@@ -1,15 +1,35 @@
 import React, { useEffect, useState } from "react";
 import "../../css_files/Homepage/Table.css";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-function Table({ tablehead, tabledata }) {
-  const [fetcheddata, setfetcheddata] = useState(tabledata);
-  const [editable, seteditable] = useState(
-    Array.from({ length: fetcheddata.length }, () => false)
-  );
-
-  useEffect(() => {
-    setfetcheddata(tabledata);
-  }, [tabledata]);
+function Table({
+  tablehead,
+  tabledata,
+  setshowaddform,
+  settriggerupdate,
+  fetchdata,
+  url,
+  reload,
+  setReload,
+}) {
+  function handleDelete(id) {
+    const URL = `${process.env.REACT_APP_API_URL}/api/v1/${url}?id=${id}`;
+    axios
+      .delete(URL)
+      .then((res) => {
+        toast.success("Record Deleted Successfully", {
+          position: "bottom-center",
+        });
+        setReload(!reload);
+      })
+      .catch((err) => {
+        toast.error("Failed to Delete", {
+          position: "bottom-center",
+        });
+      });
+  }
   return (
     <section className="table">
       <table>
@@ -25,59 +45,44 @@ function Table({ tablehead, tabledata }) {
           </tr>
         </thead>
         <tbody>
-          {fetcheddata.map((data, index) => (
+          {tabledata.map((data, index) => (
             <tr key={index}>
               {data.map((tdata, idx) => (
                 <td key={idx}>
-                  <p hidden={editable[index] && idx != 0}>{tdata}</p>
-                  <input
-                    type={editable[index] && idx != 0 ? "text" : "hidden"}
-                    value={fetcheddata[index][idx]}
-                  />
+                  <p>{tdata}</p>
                 </td>
               ))}
               <td>
-                {editable[index] ? (
-                  <i
-                    className="fa-solid fa-floppy-disk"
-                    title="Save Changes"
-                  ></i>
-                ) : (
-                  <i
-                    className="fa-regular fa-pen-to-square"
-                    onClick={() =>
-                      seteditable((prev) => {
-                        const arr = prev.map((_, i) => i === index);
-                        return arr;
-                      })
-                    }
-                    title="Edit"
-                  />
-                )}
+                <i
+                  className="fa-regular fa-pen-to-square"
+                  onClick={() => {
+                    setshowaddform(true);
+                    settriggerupdate(true);
+                    fetchdata(tabledata[index]);
+                  }}
+                  title="Edit"
+                />
               </td>
               <td>
-                {editable[index] ? (
-                  <i
-                    className="fa-solid fa-xmark"
-                    onClick={() =>
-                      seteditable((prev) => {
-                        const arr = [...prev];
-                        arr[index] = false;
-                        return arr;
-                      })
-                    }
-                    title="Cancel"
-                  ></i>
-                ) : (
-                  <i
-                    className="fa-solid fa-trash"
-                    title="Delete"
-                    onClick={() => {
-                      if (window.confirm("Do You want to delete")) {
+                <i
+                  className="fa-solid fa-trash"
+                  title="Delete"
+                  onClick={() => {
+                    Swal.fire({
+                      title: "Are you sure?",
+                      text: "You won't be able to revert this!",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "#3085d6",
+                      cancelButtonColor: "#d33",
+                      confirmButtonText: "Yes, delete it!",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        handleDelete(tabledata[index][0]);
                       }
-                    }}
-                  />
-                )}
+                    });
+                  }}
+                />
               </td>
             </tr>
           ))}

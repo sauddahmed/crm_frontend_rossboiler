@@ -1,172 +1,110 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../css_files/Master/UnitMaster.css";
 import Table from "../Homepage/Table";
+import AddUnitMaster from "./AddUnitMaster";
+import SearchUnitMaster from "./SearchUnitMaster";
+import axios from "axios";
+import { ToastContainer } from "react-toastify";
 
 function UnitMaster() {
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filterType, setFilterType] = useState("id");
-  const [tableData, setTableData] = useState([
-    [1, "Kilogram", "KG", "Measurement of mass"],
-    [2, "Meter", "M", "Measurement of length"],
-    [3, "Liter", "L", "Measurement of volume"],
-    [4, "Piece", "PCS", "Individual countable items"],
-    [5, "Dozen", "DZ", "12 pieces"],
-    [6, "Gram", "G", "Small unit of mass"],
-    [7, "Centimeter", "CM", "Small unit of length"],
-    [8, "Milliliter", "ML", "Small unit of volume"],
-    [9, "Pack", "PK", "Collection of items in a package"],
-    [10, "Box", "BX", "Container of items"],
-    [11, "Ton", "T", "Large unit of mass"],
-    [12, "Yard", "YD", "Unit of length"],
-    [13, "Inch", "IN", "Small unit of length"],
-    [14, "Square Meter", "SQM", "Measurement of area"],
-    [15, "Cubic Meter", "CBM", "Measurement of volume"],
-    [16, "Hour", "HR", "Unit of time"],
-    [17, "Minute", "MIN", "Small unit of time"],
-    [18, "Second", "SEC", "Very small unit of time"],
-    [19, "Barrel", "BBL", "Unit of volume for liquids"],
-    [20, "Carton", "CTN", "Box used for packaging"],
-  ]);
-  const [filteredData, setFilteredData] = useState(tableData);
-  const [newUnit, setNewUnit] = useState({
-    name: "",
-    code: "",
-    description: "",
-  });
+  const [showaddform, setshowaddform] = useState(false);
+  const [showsearchform, setshowsearchform] = useState(false);
+  const tablehead = ["Id", "Name", "Code", "Description"];
+  const [tabledata, setTableData] = useState([]);
+  const [reload, setReload] = useState(false);
+  const [triggerupdate, settriggerupdate] = useState(false);
+  const [unitupdatedata, setunitupdatedata] = useState([]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewUnit((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleAddUnit = (e) => {
-    e.preventDefault();
-    const { name, code, description } = newUnit;
-
-    if (!name || !code || !description) {
-      alert("All fields are required!");
-      return;
-    }
-
-    if (code.length !== 2) {
-      alert("Unit code must be exactly 2 characters!");
-      return;
-    }
-
-    setTableData((prev) => [
-      ...prev,
-      [prev.length + 1, name, code, description],
-    ]);
-    setNewUnit({ name: "", code: "", description: "" });
-    setShowAddForm(false);
-  };
-
-  const handleFilter = () => {
-    const lowerCaseQuery = searchQuery.toLowerCase();
-    const newFilteredData = tableData.filter((row) => {
-      if (filterType === "id") {
-        return row[0].toString().includes(lowerCaseQuery);
-      } else if (filterType === "name") {
-        return row[1].toLowerCase().includes(lowerCaseQuery);
-      }
-      return true;
+  function setsearchedtabledata(tabledata) {
+    setTableData([]);
+    const tablearr = [];
+    tablearr.push(tabledata.id);
+    tablearr.push(tabledata.name);
+    tablearr.push(tabledata.code);
+    tablearr.push(tabledata.description);
+    setTableData((prev) => {
+      const arr = [...prev];
+      arr.push(tablearr);
+      return arr;
     });
-    setFilteredData(newFilteredData);
-  };
+    setshowsearchform(false);
+  }
 
-  const resetFilter = () => {
-    setSearchQuery("");
-    setFilteredData(tableData);
-  };
+  function fetchunitdata(unitdataarr) {
+    setunitupdatedata(unitdataarr);
+  }
+
+  useEffect(() => {
+    setTableData([]);
+    const URL = `${process.env.REACT_APP_API_URL}/api/v1/Unit`;
+    axios
+      .get(URL)
+      .then((response) => {
+        console.log(response.data);
+        for (let i = 0; i < response.data.length; i++) {
+          const data = [];
+          data.push(response.data[i].id);
+          data.push(response.data[i].name);
+          data.push(response.data[i].code);
+          data.push(response.data[i].description);
+          setTableData((prev) => {
+            const arr = [...prev];
+            arr.push(data);
+            return arr;
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching unit data:", error);
+      });
+  }, [reload]);
 
   return (
-    <section className="category-master-container">
-      <div className="category-master">
-        <h1 className="category-master-title">UNIT MASTER</h1>
-
-        {/* Search Section */}
-        <div className="search-container">
-          <select
-            value={filterType}
-            onChange={(e) => setFilterType(e.target.value)}
-            className="search-select"
-          >
-            <option value="id">Search by ID</option>
-            <option value="name">Search by Name</option>
-          </select>
-          <input
-            type="text"
-            placeholder={`Search by ${filterType === "id" ? "ID" : "Name"}`}
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="search-input"
-          />
-          <button onClick={handleFilter} className="filter-button">
-            Filter
-          </button>
-          <button onClick={resetFilter} className="reset-button">
-            Reset
-          </button>
+    <>
+      <section className="unit-master">
+        <ToastContainer />
+        <h1>Unit Master</h1>
+        <blockquote className="unit-master-forms">
           <button
-            onClick={() => setShowAddForm((prev) => !prev)}
-            className="add-button"
+            onClick={() => {
+              setshowaddform(true);
+              settriggerupdate(false);
+            }}
           >
-            {showAddForm ? "Hide" : "Add"}
+            Add Unit Master
           </button>
-        </div>
-
-        {/* Add Form */}
-        {showAddForm && (
-          <form onSubmit={handleAddUnit} className="add-category-form">
-            <div className="form-row">
-              <div className="form-field">
-                <label>Unit Name:</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={newUnit.name}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              <div className="form-field">
-                <label>Unit Code:</label>
-                <input
-                  type="text"
-                  name="code"
-                  value={newUnit.code}
-                  onChange={handleInputChange}
-                  maxLength={2}
-                  pattern=".{2,2}"
-                  title="Unit code must be exactly 2 characters."
-                  required
-                />
-              </div>
-              <div className="form-field">
-                <label>Description:</label>
-                <input
-                  type="text"
-                  name="description"
-                  value={newUnit.description}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-            </div>
-            <button type="submit" className="add-category-button">
-              Add
-            </button>
-          </form>
+          <button onClick={() => setshowsearchform(true)}>
+            Search Unit Master
+          </button>
+        </blockquote>
+        {showaddform && (
+          <AddUnitMaster
+            setshowaddform={setshowaddform}
+            reload={reload}
+            setReload={setReload}
+            triggerupdate={triggerupdate}
+            unitupdatedata={unitupdatedata}
+            key={`${unitupdatedata}-${triggerupdate}`}
+          />
         )}
-
-        {/* Table */}
+        {showsearchform && (
+          <SearchUnitMaster
+            setshowsearchform={setshowsearchform}
+            setsearchedtabledata={setsearchedtabledata}
+          />
+        )}
         <Table
-          tablehead={["Unit Id", "Unit Name", "Unit Code", "Description"]}
-          tabledata={filteredData}
+          tablehead={tablehead}
+          tabledata={tabledata}
+          setshowaddform={setshowaddform}
+          settriggerupdate={settriggerupdate}
+          fetchdata={fetchunitdata}
+          url="Unit/DeleteUnit"
+          reload={reload}
+          setReload={setReload}
         />
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
 

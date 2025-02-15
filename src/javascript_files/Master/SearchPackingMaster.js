@@ -1,14 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../css_files/Master/SearchPackingMaster.css";
 import CloseForm from "./CloseForm";
+import axios from "axios";
 
-function SearchPackingMaster({ setshowsearchform }) {
+function SearchPackingMaster({ setshowsearchform, setsearchedtabledata }) {
+  const [Id, setId] = useState(0);
+
+  function handleSearch(e, id) {
+    e.preventDefault();
+    const url = `${process.env.REACT_APP_API_URL}/api/v1/Packing/GetPackingByFilter?id=${id}`;
+    axios
+      .get(url)
+      .then((res) => {
+        console.log(res);
+        setsearchedtabledata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   return (
-    <form className="search-packing-master-form">
+    <form
+      className="search-packing-master-form"
+      onSubmit={(e) => handleSearch(e, Id)}
+    >
       <h3>Search Packing Master By Entering at least One Field</h3>
       <blockquote>
         <label>Id</label>
-        <input type="number" placeholder="Enter Packing Master Id" />
+        <input
+          type="number"
+          placeholder="Enter Packing Master Id"
+          onChange={(e) => setId(e.target.value)}
+        />
       </blockquote>
       <blockquote>
         <label>Name</label>

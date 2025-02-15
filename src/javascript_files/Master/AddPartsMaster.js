@@ -1,42 +1,128 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import "../../css_files/Master/AddPartsMaster.css";
 import CloseForm from "./CloseForm";
+import axios from "axios";
 
-function AddPartsMaster({ setshowaddform }) {
+function AddPartsMaster({ setshowaddform, reload, setReload }) {
+  const [categoryData, setCategoryData] = useState([]);
+  const [partsData, setPartsData] = useState({
+    Name: "",
+    PartNumber: "",
+    Description: "",
+    SupplyType: "",
+    SellingPrice: "",
+    Weight: "",
+    Dimensions: "",
+    MaterialOfConstruction: "",
+    UnitId: "",
+    GSTId: "",
+    HSNDetailsId: "",
+    PackingId: "",
+    CategoryId: "",
+    SubcategoryId: "",
+  });
+
+  useEffect(() => {
+    const URL = `${process.env.REACT_APP_API_URL}/api/v1/Category`;
+    axios
+      .get(URL)
+      .then((response) => {
+        console.log(response.data);
+        setCategoryData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const URL = `${process.env.REACT_APP_API_URL}/api/v1/Parts`;
+    axios
+      .post(URL, partsData)
+      .then((response) => {
+        console.log(response.data);
+        setshowaddform(false);
+        setReload(!reload);
+      })
+      .catch((error) => {
+        console.error("Error adding packing data:", error);
+      });
+  }
   return (
-    <form className="add-parts-master">
+    <form className="add-parts-master" onSubmit={handleSubmit}>
       <blockquote>
         <label>Part Number</label>
-        <input type="text" placeholder="Enter Part Number" />
+        <input
+          type="text"
+          placeholder="Enter Part Number"
+          onChange={(e) =>
+            setPartsData({ ...partsData, PartNumber: e.target.value })
+          }
+        />
       </blockquote>
       <blockquote>
         <label>Part Name</label>
-        <input type="text" placeholder="Enter Part Name" />
+        <input
+          type="text"
+          placeholder="Enter Part Name"
+          onChange={(e) => setPartsData({ ...partsData, Name: e.target.value })}
+        />
       </blockquote>
       <blockquote>
         <label>Description</label>
-        <textarea rows={5} placeholder="Enter Part Description"></textarea>
+        <textarea
+          rows={5}
+          placeholder="Enter Part Description"
+          onChange={(e) =>
+            setPartsData({ ...partsData, Description: e.target.value })
+          }
+        ></textarea>
       </blockquote>
       <blockquote>
-        <label>Under Group</label>
-        <select>
+        <label>Category Name</label>
+        <select
+          onChange={(e) =>
+            setPartsData({
+              ...partsData,
+              CategoryId: e.target.value,
+            })
+          }
+        >
           <option value="">Select Category</option>
-          <option>Electronics</option>
-          <option>Kitchen Appliances</option>
-          <option>Vehicles</option>
-          <option>Books</option>
+          {categoryData.map((category, index) => (
+            <option key={index} value={category.id}>
+              {category.name}
+            </option>
+          ))}
         </select>
-        <select>
-          <option value="">Select Sub-Category</option>
-          <option>Laptop</option>
-          <option>Mobile</option>
-          <option>Smartwatch</option>
-          <option>TV</option>
+      </blockquote>
+      <blockquote>
+        <label>Subcategory Name</label>
+        <select
+          onChange={(e) =>
+            setPartsData({
+              ...partsData,
+              SubCategoryId: e.target.value,
+            })
+          }
+        >
+          <option value="">Select Category</option>
+          {categoryData.map((category, index) => (
+            <option key={index} value={category.id}>
+              {category.name}
+            </option>
+          ))}
         </select>
       </blockquote>
       <blockquote>
         <label>Units</label>
-        <select>
+        <select
+          onChange={(e) =>
+            setPartsData({ ...partsData, UnitId: e.target.value })
+          }
+        >
           <option value="">Select Unit</option>
           <option>Kilogram</option>
           <option>Pounds</option>
@@ -44,7 +130,11 @@ function AddPartsMaster({ setshowaddform }) {
       </blockquote>
       <blockquote>
         <label>GST Percentage</label>
-        <select>
+        <select
+          onChange={(e) =>
+            setPartsData({ ...partsData, GSTId: e.target.value })
+          }
+        >
           <option value="">Select GST Percentage</option>
           <option>15%</option>
           <option>20%</option>
@@ -54,7 +144,11 @@ function AddPartsMaster({ setshowaddform }) {
       </blockquote>
       <blockquote>
         <label>HSN Details</label>
-        <select>
+        <select
+          onChange={(e) =>
+            setPartsData({ ...partsData, HSNDetailsId: e.target.value })
+          }
+        >
           <option value="">Select HSN Details</option>
           <option>A123 (Electronics and gadgets)</option>
           <option>B4567 (Furniture and fittings)</option>

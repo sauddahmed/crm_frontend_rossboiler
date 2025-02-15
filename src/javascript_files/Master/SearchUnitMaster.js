@@ -1,14 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../css_files/Master/SearchUnitMaster.css";
 import CloseForm from "./CloseForm";
+import axios from "axios";
 
-function SearchUnitMaster({ setshowsearchform }) {
+function SearchUnitMaster({ setshowsearchform, setsearchedtabledata }) {
+  const [Id, setId] = useState(0);
+
+  function handleSearch(e, id) {
+    e.preventDefault();
+    const url = `${process.env.REACT_APP_API_URL}/api/v1/Unit/GetUnitByFilter?id=${id}`;
+    axios
+      .get(url)
+      .then((res) => {
+        console.log(res);
+        setsearchedtabledata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   return (
-    <form className="search-unit-master-form">
+    <form
+      className="search-unit-master-form"
+      onSubmit={(e) => handleSearch(e, Id)}
+    >
       <h3>Search Unit Master By Entering at least One Field</h3>
       <blockquote>
         <label>Id</label>
-        <input type="number" placeholder="Enter Unit Master Id" />
+        <input
+          type="number"
+          placeholder="Enter Unit Master Id"
+          onChange={(e) => setId(e.target.value)}
+        />
       </blockquote>
       <blockquote>
         <label>Name</label>
