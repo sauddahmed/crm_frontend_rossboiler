@@ -3,36 +3,87 @@ import { useState } from "react";
 import "../../css_files/Master/AddTechnicianMaster.css";
 import CloseForm from "./CloseForm";
 import axios from "axios";
+import { toast } from "react-toastify";
 
-function AddTechnicianMaster({ setshowaddform, reload, setReload }) {
-  const [TechnicianData, setTechnicianData] = useState({
-    Name: "",
-    CompanyPhoneNumber: "",
-    Age: "",
-    Qualification: "",
-    Experience: "",
-    YearsWithRoss: "",
-    CTC: "",
-    PostingLocation: "",
-    Aadhar: "",
-    Pan: "",
-    ResidentialAddress: "",
-    PersonalPhoneNumber: "",
+function AddTechnicianMaster({
+  setshowaddform,
+  reload,
+  setReload,
+  triggerupdate,
+  technicianupdatedata,
+}) {
+  const [technicianData, setTechnicianData] = useState({
+    Name: triggerupdate ? technicianupdatedata?.name : "",
+    CompanyPhoneNumber: triggerupdate
+      ? technicianupdatedata?.companyPhoneNumber
+      : "",
+    Age: triggerupdate ? technicianupdatedata?.age : "",
+    Qualification: triggerupdate ? technicianupdatedata?.qualification : "",
+    Experience: triggerupdate ? technicianupdatedata?.experience : "",
+    YearsWithRoss: triggerupdate ? technicianupdatedata?.yearsWithRoss : "",
+    CTC: triggerupdate ? technicianupdatedata?.ctc : "",
+    PostingLocation: triggerupdate ? technicianupdatedata?.postingLocation : "",
+    Aadhar: triggerupdate ? technicianupdatedata?.aadhar : "",
+    Pan: triggerupdate ? technicianupdatedata?.pan : "",
+    ResidentialAddress: triggerupdate
+      ? technicianupdatedata?.residentialAddress
+      : "",
+    PersonalPhoneNumber: triggerupdate
+      ? technicianupdatedata?.personalPhoneNumber
+      : "",
   });
 
   function handleSubmit(e) {
     e.preventDefault();
-    const URL = `${process.env.REACT_APP_API_URL}/api/v1/Technician`;
-    axios
-      .post(URL, TechnicianData)
-      .then((response) => {
-        console.log(response.data);
-        setshowaddform(false);
-        setReload(!reload);
-      })
-      .catch((error) => {
-        console.error("Error adding technician data:", error);
-      });
+    if (triggerupdate) {
+      const url = `${process.env.REACT_APP_API_URL}/api/v1/Technician/UpdateTechnician`;
+      axios
+        .put(url, {
+          id: technicianupdatedata.id,
+          name: technicianData.Name,
+          companyPhoneNumber: technicianData.CompanyPhoneNumber,
+          age: technicianData.Age,
+          qualification: technicianData.Qualification,
+          experience: technicianData.Experience,
+          yearsWithRoss: technicianData.YearsWithRoss,
+          ctc: technicianData.CTC,
+          postingLocation: technicianData.PostingLocation,
+          aadhar: technicianData.Aadhar,
+          pan: technicianData.Pan,
+          residentialAddress: technicianData.ResidentialAddress,
+          personalPhoneNumber: technicianData.PersonalPhoneNumber,
+        })
+        .then((res) => {
+          toast.success(res.data.message, {
+            position: "bottom-center",
+          });
+          setshowaddform(false);
+          setReload(!reload);
+        })
+        .catch((err) => {
+          toast.error("Failed to Update", {
+            position: "bottom-center",
+          });
+          console.log(err);
+        });
+    } else {
+      const URL = `${process.env.REACT_APP_API_URL}/api/v1/Technician`;
+      axios
+        .post(URL, technicianData)
+        .then((response) => {
+          toast.success("Record Added Successfully", {
+            position: "bottom-center",
+          });
+          setshowaddform(false);
+          setReload(!reload);
+        })
+        .catch((error) => {
+          console.error("Error adding boiler data:", error);
+          toast.error("Failed to Add Record", {
+            position: "bottom-center",
+          });
+        });
+    }
   }
   return (
     <form className="add-technician-master" onSubmit={handleSubmit}>
@@ -41,8 +92,9 @@ function AddTechnicianMaster({ setshowaddform, reload, setReload }) {
         <input
           type="text"
           placeholder="Enter Name of Technician"
+          value={technicianData.Name}
           onChange={(e) =>
-            setTechnicianData({ ...TechnicianData, Name: e.target.value })
+            setTechnicianData({ ...technicianData, Name: e.target.value })
           }
         />
       </blockquote>
@@ -51,9 +103,10 @@ function AddTechnicianMaster({ setshowaddform, reload, setReload }) {
         <input
           type="number"
           placeholder="Enter Company Phone Number"
+          value={technicianData.CompanyPhoneNumber}
           onChange={(e) =>
             setTechnicianData({
-              ...TechnicianData,
+              ...technicianData,
               CompanyPhoneNumber: e.target.value,
             })
           }
@@ -65,9 +118,10 @@ function AddTechnicianMaster({ setshowaddform, reload, setReload }) {
           <input
             type="number"
             placeholder="Enter Age"
+            value={technicianData.Age}
             onChange={(e) =>
               setTechnicianData({
-                ...TechnicianData,
+                ...technicianData,
                 Age: e.target.value,
               })
             }
@@ -78,9 +132,10 @@ function AddTechnicianMaster({ setshowaddform, reload, setReload }) {
           <input
             type="text"
             placeholder="Enter Qualification"
+            value={technicianData.Qualification}
             onChange={(e) =>
               setTechnicianData({
-                ...TechnicianData,
+                ...technicianData,
                 Qualification: e.target.value,
               })
             }
@@ -92,9 +147,10 @@ function AddTechnicianMaster({ setshowaddform, reload, setReload }) {
         <input
           type="number"
           placeholder="Enter Experience in Years"
+          value={technicianData.Experience}
           onChange={(e) =>
             setTechnicianData({
-              ...TechnicianData,
+              ...technicianData,
               Experience: e.target.value,
             })
           }
@@ -106,9 +162,10 @@ function AddTechnicianMaster({ setshowaddform, reload, setReload }) {
           <input
             type="number"
             placeholder="Enter Number of Years with Ross"
+            value={technicianData.YearsWithRoss}
             onChange={(e) =>
               setTechnicianData({
-                ...TechnicianData,
+                ...technicianData,
                 YearsWithRoss: e.target.value,
               })
             }
@@ -119,9 +176,10 @@ function AddTechnicianMaster({ setshowaddform, reload, setReload }) {
           <input
             type="number"
             placeholder="Enter CTC"
+            value={technicianData.CTC}
             onChange={(e) =>
               setTechnicianData({
-                ...TechnicianData,
+                ...technicianData,
                 CTC: e.target.value,
               })
             }
@@ -133,9 +191,10 @@ function AddTechnicianMaster({ setshowaddform, reload, setReload }) {
         <input
           type="text"
           placeholder="Enter Posting Location"
+          value={technicianData.PostingLocation}
           onChange={(e) =>
             setTechnicianData({
-              ...TechnicianData,
+              ...technicianData,
               PostingLocation: e.target.value,
             })
           }
@@ -146,9 +205,10 @@ function AddTechnicianMaster({ setshowaddform, reload, setReload }) {
         <input
           type="number"
           placeholder="Enter Aadhar Number"
+          value={technicianData.Aadhar}
           onChange={(e) =>
             setTechnicianData({
-              ...TechnicianData,
+              ...technicianData,
               Aadhar: e.target.value,
             })
           }
@@ -159,9 +219,10 @@ function AddTechnicianMaster({ setshowaddform, reload, setReload }) {
         <input
           type="text"
           placeholder="Enter Pan Card Number"
+          value={technicianData.Pan}
           onChange={(e) =>
             setTechnicianData({
-              ...TechnicianData,
+              ...technicianData,
               Pan: e.target.value,
             })
           }
@@ -172,9 +233,10 @@ function AddTechnicianMaster({ setshowaddform, reload, setReload }) {
         <input
           type="text"
           placeholder="Enter Residential Address"
+          value={technicianData.ResidentialAddress}
           onChange={(e) =>
             setTechnicianData({
-              ...TechnicianData,
+              ...technicianData,
               ResidentialAddress: e.target.value,
             })
           }
@@ -185,15 +247,16 @@ function AddTechnicianMaster({ setshowaddform, reload, setReload }) {
         <input
           type="number"
           placeholder="Enter Personal Phone Number"
+          value={technicianData.PersonalPhoneNumber}
           onChange={(e) =>
             setTechnicianData({
-              ...TechnicianData,
+              ...technicianData,
               PersonalPhoneNumber: e.target.value,
             })
           }
         />
       </blockquote>
-      <button type="submit">Add </button>
+      <button type="submit">{triggerupdate ? "Update" : "Add"} </button>
       <CloseForm close={setshowaddform} />
     </form>
   );

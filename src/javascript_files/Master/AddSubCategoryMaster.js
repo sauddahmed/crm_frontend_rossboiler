@@ -3,13 +3,20 @@ import { useState } from "react";
 import "../../css_files/Master/AddSubCategoryMaster.css";
 import CloseForm from "./CloseForm";
 import axios from "axios";
+import { toast } from "react-toastify";
 
-function AddSubCategoryMaster({ setshowaddform, reload, setReload }) {
+function AddSubCategoryMaster({
+  setshowaddform,
+  reload,
+  setReload,
+  triggerupdate,
+  subcategorypdatedata,
+}) {
   const [categoryData, setCategoryData] = useState([]);
   const [subCategoryData, setSubCategoryData] = useState({
-    Name: "",
-    Description: "",
-    CategoryId: "",
+    Name: triggerupdate ? subcategorypdatedata?.name : "",
+    Description: triggerupdate ? subcategorypdatedata?.description : "",
+    CategoryId: triggerupdate ? subcategorypdatedata?.categoryId : "",
   });
 
   useEffect(() => {
@@ -17,7 +24,6 @@ function AddSubCategoryMaster({ setshowaddform, reload, setReload }) {
     axios
       .get(URL)
       .then((response) => {
-        console.log(response.data);
         setCategoryData(response.data);
       })
       .catch((error) => {
@@ -27,17 +33,47 @@ function AddSubCategoryMaster({ setshowaddform, reload, setReload }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const URL = `${process.env.REACT_APP_API_URL}/api/v1/SubCategory`;
-    axios
-      .post(URL, subCategoryData)
-      .then((response) => {
-        console.log(response.data);
-        setshowaddform(false);
-        setReload(!reload);
-      })
-      .catch((error) => {
-        console.error("Error adding sub category data:", error);
-      });
+
+    if (triggerupdate) {
+      const url = `${process.env.REACT_APP_API_URL}/api/v1/SubCategory/UpdateSubCategory`;
+      axios
+        .put(url, {
+          id: subcategorypdatedata.id,
+          name: subCategoryData.Name,
+          categoryID: subCategoryData.CategoryId,
+          description: subCategoryData.Description,
+        })
+        .then((res) => {
+          toast.success(res.data.message, {
+            position: "bottom-center",
+          });
+          setshowaddform(false);
+          setReload(!reload);
+        })
+        .catch((err) => {
+          toast.error("Failed to Update", {
+            position: "bottom-center",
+          });
+          console.log(err);
+        });
+    } else {
+      const url = `${process.env.REACT_APP_API_URL}/api/v1/SubCategory`;
+      axios
+        .post(url, subCategoryData)
+        .then((response) => {
+          toast.success("Record Added Successfully", {
+            position: "bottom-center",
+          });
+          setshowaddform(false);
+          setReload(!reload);
+        })
+        .catch((error) => {
+          console.error("Error adding hsn data:", error);
+          toast.error("Failed to Add Record", {
+            position: "bottom-center",
+          });
+        });
+    }
   }
   return (
     <form className="add-sub-category-master" onSubmit={handleSubmit}>
@@ -45,6 +81,7 @@ function AddSubCategoryMaster({ setshowaddform, reload, setReload }) {
         <label>Sub-Category Name</label>
         <textarea
           placeholder="Enter Sub-Category Name"
+          value={subCategoryData.Name}
           onChange={(e) =>
             setSubCategoryData({
               ...subCategoryData,
@@ -58,6 +95,7 @@ function AddSubCategoryMaster({ setshowaddform, reload, setReload }) {
         <textarea
           rows={5}
           placeholder="Enter Sub-Category Description"
+          value={subCategoryData.Description}
           onChange={(e) =>
             setSubCategoryData({
               ...subCategoryData,
@@ -66,19 +104,7 @@ function AddSubCategoryMaster({ setshowaddform, reload, setReload }) {
           }
         ></textarea>
       </blockquote>
-      {/* <blockquote>
-        <label>Category Id</label>
-        <input
-          type="text"
-          placeholder="Enter Category Id"
-          onChange={(e) =>
-            setSubCategoryData({
-              ...subCategoryData,
-              CategoryId: e.target.value,
-            })
-          }
-        />
-      </blockquote> */}
+
       <blockquote>
         <label>Category Name</label>
         <select
@@ -91,14 +117,18 @@ function AddSubCategoryMaster({ setshowaddform, reload, setReload }) {
         >
           <option value="">Select Category</option>
           {categoryData.map((category, index) => (
-            <option key={index} value={category.id}>
+            <option
+              key={index}
+              value={category.id}
+              selected={subCategoryData.CategoryId === category.id}
+            >
               {category.name}
             </option>
           ))}
         </select>
       </blockquote>
 
-      <button type="submit">Add </button>
+      <button type="submit">{triggerupdate ? "Update" : "Add"} </button>
       <CloseForm close={setshowaddform} />
     </form>
   );

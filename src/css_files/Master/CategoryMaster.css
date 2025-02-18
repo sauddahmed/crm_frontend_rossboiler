@@ -1,157 +1,36 @@
-.category-master-container {
-  padding: 20px;
-}
-
 .category-master {
-  background-color: #ffffff;
-  padding: 20px;
-  max-width: 1200px; /* Adjust the width of the container */
   width: 100%;
-  margin: 0 auto; /* Center the container */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.category-master-title {
   text-align: center;
-  font-size: 1.5rem;
-  margin-bottom: 20px;
-  color: #343a40;
+  padding: 2rem 0;
 }
 
-.search-container {
+.category-master h1 {
+  font-size: 2.5rem;
+}
+
+.category-master-forms {
+  margin: 1rem auto;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 5px;
-  margin-bottom: 20px;
+  gap: 2rem;
+  width: fit-content;
 }
 
-.search-select,
-.search-input {
-  padding: 8px;
-  font-size: 14px;
-  width: 19rem; /* Same width as the form fields, can be adjusted */
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-}
-
-.filter-button,
-.reset-button,
-.add-button {
-  background-color: #17a2b8;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
+.category-master-forms button {
+  padding: 0.5rem;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 1rem;
+  border: 0;
 }
 
-.filter-button:hover,
-.reset-button:hover,
-.add-button:hover {
-  background-color: #138496;
-}
-
-/* Centering the Add Form */
-.add-category-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-  gap: 15px;
-  width: 100%;
-  max-width: 800px; /* Set the max width for the form */
-  margin: 0 auto; /* Center the form */
-}
-
-/* Form layout for fields */
-.form-row {
-  display: flex;
-  flex-direction: column; /* Stack the label and input vertically */
-  gap: 10px;
-  align-items: flex-start; /* Align to the left */
-  width: 100%;
-  max-width: 300px; /* Adjust the width of form rows */
-}
-
-/* Label styling */
-.form-row label {
-  font-size: 14px;
-  margin-bottom: -5px; /* Space between label and input */
-  width: 100%;
-  text-align: left; /* Align label text to the left */
-}
-
-/* Input styling */
-.form-row input,
-.form-row select {
-  padding: 7px 12px;
-  font-size: 14px;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-  width: 100%; /* Full width of the form row */
-  max-width: 300px; /* Limit the width of the inputs */
-}
-
-/* Add button styling */
-.add-category-button {
-  background-color: #17a2b8;
+.category-master-forms button:nth-child(1) {
+  background-color: #072b2b;
   color: white;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  width: 100%;
-  max-width: 300px; /* Limit button width */
-  margin-top: 0px;
+  border-radius: 0.5rem;
 }
 
-.add-category-button:hover {
-  background-color: #138496;
-}
-
-/* Extra large screen responsiveness */
-@media (min-width: 1800px) {
-  .category-master {
-    max-width: 1800px; /* Increase max width for very large screens */
-  }
-
-  .category-master-title {
-    font-size: 1.8rem; /* Increase font size further */
-  }
-
-  .search-select,
-  .search-input {
-    width: 30rem; /* Further increase the width */
-  }
-
-  .filter-button,
-  .reset-button,
-  .add-button {
-    font-size: 14px; /* Increase button font size for large screens */
-    padding: 10px 25px; /* Increase padding for buttons */
-  }
-
-  .add-category-form {
-    width: 70%; /* Allow more space for the form */
-    max-width: 1400px; /* Increase max width for the form */
-  }
-
-  .form-row {
-    max-width: 500px; /* Further increase max width of form rows */
-  }
-
-  .form-row input,
-  .form-row select {
-    max-width: 500px; /* Increase width of form inputs */
-  }
-
-  .add-category-button {
-    font-size: 16px; /* Increase button font size */
-    padding: 10px 25px; /* Increase button padding */
-    max-width: 500px; /* Increase max width of the button */
-  }
+.category-master-forms button:nth-child(2) {
+  background-color: #109b9e;
+  color: white;
+  border-radius: 0.5rem;
 }

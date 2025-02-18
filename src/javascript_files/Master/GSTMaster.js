@@ -13,7 +13,8 @@ function GSTMaster() {
   const [tabledata, setTableData] = useState([]);
   const [reload, setReload] = useState(false);
   const [triggerupdate, settriggerupdate] = useState(false);
-  const [gstupdatedata, setgstupdatedata] = useState([]);
+  const [gstupdatedata, setgstupdatedata] = useState(null);
+  const [datareload, setdatareload] = useState(0);
 
   function setsearchedtabledata(tabledata) {
     setTableData([]);
@@ -29,8 +30,17 @@ function GSTMaster() {
     setshowsearchform(false);
   }
 
-  function fetchgstdata(gstdataarr) {
-    setgstupdatedata(gstdataarr);
+  function fetchgstdata(gstid) {
+    const url = `${process.env.REACT_APP_API_URL}/api/v1/GST/GetGSTById?id=${gstid}`;
+    axios
+      .get(url)
+      .then((res) => {
+        console.log(res.data);
+        setgstupdatedata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   useEffect(() => {
@@ -81,7 +91,7 @@ function GSTMaster() {
           setReload={setReload}
           triggerupdate={triggerupdate}
           gstupdatedata={gstupdatedata}
-          key={`${gstupdatedata}-${triggerupdate}`}
+          key={`${gstupdatedata?.id}-${triggerupdate}-${datareload}`}
         />
       )}
       {showsearchform && (
@@ -99,6 +109,8 @@ function GSTMaster() {
         url="GST/DeleteGST"
         reload={reload}
         setReload={setReload}
+        setdatareload={setdatareload}
+        datareload={datareload}
       />
     </section>
   );

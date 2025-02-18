@@ -13,7 +13,8 @@ function CourierMaster() {
   const [tabledata, setTableData] = useState([]);
   const [reload, setReload] = useState(false);
   const [triggerupdate, settriggerupdate] = useState(false);
-  const [courierupdatedata, setcourierupdatedata] = useState([]);
+  const [courierupdatedata, setcourierupdatedata] = useState(null);
+  const [datareload, setdatareload] = useState(0);
 
   function setsearchedtabledata(tabledata) {
     setTableData([]);
@@ -30,8 +31,17 @@ function CourierMaster() {
     setshowsearchform(false);
   }
 
-  function fetchcourierdata(courierdataarr) {
-    setcourierupdatedata(courierdataarr);
+  function fetchcourierdata(courierid) {
+    const url = `${process.env.REACT_APP_API_URL}/api/v1/Courier/GetCourierById?id=${courierid}`;
+    axios
+      .get(url)
+      .then((res) => {
+        console.log(res.data);
+        setcourierupdatedata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   useEffect(() => {
@@ -84,7 +94,7 @@ function CourierMaster() {
             setReload={setReload}
             triggerupdate={triggerupdate}
             courierupdatedata={courierupdatedata}
-            key={`${courierupdatedata}-${triggerupdate}`}
+            key={`${courierupdatedata?.id}-${triggerupdate}-${datareload}`}
           />
         )}
         {showsearchform && (
@@ -102,6 +112,8 @@ function CourierMaster() {
           url="Courier/DeleteCourier"
           reload={reload}
           setReload={setReload}
+          setdatareload={setdatareload}
+          datareload={datareload}
         />
       </section>
     </>

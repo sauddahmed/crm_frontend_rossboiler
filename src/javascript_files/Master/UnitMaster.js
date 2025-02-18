@@ -13,7 +13,8 @@ function UnitMaster() {
   const [tabledata, setTableData] = useState([]);
   const [reload, setReload] = useState(false);
   const [triggerupdate, settriggerupdate] = useState(false);
-  const [unitupdatedata, setunitupdatedata] = useState([]);
+  const [unitupdatedata, setunitupdatedata] = useState(null);
+  const [datareload, setdatareload] = useState(0);
 
   function setsearchedtabledata(tabledata) {
     setTableData([]);
@@ -30,8 +31,17 @@ function UnitMaster() {
     setshowsearchform(false);
   }
 
-  function fetchunitdata(unitdataarr) {
-    setunitupdatedata(unitdataarr);
+  function fetchunitdata(unitid) {
+    const url = `${process.env.REACT_APP_API_URL}/api/v1/Unit/GetUnitByFilter?id=${unitid}`;
+    axios
+      .get(url)
+      .then((res) => {
+        console.log(res.data);
+        setunitupdatedata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   useEffect(() => {
@@ -84,7 +94,7 @@ function UnitMaster() {
             setReload={setReload}
             triggerupdate={triggerupdate}
             unitupdatedata={unitupdatedata}
-            key={`${unitupdatedata}-${triggerupdate}`}
+            key={`${unitupdatedata?.id}-${triggerupdate}-${datareload}`}
           />
         )}
         {showsearchform && (
@@ -102,6 +112,8 @@ function UnitMaster() {
           url="Unit/DeleteUnit"
           reload={reload}
           setReload={setReload}
+          setdatareload={setdatareload}
+          datareload={datareload}
         />
       </section>
     </>

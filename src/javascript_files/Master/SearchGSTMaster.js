@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../../css_files/Master/SearchGSTMaster.css";
 import CloseForm from "./CloseForm";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function SearchGSTMaster({ setshowsearchform, setsearchedtabledata }) {
   const [Id, setId] = useState(0);
@@ -13,9 +14,15 @@ function SearchGSTMaster({ setshowsearchform, setsearchedtabledata }) {
       .get(url)
       .then((res) => {
         console.log(res);
+        toast.success("Fetched", {
+          position: "bottom-center",
+        });
         setsearchedtabledata(res.data);
       })
       .catch((err) => {
+        toast.error("Failed to Fetch", {
+          position: "bottom-center",
+        });
         console.log(err);
       });
   }

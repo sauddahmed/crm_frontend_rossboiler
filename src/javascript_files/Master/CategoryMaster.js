@@ -13,7 +13,8 @@ function CategoryMaster() {
   const [tabledata, setTableData] = useState([]);
   const [reload, setReload] = useState(false);
   const [triggerupdate, settriggerupdate] = useState(false);
-  const [categoryupdatedata, setcategoryupdatedata] = useState([]);
+  const [categoryupdatedata, setcategoryupdatedata] = useState(null);
+  const [datareload, setdatareload] = useState(0);
 
   function setsearchedtabledata(tabledata) {
     setTableData([]);
@@ -29,8 +30,17 @@ function CategoryMaster() {
     setshowsearchform(false);
   }
 
-  function fetchhsndata(categorydataarr) {
-    setcategoryupdatedata(categorydataarr);
+  function fetchcategorydata(categoryid) {
+    const url = `${process.env.REACT_APP_API_URL}/api/v1/Category/GetCategoryById?id=${categoryid}`;
+    axios
+      .get(url)
+      .then((res) => {
+        console.log(res.data);
+        setcategoryupdatedata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   useEffect(() => {
@@ -80,8 +90,8 @@ function CategoryMaster() {
           reload={reload}
           setReload={setReload}
           triggerupdate={triggerupdate}
-          categorypdatedata={categoryupdatedata}
-          key={`${categoryupdatedata}-${triggerupdate}`}
+          categoryupdatedata={categoryupdatedata}
+          key={`${categoryupdatedata?.id}-${triggerupdate}-${datareload}`}
         />
       )}
       {showsearchform && (
@@ -95,10 +105,12 @@ function CategoryMaster() {
         tabledata={tabledata}
         setshowaddform={setshowaddcategorymaster}
         settriggerupdate={settriggerupdate}
-        fetchdata={fetchhsndata}
+        fetchdata={fetchcategorydata}
         url="Category/DeleteCategory"
         reload={reload}
         setReload={setReload}
+        setdatareload={setdatareload}
+        datareload={datareload}
       />
     </section>
   );

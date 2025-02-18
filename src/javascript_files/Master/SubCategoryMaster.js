@@ -13,7 +13,8 @@ function SubCategoryMaster() {
   const [tabledata, setTableData] = useState([]);
   const [reload, setReload] = useState(false);
   const [triggerupdate, settriggerupdate] = useState(false);
-  const [subcategoryupdatedata, setsubcategoryupdatedata] = useState([]);
+  const [subcategoryupdatedata, setsubcategoryupdatedata] = useState(null);
+  const [datareload, setdatareload] = useState(0);
 
   function setsearchedtabledata(tabledata) {
     setTableData([]);
@@ -29,8 +30,17 @@ function SubCategoryMaster() {
     setshowsearchform(false);
   }
 
-  function fetchsubcategorydata(subcategorydataarr) {
-    setsubcategoryupdatedata(subcategorydataarr);
+  function fetchsubcategorydata(subcategoryid) {
+    const url = `${process.env.REACT_APP_API_URL}/api/v1/SubCategory/GetSubCategoryById?id=${subcategoryid}`;
+    axios
+      .get(url)
+      .then((res) => {
+        console.log(res.data);
+        setsubcategoryupdatedata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   useEffect(() => {
@@ -80,7 +90,12 @@ function SubCategoryMaster() {
         <ToastContainer />
         <h1>Sub Category Master</h1>
         <blockquote className="sub-category-master-forms">
-          <button onClick={() => setshowaddform(true)}>
+          <button
+            onClick={() => {
+              setshowaddform(true);
+              settriggerupdate(false);
+            }}
+          >
             Add Sub-Category Master
           </button>
           <button onClick={() => setshowsearchform(true)}>
@@ -92,6 +107,9 @@ function SubCategoryMaster() {
             setshowaddform={setshowaddform}
             reload={reload}
             setReload={setReload}
+            triggerupdate={triggerupdate}
+            subcategorypdatedata={subcategoryupdatedata}
+            key={`${subcategoryupdatedata?.id}-${triggerupdate}-${datareload}`}
           />
         )}
         {showsearchform && (
@@ -109,6 +127,8 @@ function SubCategoryMaster() {
           url="SubCategory/DeleteSubCategory"
           reload={reload}
           setReload={setReload}
+          setdatareload={setdatareload}
+          datareload={datareload}
         />
       </section>
     </>

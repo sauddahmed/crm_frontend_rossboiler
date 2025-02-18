@@ -15,7 +15,9 @@ function SearchBoilerMaster({ setshowsearchform, setsearchedtabledata }) {
       .then((res) => {
         console.log(res);
         setsearchedtabledata(res.data);
-        toast.success("Search successful!");
+        toast.success("Fetched", {
+          position: "bottom-center",
+        });
       })
       .catch((err) => {
         console.log(err);

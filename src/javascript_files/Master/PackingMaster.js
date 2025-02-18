@@ -13,7 +13,8 @@ function PackingMaster() {
   const [tabledata, setTableData] = useState([]);
   const [reload, setReload] = useState(false);
   const [triggerupdate, settriggerupdate] = useState(false);
-  const [packingupdatedata, setpackingupdatedata] = useState([]);
+  const [packingupdatedata, setpackingupdatedata] = useState(null);
+  const [datareload, setdatareload] = useState(0);
 
   function setsearchedtabledata(tabledata) {
     setTableData([]);
@@ -30,8 +31,17 @@ function PackingMaster() {
     setshowsearchform(false);
   }
 
-  function fetchpackingdata(packingdataarr) {
-    setpackingupdatedata(packingdataarr);
+  function fetchpackingdata(packingid) {
+    const url = `${process.env.REACT_APP_API_URL}/api/v1/Packing/GetPackingByFilter?id=${packingid}`;
+    axios
+      .get(url)
+      .then((res) => {
+        console.log(res.data);
+        setpackingupdatedata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   useEffect(() => {
@@ -84,7 +94,7 @@ function PackingMaster() {
             setReload={setReload}
             triggerupdate={triggerupdate}
             packingupdatedata={packingupdatedata}
-            key={`${packingupdatedata}-${triggerupdate}`}
+            key={`${packingupdatedata?.id}-${triggerupdate}-${datareload}`}
           />
         )}
         {showsearchform && (
@@ -102,6 +112,8 @@ function PackingMaster() {
           url="Packing/DeletePacking"
           reload={reload}
           setReload={setReload}
+          setdatareload={setdatareload}
+          datareload={datareload}
         />
       </section>
     </>

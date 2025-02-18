@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../../css_files/Master/SearchBoilerSeriesMaster.css";
 import CloseForm from "./CloseForm";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function SearchBoilerSeriesMaster({ setshowsearchform, setsearchedtabledata }) {
   const [Id, setId] = useState(0);
@@ -12,11 +13,15 @@ function SearchBoilerSeriesMaster({ setshowsearchform, setsearchedtabledata }) {
     axios
       .get(url)
       .then((res) => {
-        console.log(res);
+        toast.success("Fetched", {
+          position: "bottom-center",
+        });
         setsearchedtabledata(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error("Failed to Search. Please Check Id", {
+          position: "bottom-center",
+        });
       });
   }
   return (

@@ -14,6 +14,8 @@ function BoilerMaster() {
   const [reload, setReload] = useState(false);
   const [triggerupdate, settriggerupdate] = useState(false);
   const [hsnupdatedata, sethsnupdatedata] = useState([]);
+  const [boilerupdatedata, setboilerupdatedata] = useState(null);
+  const [datareload, setdatareload] = useState(0);
 
   function setsearchedtabledata(tabledata) {
     setTableData([]);
@@ -27,6 +29,19 @@ function BoilerMaster() {
       return arr;
     });
     setshowsearchform(false);
+  }
+
+  function fetchboilerdata(boilerid) {
+    const url = `${process.env.REACT_APP_API_URL}/api/v1/Boiler/GetBoilerById?id=${boilerid}`;
+    axios
+      .get(url)
+      .then((res) => {
+        console.log(res.data);
+        setboilerupdatedata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   useEffect(() => {
@@ -59,7 +74,12 @@ function BoilerMaster() {
         <ToastContainer />
         <h1>Boiler Master</h1>
         <blockquote className="boiler-master-forms">
-          <button onClick={() => setshowaddform(true)}>
+          <button
+            onClick={() => {
+              setshowaddform(true);
+              settriggerupdate(false);
+            }}
+          >
             Add Boiler Master
           </button>
           <button onClick={() => setshowsearchform(true)}>
@@ -71,6 +91,9 @@ function BoilerMaster() {
             setshowaddform={setshowaddform}
             reload={reload}
             setReload={setReload}
+            triggerupdate={triggerupdate}
+            boilerupdatedata={boilerupdatedata}
+            key={`${boilerupdatedata?.id}-${triggerupdate}-${datareload}`}
           />
         )}
         {showsearchform && (
@@ -82,9 +105,14 @@ function BoilerMaster() {
         <Table
           tablehead={tablehead}
           tabledata={tabledata}
+          setshowaddform={setshowaddform}
           url="Boiler/DeleteBoiler"
+          settriggerupdate={settriggerupdate}
+          fetchdata={fetchboilerdata}
           reload={reload}
           setReload={setReload}
+          setdatareload={setdatareload}
+          datareload={datareload}
         />
       </section>
     </>

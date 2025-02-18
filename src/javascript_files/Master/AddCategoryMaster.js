@@ -10,11 +10,11 @@ function AddCategoryMaster({
   reload,
   setReload,
   triggerupdate,
-  categorypdatedata,
+  categoryupdatedata,
 }) {
   const [categoryData, setCategoryData] = useState({
-    Name: triggerupdate ? categorypdatedata[1] : "",
-    Description: triggerupdate ? categorypdatedata[2] : "",
+    Name: triggerupdate ? categoryupdatedata?.name : "",
+    Description: triggerupdate ? categoryupdatedata?.description : "",
   });
 
   function handleSubmit(e) {
@@ -24,7 +24,7 @@ function AddCategoryMaster({
       const url = `${process.env.REACT_APP_API_URL}/api/v1/Category/UpdateCategory`;
       axios
         .put(url, {
-          id: categorypdatedata[0],
+          id: categoryupdatedata.id,
           name: categoryData.Name,
           description: categoryData.Description,
         })

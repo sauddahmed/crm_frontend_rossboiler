@@ -27,7 +27,8 @@ function TechnicianMaster() {
   const [tabledata, setTableData] = useState([]);
   const [reload, setReload] = useState(false);
   const [triggerupdate, settriggerupdate] = useState(false);
-  const [technicianupdatedata, settechnicianupdatedata] = useState([]);
+  const [technicianupdatedata, settechnicianupdatedata] = useState(null);
+  const [datareload, setdatareload] = useState(0);
 
   function setsearchedtabledata(tabledata) {
     setTableData([]);
@@ -53,8 +54,17 @@ function TechnicianMaster() {
     setshowsearchform(false);
   }
 
-  function fetchtechniciandata(techniciandataarr) {
-    settechnicianupdatedata(techniciandataarr);
+  function fetchtechniciandata(technicianid) {
+    const url = `${process.env.REACT_APP_API_URL}/api/v1/Technician/GetTechnicianById?id=${technicianid}`;
+    axios
+      .get(url)
+      .then((res) => {
+        console.log(res.data);
+        settechnicianupdatedata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   useEffect(() => {
@@ -116,7 +126,7 @@ function TechnicianMaster() {
             setReload={setReload}
             triggerupdate={triggerupdate}
             technicianupdatedata={technicianupdatedata}
-            key={`${technicianupdatedata}-${triggerupdate}`}
+            key={`${technicianupdatedata?.id}-${triggerupdate}-${datareload}`}
           />
         )}
         {showsearchform && (
@@ -134,6 +144,8 @@ function TechnicianMaster() {
           url="Technician/DeleteTechnician"
           reload={reload}
           setReload={setReload}
+          setdatareload={setdatareload}
+          datareload={datareload}
         />
       </section>
     </>

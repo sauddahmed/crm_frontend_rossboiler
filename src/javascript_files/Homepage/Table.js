@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../css_files/Homepage/Table.css";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { triggerscroll } from "./Homepage";
 
 function Table({
   tablehead,
@@ -13,7 +14,11 @@ function Table({
   url,
   reload,
   setReload,
+  setdatareload,
+  datareload,
 }) {
+  const scrollupwords = useContext(triggerscroll);
+
   function handleDelete(id) {
     const URL = `${process.env.REACT_APP_API_URL}/api/v1/${url}?id=${id}`;
     axios
@@ -56,9 +61,11 @@ function Table({
                 <i
                   className="fa-regular fa-pen-to-square"
                   onClick={() => {
+                    setdatareload(datareload + 1);
                     setshowaddform(true);
                     settriggerupdate(true);
-                    fetchdata(tabledata[index]);
+                    scrollupwords();
+                    fetchdata(tabledata[index][0]);
                   }}
                   title="Edit"
                 />

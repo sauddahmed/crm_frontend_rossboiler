@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../../css_files/Master/SearchCustomerPricingMaster.css";
 import CloseForm from "./CloseForm";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function SearchCustomerPricingMaster({
   setshowsearchform,
@@ -15,11 +16,15 @@ function SearchCustomerPricingMaster({
     axios
       .get(url)
       .then((res) => {
-        console.log(res);
+        toast.success("Fetched", {
+          position: "bottom-center",
+        });
         setsearchedtabledata(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error("Failed to Search. Please Check Id", {
+          position: "bottom-center",
+        });
       });
   }
   return (

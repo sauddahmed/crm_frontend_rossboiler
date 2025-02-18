@@ -20,7 +20,8 @@ function CustomerMaster() {
   const [tabledata, setTableData] = useState([]);
   const [reload, setReload] = useState(false);
   const [triggerupdate, settriggerupdate] = useState(false);
-  const [customerupdatedata, setcustomerupdatedata] = useState([]);
+  const [customerupdatedata, setcustomerupdatedata] = useState(null);
+  const [datareload, setdatareload] = useState(0);
 
   function setsearchedtabledata(tabledata) {
     setTableData([]);
@@ -39,8 +40,17 @@ function CustomerMaster() {
     setshowsearchform(false);
   }
 
-  function fetchcustomerdata(customerdataarr) {
-    setcustomerupdatedata(customerdataarr);
+  function fetchcustomerdata(customerid) {
+    const url = `${process.env.REACT_APP_API_URL}/api/v1/Customer/GetCustomerById?id=${customerid}`;
+    axios
+      .get(url)
+      .then((res) => {
+        console.log(res.data);
+        setcustomerupdatedata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   useEffect(() => {
@@ -71,49 +81,53 @@ function CustomerMaster() {
   }, [reload]);
 
   return (
-    <section className="customer-master">
-      <ToastContainer />
-      <h1>Customer Master</h1>
-      <blockquote className="customer-master-forms">
-        <button
-          onClick={() => {
-            setshowaddform(true);
-            settriggerupdate(false);
-          }}
-        >
-          Add Customer Master
-        </button>
-        <button onClick={() => setshowsearchform(true)}>
-          Search Customer Master
-        </button>
-      </blockquote>
-      {showaddform && (
-        <AddCustomerMaster
+    <>
+      <section className="customer-master">
+        <ToastContainer />
+        <h1>Customer Master</h1>
+        <blockquote className="customer-master-forms">
+          <button
+            onClick={() => {
+              setshowaddform(true);
+              settriggerupdate(false);
+            }}
+          >
+            Add Customer Master
+          </button>
+          <button onClick={() => setshowsearchform(true)}>
+            Search Customer Master
+          </button>
+        </blockquote>
+        {showaddform && (
+          <AddCustomerMaster
+            setshowaddform={setshowaddform}
+            reload={reload}
+            setReload={setReload}
+            triggerupdate={triggerupdate}
+            customerupdatedata={customerupdatedata}
+            key={`${customerupdatedata?.id}-${triggerupdate}-${datareload}`}
+          />
+        )}
+        {showsearchform && (
+          <SearchCustomerMaster
+            setshowsearchform={setshowsearchform}
+            setsearchedtabledata={setsearchedtabledata}
+          />
+        )}
+        <Table
+          tablehead={tablehead}
+          tabledata={tabledata}
           setshowaddform={setshowaddform}
+          settriggerupdate={settriggerupdate}
+          fetchdata={fetchcustomerdata}
+          url="Customer/DeleteCustomer"
           reload={reload}
           setReload={setReload}
-          triggerupdate={triggerupdate}
-          customerupdatedata={customerupdatedata}
-          key={`${customerupdatedata}-${triggerupdate}`}
+          setdatareload={setdatareload}
+          datareload={datareload}
         />
-      )}
-      {showsearchform && (
-        <SearchCustomerMaster
-          setshowsearchform={setshowsearchform}
-          setsearchedtabledata={setsearchedtabledata}
-        />
-      )}
-      <Table
-        tablehead={tablehead}
-        tabledata={tabledata}
-        setshowaddform={setshowaddform}
-        settriggerupdate={settriggerupdate}
-        fetchdata={fetchcustomerdata}
-        url="Customer/DeleteCustomer"
-        reload={reload}
-        setReload={setReload}
-      />
-    </section>
+      </section>
+    </>
   );
 }
 

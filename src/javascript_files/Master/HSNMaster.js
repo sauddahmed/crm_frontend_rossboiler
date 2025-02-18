@@ -13,7 +13,8 @@ function HSNMaster() {
   const [tabledata, setTableData] = useState([]);
   const [reload, setReload] = useState(false);
   const [triggerupdate, settriggerupdate] = useState(false);
-  const [hsnupdatedata, sethsnupdatedata] = useState([]);
+  const [hsnupdatedata, sethsnupdatedata] = useState(null);
+  const [datareload, setdatareload] = useState(0);
 
   function setsearchedtabledata(tabledata) {
     setTableData([]);
@@ -29,8 +30,17 @@ function HSNMaster() {
     setshowsearchform(false);
   }
 
-  function fetchhsndata(hsndataarr) {
-    sethsnupdatedata(hsndataarr);
+  function fetchhsndata(hsnid) {
+    const url = `${process.env.REACT_APP_API_URL}/api/v1/HSN/GetHSNByFilter?id=${hsnid}`;
+    axios
+      .get(url)
+      .then((res) => {
+        console.log(res.data);
+        sethsnupdatedata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   useEffect(() => {
@@ -80,7 +90,7 @@ function HSNMaster() {
           setReload={setReload}
           triggerupdate={triggerupdate}
           hsnupdatedata={hsnupdatedata}
-          key={`${hsnupdatedata}-${triggerupdate}`}
+          key={`${hsnupdatedata?.id}-${triggerupdate}-${datareload}`}
         />
       )}
       {showsearchform && (
@@ -98,6 +108,8 @@ function HSNMaster() {
         url="HSN/DeleteHSN"
         reload={reload}
         setReload={setReload}
+        setdatareload={setdatareload}
+        datareload={datareload}
       />
     </section>
   );

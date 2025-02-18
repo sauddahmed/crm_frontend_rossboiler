@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../../css_files/Master/SearchUnitMaster.css";
 import CloseForm from "./CloseForm";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function SearchUnitMaster({ setshowsearchform, setsearchedtabledata }) {
   const [Id, setId] = useState(0);
@@ -12,10 +13,15 @@ function SearchUnitMaster({ setshowsearchform, setsearchedtabledata }) {
     axios
       .get(url)
       .then((res) => {
-        console.log(res);
+        toast.success("Fetched", {
+          position: "bottom-center",
+        });
         setsearchedtabledata(res.data);
       })
       .catch((err) => {
+        toast.error("Failed to Search. Please Check Id", {
+          position: "bottom-center",
+        });
         console.log(err);
       });
   }

@@ -13,9 +13,9 @@ function CustomerPricingMaster() {
   const [tabledata, setTableData] = useState([]);
   const [reload, setReload] = useState(false);
   const [triggerupdate, settriggerupdate] = useState(false);
-  const [customerpricingupdatedata, setcustomerpricingupdatedata] = useState(
-    []
-  );
+  const [customerpricingupdatedata, setcustomerpricingupdatedata] =
+    useState(null);
+  const [datareload, setdatareload] = useState(0);
 
   function setsearchedtabledata(tabledata) {
     setTableData([]);
@@ -32,8 +32,17 @@ function CustomerPricingMaster() {
     setshowsearchform(false);
   }
 
-  function fetchcustomerpricingdata(customerpricingdataarr) {
-    setcustomerpricingupdatedata(customerpricingdataarr);
+  function fetchcustomerpricingdata(customerpricingid) {
+    const url = `${process.env.REACT_APP_API_URL}/api/v1/CustomerPricing/GetCustomerPricingById?id=${customerpricingid}`;
+    axios
+      .get(url)
+      .then((res) => {
+        console.log(res.data);
+        setcustomerpricingupdatedata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   useEffect(() => {
@@ -85,7 +94,7 @@ function CustomerPricingMaster() {
           setReload={setReload}
           triggerupdate={triggerupdate}
           customerpricingupdatedata={customerpricingupdatedata}
-          key={`${customerpricingupdatedata}-${triggerupdate}`}
+          key={`${customerpricingupdatedata?.id}-${triggerupdate}-${datareload}`}
         />
       )}
       {showsearchform && (
@@ -103,6 +112,8 @@ function CustomerPricingMaster() {
         url="CustomerPricing/DeleteCustomerPricing"
         reload={reload}
         setReload={setReload}
+        setdatareload={setdatareload}
+        datareload={datareload}
       />
     </section>
   );

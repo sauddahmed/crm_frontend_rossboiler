@@ -13,8 +13,8 @@ function AddHSNMaster({
   hsnupdatedata,
 }) {
   const [hsnData, setHsnData] = useState({
-    HsnCode: triggerupdate ? hsnupdatedata[1] : "",
-    Description: triggerupdate ? hsnupdatedata[2] : "",
+    HsnCode: triggerupdate ? hsnupdatedata?.hsnCode : "",
+    Description: triggerupdate ? hsnupdatedata?.description : "",
   });
 
   function handleSubmit(e) {
@@ -24,7 +24,7 @@ function AddHSNMaster({
       const url = `${process.env.REACT_APP_API_URL}/api/v1/HSN/UpdateHSN`;
       axios
         .put(url, {
-          hsnID: hsnupdatedata[0],
+          hsnID: hsnupdatedata.id,
           hsnCode: hsnData.HsnCode,
           description: hsnData.Description,
         })
