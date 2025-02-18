@@ -12,67 +12,67 @@ function Sidebar() {
     {
       path: "master/category-master",
       icon: "fa-solid fa-tags",
-      label: "Category Master",
+      label: "Category",
     },
     {
       path: "master/sub-category-master",
       icon: "fa-solid fa-sitemap",
-      label: "Sub-Category Master",
+      label: "Sub-Category",
     },
     {
       path: "master/hsn-master",
       icon: "fa-solid fa-code",
-      label: "HSN Master",
+      label: "HSN",
     },
     {
       path: "master/unit-master",
       icon: "fa-solid fa-ruler",
-      label: "Unit\nMaster",
+      label: "Unit",
     },
     {
       path: "master/packing-master",
       icon: "fa-solid fa-box",
-      label: "Packing Master",
+      label: "Packing",
     },
     {
       path: "master/currency-master",
       icon: "fa-solid fa-dollar-sign",
-      label: "Currency Master",
+      label: "Currency",
     },
     {
       path: "master/gst-master",
       icon: "fa-solid fa-file-invoice",
-      label: "GST Master",
+      label: "GST",
     },
     {
       path: "master/parts-master",
       icon: "fa-solid fa-cogs",
-      label: "Parts Master",
+      label: "Parts",
     },
     {
       path: "master/boiler-master",
       icon: "fa-solid fa-fire",
-      label: "Boiler Master",
+      label: "Boiler",
     },
     {
       path: "master/boiler-series-master",
       icon: "fa-solid fa-file-invoice",
-      label: "Boiler Series Master",
+      label: "Boiler Series",
     },
     {
       path: "master/boiler-series-parts-mapping-master",
       icon: "fa-solid fa-map",
-      label: "Boiler Series Mapping Master",
+      label: "Boiler Series Mapping",
     },
     {
       path: "master/courier-master",
       icon: "fa-solid fa-truck",
-      label: "Courier Master",
+      label: "Courier",
     },
     {
       path: "master/customer-master",
       icon: "fa-solid fa-users",
-      label: "Customer Master",
+      label: "Customer",
     },
     {
       path: "master/customer-pricing-master",
@@ -82,7 +82,7 @@ function Sidebar() {
     {
       path: "master/technician-master",
       icon: "fa-solid fa-tools",
-      label: "Technician Master",
+      label: "Technician",
     },
   ];
 

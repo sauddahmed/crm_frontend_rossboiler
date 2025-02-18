@@ -39,7 +39,7 @@ function AddTechnicianMaster({
       const url = `${process.env.REACT_APP_API_URL}/api/v1/Technician/UpdateTechnician`;
       axios
         .put(url, {
-          id: technicianupdatedata.id,
+          technicianID: technicianupdatedata.id,
           name: technicianData.Name,
           companyPhoneNumber: technicianData.CompanyPhoneNumber,
           age: technicianData.Age,

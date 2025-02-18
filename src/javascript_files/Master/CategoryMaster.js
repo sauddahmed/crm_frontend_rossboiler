@@ -83,6 +83,7 @@ function CategoryMaster() {
         <button onClick={() => setshowsearchform(true)}>
           Search Category Master
         </button>
+        <button onClick={() => setReload(!reload)}>Reset</button>
       </blockquote>
       {showaddcategorymaster && (
         <AddCategoryMaster
