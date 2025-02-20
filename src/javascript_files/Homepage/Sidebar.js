@@ -84,6 +84,11 @@ function Sidebar() {
       icon: "fa-solid fa-tools",
       label: "Technician",
     },
+    {
+      path: "master/quotation-master",
+      icon: "fa-solid fa-file-invoice-dollar",
+      label: "Quotation",
+    },
   ];
 
   return (

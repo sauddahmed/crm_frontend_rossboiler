@@ -16,6 +16,7 @@ import CourierMaster from "./javascript_files/Master/CourierMaster";
 import TechnicianMaster from "./javascript_files/Master/TechnicianMaster";
 import CustomerMaster from "./javascript_files/Master/CustomerMaster";
 import CustomerPricingMaster from "./javascript_files/Master/CustomerPricingMaster";
+import QuotationMaster from "./javascript_files/Master/QuotationMaster.js";
 import Signin from "./javascript_files/Signin/Signin";
 import Login from "./javascript_files/Signin/Login";
 import Register from "./javascript_files/Signin/Register";
@@ -57,6 +58,7 @@ function App() {
           path="master/customer-pricing-master"
           element={<CustomerPricingMaster />}
         />
+        <Route path="master/quotation-master" element={<QuotationMaster />} />
       </Route>
     </Routes>
   );
