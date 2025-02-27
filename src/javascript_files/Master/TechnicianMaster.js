@@ -16,7 +16,7 @@ function TechnicianMaster() {
     "Age",
     "Qualification",
     "Experience",
-    "Years With Ross",
+    "Years With Kulkarni",
     "CTC",
     "Posting Location",
     "Aadhar",

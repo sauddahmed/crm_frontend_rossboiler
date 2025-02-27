@@ -10,7 +10,7 @@ function Navbar() {
       {/* Left Section: Logo */}
       <div className="navbar-left">
         <img src="/images/image689.png" alt="Company Logo" id="navbar-logo" />
-        <span className="company-name">Ross Boilers</span>
+        <span className="company-name"></span>
       </div>
 
       {/* Right Section: Navigation Icons */}

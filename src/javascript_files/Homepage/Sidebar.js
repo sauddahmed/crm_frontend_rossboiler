@@ -49,21 +49,21 @@ function Sidebar() {
       icon: "fa-solid fa-cogs",
       label: "Parts",
     },
-    {
-      path: "master/boiler-master",
-      icon: "fa-solid fa-fire",
-      label: "Boiler",
-    },
-    {
-      path: "master/boiler-series-master",
-      icon: "fa-solid fa-file-invoice",
-      label: "Boiler Series",
-    },
-    {
-      path: "master/boiler-series-parts-mapping-master",
-      icon: "fa-solid fa-map",
-      label: "Boiler Series Mapping",
-    },
+    // {
+    //   path: "master/boiler-master",
+    //   icon: "fa-solid fa-fire",
+    //   label: "Boiler",
+    // },
+    // {
+    //   path: "master/boiler-series-master",
+    //   icon: "fa-solid fa-file-invoice",
+    //   label: "Boiler Series",
+    // },
+    // {
+    //   path: "master/boiler-series-parts-mapping-master",
+    //   icon: "fa-solid fa-map",
+    //   label: "Boiler Series Mapping",
+    // },
     {
       path: "master/courier-master",
       icon: "fa-solid fa-truck",
